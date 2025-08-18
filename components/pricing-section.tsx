@@ -18,28 +18,28 @@ export default function PricingSection() {
 
   const plans = [
     {
-      id: 1,
+      id: "F0945458-34A3-4EAA-969B-08DDD5DB513B",
       name: "Plano Básico",
       price: "39,90",
       features: ["1 usuário", "Até 10 pareceres por ano"],
       priceAnual: "478,80",
     },
     {
-      id: 2,
+      id: "DA59FEA7-1A04-4826-969C-08DDD5DB513B",
       name: "Plano Essencial",
       price: "69,90",
       features: ["2 usuários", "Até 20 pareceres por ano"],
       priceAnual: "838,80",
     },
     {
-      id: 3,
+      id: "02471104-69F4-415E-969D-08DDD5DB513B",
       name: "Plano Profissional",
       price: "99,90",
       features: ["5 usuários", "Até 30 pareceres por ano"],
       priceAnual: "1198,80",
     },
     {
-      id: 4,
+      id: "A8FCC0BE-FA12-49AE-969E-08DDD5DB513B",
       name: "Plano Corporativo",
       price: "149,90",
       features: ["7 usuários", "Até 50 pareceres por ano"],
@@ -106,7 +106,7 @@ export default function PricingSection() {
                     ))}
                   </ul>
                   <div className="flex justify-start">
-                    {/* <Button
+                    <Button
                       onClick={() => {
                         setSelectedPlanIndex(index);
                         handleContratar(index);
@@ -115,14 +115,14 @@ export default function PricingSection() {
                       size="lg"
                     >
                       Contratar
-                    </Button> */}
-                    <Button
+                    </Button>
+                    {/* <Button
                       onClick={() => setIsModalOpen(true)} // abre modal
                       className="w-1/2 bg-[#840C0C] hover:bg-red-800 text-white py-3 px-6 rounded-md font-medium transition-colors duration-200"
                       size="lg"
                     >
                       Contratar
-                    </Button>
+                    </Button> */}
                   </div>
                 </div>
               </div>
@@ -136,7 +136,7 @@ export default function PricingSection() {
           </p>
 
           {/* <Link href="/fale-com-a-gente?origem=planopersonalizado"> */}
-          <Link href="https://wa.me/5541988705498" target="_blank">
+          <Link href="https://wa.me/554188705498" target="_blank">
             <Button
               variant="outline"
               className="border-2 border-red-800 text-red-800 hover:text-white hover:bg-red-800 px-6 py-2 rounded-md"
@@ -170,7 +170,7 @@ export default function PricingSection() {
               Entre em contato conosco e garanta descontos exclusivos de
               pré-vendas.
             </p>
-            <Link href="https://wa.me/5541988705498" target="_blank">
+            <Link href="https://wa.me/554188705498" target="_blank">
               <Button
                 onClick={() => setIsModalOpen(false)}
                 className="bg-[#840C0C] mt-6 hover:bg-red-800 mr-6 text-white"

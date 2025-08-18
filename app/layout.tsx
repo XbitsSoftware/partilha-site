@@ -2,6 +2,8 @@ import type React from "react";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "react-hot-toast";
+import { IconAtentionToast, IconSucessToast } from "@/public/extensions/icons";
 
 const inter = Roboto({ subsets: ["latin"] });
 
@@ -80,7 +82,27 @@ export default function RootLayout({
         <meta name="theme-color" content="#92400e" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        {children}
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 4000,
+            style: {
+              padding: "16px",
+              borderRadius: "8px",
+            },
+            success: {
+              style: { background: "#2ABB7F", color: "#FFFFFF" },
+              icon: <IconSucessToast height={20} width={20} />,
+            },
+            error: {
+              style: { background: "#EF5C48", color: "#FFFFFF" },
+              icon: <IconAtentionToast height={20} width={20} />,
+            },
+          }}
+        />{" "}
+      </body>
     </html>
   );
 }

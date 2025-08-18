@@ -7,17 +7,17 @@ import ServicesSection from "@/components/services-section";
 import Footer from "@/components/footer";
 
 export default function HomePage() {
-   return (
-      <div className="min-h-screen bg-white">
-         <Header />
-         <main>
-            <Hero />
-            <AboutSection />
-            <HistorySection />
-            <BenefitsSection />
-            <ServicesSection />
-         </main>
-         <Footer />
-      </div>
-   );
+  return (
+    <div className="min-h-screen bg-white">
+      <Header />
+      <main>
+        <Hero />
+        <AboutSection />
+        <HistorySection />
+        <BenefitsSection />
+        <ServicesSection />
+      </main>
+      <Footer />
+    </div>
+  );
 }
