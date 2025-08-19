@@ -17,7 +17,7 @@ const carouselSlides = [
         <span className="text-[#FBF6EE]">jurídico </span>
         <br />
         <span className="text-[#FBF6EE]">na </span>
-        <span className="text-[#E6C288]">divisão de bens</span>
+        <span className="text-[#E6C288]">divisão patrimonial</span>
       </>
     ),
     description:

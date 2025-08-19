@@ -12,7 +12,7 @@ export default function Footer() {
   const socialLinks = [
     {
       icon: IconFacebookLogo,
-      href: "https://www.facebook.com/xbitssoftware",
+      href: "https://www.facebook.com/profile.php?id=61576015531632",
       label: "Facebook",
     },
     {
