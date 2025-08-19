@@ -10,8 +10,7 @@ export default function AboutSection() {
           <div className="lg:col-span-6 order-2 lg:order-2 flex flex-col justify-center">
             <h2 className="text-2xl lg:text-3xl font-bold text-[#380505] mb-6">
               Um momento inevitável, mas que
-              <br />
-              pode ser facilitado
+              <span className=""> pode ser facilitado</span>
             </h2>
 
             <div className="space-y-4 text-[#4A4A4A] leading-relaxed text-[0.9rem]">
