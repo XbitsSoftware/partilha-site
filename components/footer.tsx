@@ -38,7 +38,11 @@ export default function Footer() {
       { name: "Funcionalidades", href: "/funcionalidades" },
       { name: "Planos", href: "/planos" },
       // { name: "Depoimentos", href: "depoimentos" },
-      { name: "Área do cliente", href: "#" },
+      {
+        name: "Área do cliente",
+        href: "http://app.partilhaonline.com/login",
+        target: "_blank",
+      },
       {
         name: "Fale com a gente",
         href: "https://wa.me/554188705498",
