@@ -2,6 +2,7 @@ import type React from "react";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Roboto({ subsets: ["latin"] });
 
@@ -20,6 +21,10 @@ export const metadata: Metadata = {
     "plataforma jurídica",
     "automatização jurídica",
   ],
+  icons: {
+    icon: "/images/favicon.png",
+    apple: "/images/apple-touch-icon.png",
+  },
   authors: [{ name: "Partilha Online" }],
   creator: "Partilha Online",
   publisher: "Partilha Online",
@@ -75,12 +80,13 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <head>
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <meta name="theme-color" content="#92400e" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }

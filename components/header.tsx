@@ -21,12 +21,16 @@ export default function Header() {
   }, []);
 
   const navigation = [
-    { name: "Home", href: "/" },
-    { name: "Funcionalidades", href: "/funcionalidades" },
-    { name: "Planos", href: "/planos" },
-    // { name: "Depoimentos", href: "/depoimentos" },
-    // { name: "Artigos", href: "/artigos" },
-    { name: "Área do cliente", href: "https://partilha.xbits.com.br/login" },
+    { name: "Home", href: "/", target: "" },
+    { name: "Funcionalidades", href: "/funcionalidades", target: "" },
+    { name: "Planos", href: "/planos", target: "" },
+    // { name: "Depoimentos", href: "/depoimentos", target: "" },
+    // { name: "Artigos", href: "/artigos", target: "" },
+    {
+      name: "Área do cliente",
+      href: "http://app.partilhaonline.com/login",
+      target: "_blank",
+    },
   ];
 
   return (
@@ -58,6 +62,7 @@ export default function Header() {
               {navigation.map((item) => (
                 <Link
                   key={item.name}
+                  target={item.target}
                   href={item.href}
                   className={`px-3 py-2 text-sm font-normal transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-amber-300 focus:ring-offset-2 rounded-md ${
                     isAtTop
