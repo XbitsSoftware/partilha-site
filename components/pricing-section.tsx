@@ -18,28 +18,28 @@ export default function PricingSection() {
 
   const plans = [
     {
-      id: "F0945458-34A3-4EAA-969B-08DDD5DB513B",
+      id: "30A78D72-370D-42BD-C50F-08DDE74576CF",
       name: "Plano Básico",
       price: "39,90",
       features: ["1 usuário", "Até 10 pareceres por ano"],
       priceAnual: "478,80",
     },
     {
-      id: "DA59FEA7-1A04-4826-969C-08DDD5DB513B",
+      id: "30A78D72-370D-42BD-C50F-08DDE74576CF",
       name: "Plano Essencial",
       price: "69,90",
       features: ["2 usuários", "Até 20 pareceres por ano"],
       priceAnual: "838,80",
     },
     {
-      id: "02471104-69F4-415E-969D-08DDD5DB513B",
+      id: "30A78D72-370D-42BD-C50F-08DDE74576CF",
       name: "Plano Profissional",
       price: "99,90",
       features: ["5 usuários", "Até 30 pareceres por ano"],
       priceAnual: "1198,80",
     },
     {
-      id: "A8FCC0BE-FA12-49AE-969E-08DDD5DB513B",
+      id: "30A78D72-370D-42BD-C50F-08DDE74576CF",
       name: "Plano Corporativo",
       price: "149,90",
       features: ["7 usuários", "Até 50 pareceres por ano"],

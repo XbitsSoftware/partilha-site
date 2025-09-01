@@ -26,15 +26,17 @@ export default function CheckoutSection({ id }: { id: string }) {
   const {
     hookForm,
     estados,
-    handleSubmit,
     plan,
     loading,
-    handleTradePlan,
     paymentMethod,
-    setPaymentMethod,
     pixData,
+    couponValid,
+    handleTradePlan,
+    handleSubmit,
+    setPaymentMethod,
     setPixData,
     handleSearchZipCode,
+    handleCouponValidate,
   } = UseCheckoutController(id);
   const onSubmit = async (data: any) => {
     // Aqui você chama a função de compra
@@ -436,9 +438,15 @@ export default function CheckoutSection({ id }: { id: string }) {
                         label="Cupom de desconto"
                         control={hookForm.control}
                         errors={hookForm.formState.errors}
+                        onChange={(e) => handleCouponValidate(e.target.value)}
                         name="couponCode"
                         id="couponCode"
                       />
+                      {couponValid == true && (
+                        <span className="text-green-500 text-sm">
+                          Cupom válido
+                        </span>
+                      )}
                     </div>
                     <div className="col-span-12 md:col-span-3 mb-4 sm:mb-0">
                       <Input
@@ -466,9 +474,15 @@ export default function CheckoutSection({ id }: { id: string }) {
                         label="Cupom de desconto"
                         control={hookForm.control}
                         errors={hookForm.formState.errors}
+                        onChange={(e) => handleCouponValidate(e.target.value)}
                         name="couponCode"
                         id="couponCode"
                       />
+                      {couponValid == true && (
+                        <span className="text-green-500 text-sm">
+                          Cupom válido
+                        </span>
+                      )}
                     </div>
                     <div className="col-span-12 md:col-span-3 mb-4 sm:mb-0">
                       <Input

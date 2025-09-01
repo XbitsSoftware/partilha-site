@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 
 export const UseCheckoutController = (planId: string) => {
   const [plan, setPlan] = useState<null | {
+    id: string;
     name: string;
     price: string;
     features: string[];
@@ -14,6 +15,8 @@ export const UseCheckoutController = (planId: string) => {
   }>(null);
   const [loading, setLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("CreditCard");
+  const [couponValid, setCouponValid] = useState(false);
+  const [valueCoupon, setValueCoupon] = useState(0);
   const [pixData, setPixData] = useState<null | {
     qrCode: string;
     expirationDate: string;
@@ -70,28 +73,28 @@ export const UseCheckoutController = (planId: string) => {
 
   const plans = [
     {
-      id: "F0945458-34A3-4EAA-969B-08DDD5DB513B",
+      id: "30A78D72-370D-42BD-C50F-08DDE74576CF",
       name: "Plano Básico",
       price: "39,90",
       features: ["1 usuário", "Até 10 pareceres por ano"],
       priceAnual: "478,80",
     },
     {
-      id: "DA59FEA7-1A04-4826-969C-08DDD5DB513B",
+      id: "30A78D72-370D-42BD-C50F-08DDE74576CF",
       name: "Plano Essencial",
       price: "69,90",
       features: ["2 usuários", "Até 20 pareceres por ano"],
       priceAnual: "838,80",
     },
     {
-      id: "02471104-69F4-415E-969D-08DDD5DB513B",
+      id: "30A78D72-370D-42BD-C50F-08DDE74576CF",
       name: "Plano Profissional",
       price: "99,90",
       features: ["5 usuários", "Até 30 pareceres por ano"],
       priceAnual: "1198,80",
     },
     {
-      id: "A8FCC0BE-FA12-49AE-969E-08DDD5DB513B",
+      id: "30A78D72-370D-42BD-C50F-08DDE74576CF",
       name: "Plano Corporativo",
       price: "149,90",
       features: ["7 usuários", "Até 50 pareceres por ano"],
@@ -267,7 +270,11 @@ export const UseCheckoutController = (planId: string) => {
       finalValue = numericValue * 0.9; // aplica 10% de desconto
     }
 
-    hookForm.setValue("totalValue", finalValue.toFixed(2));
+    if (couponValid) {
+      finalValue = valueCoupon;
+    }
+
+    hookForm.setValue("totalValue", finalValue.toString().replace(".", ","));
   };
 
   const handleSearchZipCode = async (
@@ -291,9 +298,57 @@ export const UseCheckoutController = (planId: string) => {
     }
   };
 
+  const handleCouponValidate = async (couponCode: string) => {
+    console.log("Validando cupom:", couponCode);
+    const code = couponCode.trim();
+    if (code.length <= 13) {
+      hookForm.setValue("totalValue", plan?.priceAnual ?? "0.00");
+      setCouponValid(false);
+      setValueCoupon(0);
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `/api/checkout?Code=${code}&ProductId=ADD7E59B-AB1C-4A6D-8811-D2188F232590&PlanId=${plan?.id}&BillingType=${paymentMethod}`
+      );
+
+      const data = await response.json();
+
+      if (data.result === "Valid") {
+        toast.success("Cupom aplicado com sucesso!");
+        hookForm.setValue("totalValue", data.valueForDiscount);
+        setValueCoupon(data.valueForDiscount);
+        setCouponValid(true);
+      } else {
+        toast.error("Cupom inválido ou expirado.");
+        hookForm.setValue("totalValue", plan?.priceAnual ?? "0.00");
+        setValueCoupon(0);
+        setCouponValid(false);
+      }
+    } catch (error) {
+      console.error("Erro ao validar cupom:", error);
+      hookForm.setValue("totalValue", plan?.priceAnual ?? "0.00");
+      setValueCoupon(0);
+      setCouponValid(false);
+      toast.error("Erro ao validar cupom. Tente novamente mais tarde.");
+    }
+  };
+
   useEffect(() => {
     setValueInTotalValue();
-  }, [paymentMethod, plan]);
+    handleCouponValidate(hookForm.getValues("couponCode") ?? "");
+  }, [paymentMethod, plan, couponValid]);
+
+  useEffect(() => {
+    fetch("https://api.ipify.org?format=json")
+      .then((res) => res.json())
+      .then((data) => {
+        hookForm.setValue("payment.remoteIp", data.ip);
+        console.log("IP obtido:", data);
+      })
+      .catch((err) => console.error("Erro ao obter IP:", err));
+  }, []);
 
   useEffect(() => {
     if (planId) {
@@ -309,15 +364,17 @@ export const UseCheckoutController = (planId: string) => {
   return {
     hookForm,
     estados,
-    handleSubmit,
-    unmask,
-    handleTradePlan,
     plan,
     loading,
     paymentMethod,
-    setPaymentMethod,
     pixData,
+    couponValid,
+    handleSubmit,
+    unmask,
+    handleTradePlan,
+    setPaymentMethod,
     setPixData,
     handleSearchZipCode,
+    handleCouponValidate,
   };
 };
