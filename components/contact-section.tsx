@@ -5,8 +5,6 @@ import { useRef } from "react";
 import { useState } from "react";
 import { Phone, Mail, MapPin, User, PhoneCall } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import GoogleMap from "@/components/google-map";
 import { IconClip } from "@/public/extensions/icons";
 

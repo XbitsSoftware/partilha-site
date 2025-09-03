@@ -3,7 +3,7 @@
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import PurchaseHero from "@/components/purchase-hero";
-import CheckoutSection from "@/components/checkout-section";
+import CheckoutSection from "@/components/checkout/checkout-section";
 
 export default function PurchasePage({ params }: { params: { id: string } }) {
   return (

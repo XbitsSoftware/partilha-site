@@ -1,0 +1,16 @@
+export enum EMask {
+  CPF = 1,
+  CNPJ,
+  CPF_CNPJ,
+  PHONE_DYNAMIC,
+  CEP,
+  PHONE,
+  PHONE_NO_DDD,
+  TEXT_ONLY,
+  NUMBERS_ONLY,
+  DATE,
+  TIME,
+  CREDIT_CARD,
+  NUMBERS_4_DIGITS,
+  CVV,
+}
