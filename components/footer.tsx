@@ -12,7 +12,7 @@ export default function Footer() {
   const socialLinks = [
     {
       icon: IconFacebookLogo,
-      href: "https://www.facebook.com/xbitssoftware",
+      href: "https://www.facebook.com/profile.php?id=61576015531632",
       label: "Facebook",
     },
     {
@@ -38,7 +38,11 @@ export default function Footer() {
       { name: "Funcionalidades", href: "/funcionalidades" },
       { name: "Planos", href: "/planos" },
       // { name: "Depoimentos", href: "depoimentos" },
-      { name: "Área do cliente", href: "#" },
+      {
+        name: "Área do cliente",
+        href: "http://app.partilhaonline.com/login",
+        target: "_blank",
+      },
       {
         name: "Fale com a gente",
         href: "https://wa.me/554188705498",
@@ -53,22 +57,20 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
           {/* Company Info */}
           <div className="col-span-2 lg:col-span-2 text-center justify-center sm:justify-start sm:text-start">
-            <div className="flex items-start justify-center lg:justify-start">
+            {/* <div className="flex items-start justify-center lg:justify-start">
               <p className=" mb-6 leading-relaxed">
                 R. Dr. Manoel Pedro, 365 – Conj. 504, Sala 4
                 <br />
                 Cabral – Curitiba/PR – CEP 80035-030
               </p>
-            </div>
-            <div className="flex items-start justify-center lg:justify-start">
+            </div> */}
+            <div className="flex items-start mt-10 justify-center lg:justify-start">
               <div className="flex items-center gap-3">
-                <span className="text-xl font-bold mb-4">
-                  +55 (41) 98870-5498
-                </span>
+                <span className="text-[#E6C288]">+55 (41) 98870-5498</span>
               </div>
             </div>
             <div className="flex items-center justify-center lg:justify-start">
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 mt-4">
                 <span className="text-[#E6C288]">
                   contato@partilhaonline.com
                 </span>

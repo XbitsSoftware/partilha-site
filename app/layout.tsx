@@ -4,14 +4,17 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import { IconAtentionToast, IconSucessToast } from "@/public/extensions/icons";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Roboto({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Partilha Online - Seu Assistente Jurídico na Divisão de Bens",
+  title: "Partilha Online - Seu assistente jurídico na divisão patrimonial",
   description:
     "Plataforma inteligente para advogados que agiliza processos de divisão patrimonial, inventários e divórcios. Automatize cálculos complexos e gere documentos padronizados com segurança e eficiência.",
   keywords: [
+    "divisão patrimonial",
+    "inventário de bens",
     "divisão de bens",
     "inventário",
     "divórcio",
@@ -22,6 +25,10 @@ export const metadata: Metadata = {
     "plataforma jurídica",
     "automatização jurídica",
   ],
+  icons: {
+    icon: "/images/favicon.png",
+    apple: "/images/apple-touch-icon.png",
+  },
   authors: [{ name: "Partilha Online" }],
   creator: "Partilha Online",
   publisher: "Partilha Online",
@@ -41,7 +48,7 @@ export const metadata: Metadata = {
     locale: "pt_BR",
     url: "https://partilhaonline.com.br",
     siteName: "Partilha Online",
-    title: "Partilha Online - Seu Assistente Jurídico na Divisão de Bens",
+    title: "Partilha Online - Seu assistente jurídico na divisão patrimonial",
     description:
       "Plataforma inteligente para advogados que agiliza processos de divisão patrimonial, inventários e divórcios.",
     images: [
@@ -55,7 +62,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Partilha Online - Seu Assistente Jurídico na Divisão de Bens",
+    title: "Partilha Online - Seu assistente jurídico na divisão patrimonial",
     description:
       "Plataforma inteligente para advogados que agiliza processos de divisão patrimonial.",
     images: ["/og-image.jpg"],
@@ -77,13 +84,12 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <head>
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <meta name="theme-color" content="#92400e" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className={inter.className}>
         {children}
+
         <Toaster
           position="top-right"
           toastOptions={{
@@ -102,6 +108,7 @@ export default function RootLayout({
             },
           }}
         />{" "}
+        <Analytics />
       </body>
     </html>
   );
