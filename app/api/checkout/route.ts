@@ -7,7 +7,7 @@ export async function POST(req: Request) {
     let apiUrl = "";
     if (body.charge.billingType === "CreditCard") {
       apiUrl =
-        "https://apihml.xgateway.com.br/api/api/Customer/signup_payment_with_card";
+        "https://apihml.xgateway.com.br/api/Customer/signup_payment_with_card";
     } else if (body.charge.billingType === "Pix") {
       apiUrl =
         "https://apihml.xgateway.com.br/api/Customer/signup_payment_with_pix";
