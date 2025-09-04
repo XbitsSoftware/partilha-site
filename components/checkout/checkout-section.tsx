@@ -12,12 +12,9 @@ import {
   Search,
   User,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
 import Input from "../input/input";
-import { useForm } from "react-hook-form";
 import Select from "../select/select";
 import { EMask } from "@/app/enum/enum";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { UseCheckoutController } from "./checkout-section.controller";
 import { Loading } from "../loading/loading";
 import { ModalPix } from "../modalPix/modalPix";
@@ -273,7 +270,6 @@ export default function CheckoutSection({ id }: { id: string }) {
                     control={hookForm.control}
                     id="complement"
                     placeholder="Digite"
-                    mandatory
                     errors={hookForm.formState.errors}
                     name="customer.address.complement"
                   />
@@ -423,8 +419,8 @@ export default function CheckoutSection({ id }: { id: string }) {
                         control={hookForm.control}
                         errors={hookForm.formState.errors}
                         items={Array.from({ length: 12 }, (_, index) => ({
-                          value: String(index + 1).padStart(2, "0"),
-                          label: String(index + 1).padStart(2, "0"),
+                          value: Number(index + 1),
+                          label: String(index + 1),
                         }))}
                         name="charge.installmentCount"
                         id="installmentCount"

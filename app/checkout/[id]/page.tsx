@@ -10,7 +10,7 @@ export default function PurchasePage({ params }: { params: { id: string } }) {
     <div className="min-h-screen bg-white">
       <Header />
       <main>
-        <PurchaseHero />
+        <PurchaseHero id={params.id} />
         <CheckoutSection id={params.id} />
       </main>
       <Footer />

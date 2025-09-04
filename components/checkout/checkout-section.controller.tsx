@@ -47,7 +47,7 @@ export const UseCheckoutController = (planId: string) => {
       },
       charge: {
         billingType: paymentMethod,
-        installmentCount: "",
+        installmentCount: 1,
         description: "Compra realizada no Partilha Online",
       },
       payment: {
@@ -151,7 +151,9 @@ export const UseCheckoutController = (planId: string) => {
           district: formData.customer.address.district,
           city: formData.customer.address.city,
           number: formData.customer.address.number,
-          complement: formData.customer.address.complement,
+          complement: formData.customer.address.complement?.trim()
+            ? formData.customer.address.complement
+            : null,
           state: formData.customer.address.state,
           zipCode: unmask(formData.customer.address.zipCode), // CEP
           country: "Brasil",
