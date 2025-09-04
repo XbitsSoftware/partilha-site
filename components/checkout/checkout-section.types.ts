@@ -27,7 +27,12 @@ export const formSchema = z
         district: z.string().min(1, "Bairro obrigatório"),
         city: z.string().min(2, "Cidade obrigatória"),
         number: z.string().min(1, "Número obrigatório"),
-        complement: z.string().min(2, "Complemento obrigatório"),
+        complement: z
+          .string()
+          .optional()
+          .refine((val) => !val || (val.length >= 2 && val.length <= 100), {
+            message: "Complemento deve ter entre 2 e 100 caracteres",
+          }),
         state: z.string().min(1, "Selecione um estado"),
         zipCode: z.string().min(8, "CEP obrigatório"),
         country: z.string().optional(),
@@ -35,7 +40,7 @@ export const formSchema = z
     }),
     charge: z.object({
       billingType: z.enum(["CreditCard", "Boleto", "Pix"]),
-      installmentCount: z.string().optional(),
+      installmentCount: z.number().optional(),
       description: z.string().optional(),
     }),
     payment: z.object({
@@ -165,7 +170,7 @@ export interface TFormState {
   };
   charge: {
     billingType: string;
-    installmentCount: string;
+    installmentCount: number;
     description: string;
   };
   payment: {

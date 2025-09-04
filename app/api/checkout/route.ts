@@ -2,16 +2,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    console.log("Rota /api/checkout chamada!");
-
-    let body;
-    try {
-      body = await req.json();
-      console.log("Body recebido:", body);
-    } catch (err) {
-      console.error("Erro ao ler body:", err);
-      return NextResponse.json({ error: "Body inválido" }, { status: 400 });
-    }
+    const body = await req.json();
 
     let apiUrl = "";
     if (body.charge.billingType === "CreditCard") {
@@ -33,13 +24,21 @@ export async function POST(req: Request) {
       body: JSON.stringify(body),
     });
 
-    const data = await res.json();
+    const text = await res.text();
 
-    return NextResponse.json(data, { status: res.status });
+    try {
+      const json = JSON.parse(text);
+      return NextResponse.json(json, { status: res.status });
+    } catch {
+      return new NextResponse(text, {
+        status: res.status,
+        headers: { "Content-Type": "text/plain" },
+      });
+    }
   } catch (error) {
     console.error("Erro geral:", error);
     return NextResponse.json(
-      { error: "Erro ao processar pagamento" },
+      { error: "Erro ao processar requisição" },
       { status: 500 }
     );
   }

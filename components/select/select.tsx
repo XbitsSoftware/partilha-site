@@ -25,6 +25,53 @@ const Select = ({
 }: SelectCustomProps) => {
   const selectContainer = useRef<any>(null);
   const [openList, setOpenList] = useState<boolean>(false);
+  const [highlightedIndex, setHighlightedIndex] = useState<number>(-1);
+  const optionRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const handleKeyDown = (
+    e: React.KeyboardEvent<HTMLDivElement>,
+    onChange: (value: any) => void
+  ) => {
+    if (!openList) {
+      if (e.key === "Enter" || e.key === " ") {
+        setOpenList(true);
+        setHighlightedIndex(0);
+      }
+      return;
+    }
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setHighlightedIndex((prev) =>
+        prev < (items?.length ?? 0) - 1 ? prev + 1 : 0
+      );
+    }
+
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setHighlightedIndex((prev) =>
+        prev > 0 ? prev - 1 : (items?.length ?? 0) - 1
+      );
+    }
+    if (e.key === "Tab") {
+      e.preventDefault();
+      setHighlightedIndex((prev) =>
+        prev < (items?.length ?? 0) - 1 ? prev + 1 : 0
+      );
+    }
+
+    if (e.key === "Enter") {
+      e.preventDefault();
+      if (highlightedIndex >= 0 && items) {
+        onChange(items[highlightedIndex].value);
+        setOpenList(false);
+      }
+    }
+
+    if (e.key === "Escape") {
+      setOpenList(false);
+    }
+  };
 
   const handleErrorName = () => {
     return name.split(".").reduce((acc, key) => acc?.[key], errors);
@@ -74,6 +121,15 @@ const Select = ({
   };
 
   useEffect(() => {
+    if (highlightedIndex >= 0 && optionRefs.current[highlightedIndex]) {
+      optionRefs.current[highlightedIndex]?.scrollIntoView({
+        block: "nearest",
+        behavior: "smooth",
+      });
+    }
+  }, [highlightedIndex]);
+
+  useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -117,14 +173,15 @@ const Select = ({
               </div>
             )}
             <div
-              className={`w-full rounded border h-[2.25rem]  border-gray-300 relative pr-8 ${
-                !!iconLeft ? "pl-12" : "pl-4"
-              } 
-                ${
-                  disabled ? "bg-gray-100" : "bg-white"
-                } cursor-pointer flex items-center text-gray font-light input`}
+              className={`w-full rounded border h-[2.25rem] border-gray-300 relative pr-8 
+    ${!!iconLeft ? "pl-12" : "pl-4"} 
+    ${disabled ? "bg-gray-100" : "bg-white"} 
+    cursor-pointer flex items-center text-gray font-light input`}
               onClick={handleOpenList}
               id={`${id}-base`}
+              tabIndex={0}
+              role="button"
+              onKeyDown={(e) => handleKeyDown(e, onChange)} // ✅ usa a função completa
             >
               {renderBaseValue(value)}
             </div>
@@ -147,8 +204,16 @@ const Select = ({
                 {items.map((item, index) => (
                   <div
                     key={index}
+                    ref={(el) => {
+                      optionRefs.current[index] = el;
+                    }}
                     onClick={() => handleSelectValue(item.value, onChange)}
-                    className="px-4 h-10 w-full flex items-center justify-between hover:bg-gray-100"
+                    className={`px-4 h-10 w-full flex items-center justify-between 
+                    ${
+                      index === highlightedIndex
+                        ? "bg-gray-200"
+                        : "hover:bg-gray-100"
+                    }`}
                   >
                     <p className="m-0 w-fit">{item.label}</p>
                     {value === item.value && (
