@@ -13,7 +13,7 @@ export default function AboutSection() {
               <span className=""> pode ser facilitado</span>
             </h2>
 
-            <div className="space-y-4 text-[#4A4A4A] leading-relaxed text-[0.9rem]">
+            <div className="space-y-4 text-[#4A4A4A] leading-relaxed text-[1rem]">
               <p>
                 A partilha de bens faz parte de um processo natural da vida. Com
                 o <strong className="text-gray-900">Partilha Online</strong> é

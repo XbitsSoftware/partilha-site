@@ -36,7 +36,7 @@ export default function FeaturesSection() {
     <section className="py-16 lg:py-24 bg-stone-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl lg:text-4xl font-medium	 text-[#380505] mb-4">
+          <h2 className="text-[30px] font-medium	 text-[#380505] mb-4">
             O que você pode fazer com o{" "}
             <span className="font-bold">Partilha Online</span>
           </h2>

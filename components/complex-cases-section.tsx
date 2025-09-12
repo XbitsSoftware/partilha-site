@@ -11,12 +11,12 @@ export default function ComplexCasesSection() {
         <div className="flex flex-col-reverse lg:grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Content */}
           <div>
-            <h2 className="text-3xl flex justify-center lg:justify-start lg:text-3xl font-bold text-[#380505] mb-6">
+            <h2 className="text-[30px] flex justify-center lg:justify-start font-bold text-[#380505] mb-6">
               Casos Complexos?
               <br />A ferramenta resolve
             </h2>
 
-            <div className="space-y-6 text-gray-700 leading-relaxed mb-8">
+            <div className="space-y-6 text-gray-700 text-[1rem] leading-relaxed mb-8">
               <p>
                 O sistema organiza automaticamente cenários desafiadores com
                 lógica jurídica.

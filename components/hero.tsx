@@ -96,7 +96,7 @@ export default function Hero() {
           <Link href="/planos">
             <Button
               size="lg"
-              className="bg-[#840C0C] hover:bg-red-800 mb-12 text-white w-fit px-4 py-3 text-[0.875rem] font-medium rounded-md"
+              className="bg-[#840C0C] hover:bg-red-800 mb-12 text-white w-fit px-4 py-3 text-[0.875rem] md:text-[1rem]  font-medium rounded-md"
             >
               {currentContent.buttonText}
             </Button>

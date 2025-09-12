@@ -46,7 +46,7 @@ export default function BenefitsSection() {
 
           {/* Texto e botão */}
           <div className="lg:col-span-3">
-            <h2 className="text-2xl lg:text-4xl text-[#EFD7B1] font-bold mb-8">
+            <h2 className="text-[1.875rem] text-[#EFD7B1] font-bold mb-8">
               Benefícios que transformam
               <br />
               seu dia a dia jurídico
@@ -58,7 +58,7 @@ export default function BenefitsSection() {
                   <div className="flex-shrink-0 w-6 h-6rounded-full flex items-center justify-center mt-1 md:mt-0">
                     <IconCheckWithCircle />
                   </div>
-                  <span className="text-[#FBF6EE] text-sm lg:text:lg leading-relaxed">
+                  <span className="text-[#FBF6EE] text-[1rem] leading-relaxed">
                     {benefit}
                   </span>
                 </li>

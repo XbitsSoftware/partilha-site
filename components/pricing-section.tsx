@@ -118,7 +118,7 @@ export default function PricingSection() {
                     </Button>
                     {/* <Button
                       onClick={() => setIsModalOpen(true)} // abre modal
-                      className="w-1/2 bg-[#840C0C] hover:bg-red-800 text-white py-3 px-6 rounded-md font-medium transition-colors duration-200"
+                      className="w-1/2 bg-[#840C0C] text-[1rem] hover:bg-red-800 text-white py-3 px-6 rounded-md font-medium transition-colors duration-200"
                       size="lg"
                     >
                       Contratar
@@ -164,7 +164,7 @@ export default function PricingSection() {
             </span>
             <div className="border-b border-gray-300 mb-4 mr-6"></div>
             <h2 className="text-2xl text-[#983131] font-medium mb-4 mr-6">
-              Nossas vendas iniciam no dia 15 de setembro.
+              Nossas vendas iniciam no dia 01 de outubro.
             </h2>
             <p className="text-gray-700 text-[1rem] mb-4 mr-6">
               Entre em contato conosco e garanta descontos exclusivos de
