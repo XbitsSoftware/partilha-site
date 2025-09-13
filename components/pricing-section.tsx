@@ -106,7 +106,7 @@ export default function PricingSection() {
                     ))}
                   </ul>
                   <div className="flex justify-start">
-                    <Button
+                    {/* <Button
                       onClick={() => {
                         setSelectedPlanIndex(index);
                         handleContratar(index);
@@ -115,14 +115,14 @@ export default function PricingSection() {
                       size="lg"
                     >
                       Contratar
-                    </Button>
-                    {/* <Button
+                    </Button> */}
+                    <Button
                       onClick={() => setIsModalOpen(true)} // abre modal
                       className="w-1/2 bg-[#840C0C] text-[1rem] hover:bg-red-800 text-white py-3 px-6 rounded-md font-medium transition-colors duration-200"
                       size="lg"
                     >
                       Contratar
-                    </Button> */}
+                    </Button>
                   </div>
                 </div>
               </div>
