@@ -30,7 +30,7 @@ export default function ExtraBenefitsSection() {
 
           {/* Content */}
           <div className="order-2 lg:order-1">
-            <h2 className="text-3xl lg:text-4xl font-medium flex justify-center lg:justify-start text-[#380505] mb-8">
+            <h2 className="text-[30px] font-medium flex justify-center lg:justify-start text-[#380505] mb-8">
               Benefícios Extras
             </h2>
 
@@ -43,7 +43,7 @@ export default function ExtraBenefitsSection() {
                       aria-hidden="true"
                     />
                   </div>
-                  <span className="text-[#4A4A4A] font-bold text-[1.1rem]">
+                  <span className="text-[#4A4A4A] font-bold text-[1rem]">
                     {benefit}
                   </span>
                 </li>

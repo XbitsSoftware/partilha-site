@@ -31,7 +31,7 @@ export default function ServicesSection() {
     <section className="py-16 lg:py-24 bg-stone-50" id="funcionalidades">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl lg:text-4xl font-medium	 text-[#380505] mb-4">
+          <h2 className="text-[30px] font-medium	 text-[#380505] mb-4">
             O que o{" "}
             <span className="text-[#380505] font-bold">Partilha Online</span>{" "}
             faz por você
@@ -51,10 +51,10 @@ export default function ServicesSection() {
                     aria-hidden="true"
                   />
                 </div>
-                <h3 className="text-xl justify-start items-start font-bold text-[#380505] mb-4">
+                <h3 className="text-[20px] justify-start items-start font-bold text-[#380505] mb-4">
                   {service.title}
                 </h3>
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-gray-600 text-[16px] leading-relaxed">
                   {service.description}
                 </p>
               </div>

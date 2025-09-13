@@ -22,7 +22,7 @@ export default function ProcessSection() {
     <section className="py-16 lg:py-24 bg-[#f9f5f0]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl lg:text-4xl font-medium text-[#654615] mb-4">
+          <h2 className="text-[30px] font-medium text-[#654615] mb-4">
             Como Funciona – Etapa por Etapa
           </h2>
         </div>
@@ -42,10 +42,10 @@ export default function ProcessSection() {
                   </div>
                 </div>
                 <div className="pl-16">
-                  <h3 className="text-lg pt-4 font-bold text-[#654615] mb-2">
+                  <h3 className="text-[20px] pt-4 font-bold text-[#654615] mb-2">
                     {step.title}
                   </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">
+                  <p className="text-gray-600 text-[16px] leading-relaxed">
                     {step.description}
                   </p>
                 </div>

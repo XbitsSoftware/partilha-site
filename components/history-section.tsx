@@ -21,11 +21,11 @@ export default function HistorySection() {
 
           {/* Texto - aparece depois no mobile */}
           <div className="lg:col-span-6 order-2 lg:order-1">
-            <h2 className="text-2xl lg:text-4xl font-bold text-[#380505] mb-8">
+            <h2 className="text-[1.875rem] font-bold text-[#380505] mb-8">
               Nossa história
             </h2>
 
-            <div className="space-y-6 text-[#4A4A4A] leading-relaxed text-[0.875rem]">
+            <div className="space-y-6 text-[#4A4A4A] leading-relaxed text-[1rem]">
               <p>
                 O <strong className="text-gray-600">Partilha Online</strong> foi
                 idealizado por advogados com vasta experiência na área, testado
