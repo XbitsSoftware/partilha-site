@@ -6,13 +6,10 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 export const UseCheckoutController = (planId: string) => {
-  const [plan, setPlan] = useState<null | {
-    id: string;
-    name: string;
-    price: string;
-    features: string[];
-    priceAnual: string;
-  }>(null);
+  const [plan, setPlan] = useState<any | null>(null);
+  const [plans, setPlans] = useState<any[]>([]);
+  const productId = "add7e59b-ab1c-4a6d-8811-d2188f232590";
+  const urlGatewayApi = "https://apihml.xgateway.com.br/api/";
   const [loading, setLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("CreditCard");
   const [couponValid, setCouponValid] = useState(false);
@@ -66,41 +63,10 @@ export const UseCheckoutController = (planId: string) => {
       },
       termsOfUse: false,
       productsInfo: false,
-      totalValue: plan?.price,
+      totalValue: plan?.price ?? "0.00",
     },
     resolver: zodResolver(formSchema),
   });
-
-  const plans = [
-    {
-      id: "2551e22f-32f7-444b-14fc-08ddeaf66fc6",
-      name: "Plano Básico",
-      price: "39,90",
-      features: ["1 usuário", "Até 10 pareceres por ano"],
-      priceAnual: "478,80",
-    },
-    {
-      id: "cf7803c3-6f35-465d-14fd-08ddeaf66fc6",
-      name: "Plano Essencial",
-      price: "69,90",
-      features: ["2 usuários", "Até 20 pareceres por ano"],
-      priceAnual: "838,80",
-    },
-    {
-      id: "ec547cbd-adcf-4009-14fe-08ddeaf66fc6",
-      name: "Plano Profissional",
-      price: "99,90",
-      features: ["5 usuários", "Até 30 pareceres por ano"],
-      priceAnual: "1198,80",
-    },
-    {
-      id: "58e67ec5-9370-4fa8-14ff-08ddeaf66fc6",
-      name: "Plano Corporativo",
-      price: "149,90",
-      features: ["7 usuários", "Até 50 pareceres por ano"],
-      priceAnual: "1798,80",
-    },
-  ];
 
   const estados = [
     { sigla: "AC", nome: "Acre" },
@@ -132,6 +98,17 @@ export const UseCheckoutController = (planId: string) => {
     { sigla: "TO", nome: "Tocantins" },
   ];
 
+  const fetchPlans = async () => {
+    try {
+      const result = await fetch(
+        `${urlGatewayApi}Plan/find_plan_by_product_id?productId=${productId}`
+      ).then((res) => res.json());
+
+      setPlans(result);
+    } catch (error) {
+      console.error("Erro ao buscar planos:", error);
+    }
+  };
   const handleSubmit = async (formData: any) => {
     hookForm.setValue("charge.billingType", paymentMethod);
     const validation = await hookForm.trigger();
@@ -255,6 +232,10 @@ export const UseCheckoutController = (planId: string) => {
   };
 
   const setValueInTotalValue = () => {
+    if (!plan) {
+      hookForm.setValue("totalValue", "0.00");
+      return;
+    }
     let value = plan?.priceAnual ?? "0";
 
     const numericValue = Number(
@@ -353,14 +334,16 @@ export const UseCheckoutController = (planId: string) => {
   }, []);
 
   useEffect(() => {
-    if (planId) {
-      const selectedPlan = plans.find((plan) => plan.id.toString() === planId);
+    if (planId && plans.length > 0) {
+      const selectedPlan = plans.find((p) => p.id === planId);
       if (selectedPlan) {
         setPlan(selectedPlan);
-      } else {
-        router.push("/planos");
       }
     }
+  }, [planId, plans]);
+
+  useEffect(() => {
+    fetchPlans();
   }, []);
 
   return {
