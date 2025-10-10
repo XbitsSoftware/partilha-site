@@ -236,8 +236,9 @@ export const UseCheckoutController = (planId: string) => {
       hookForm.setValue("totalValue", "0.00");
       return;
     }
-    let value = plan?.priceAnual ?? "0";
 
+    const value = String(plan?.price ?? "0");
+    console.log("value", value);
     const numericValue = Number(
       value.replace("R$", "").replace(/\./g, "").replace(",", ".")
     );
@@ -285,7 +286,7 @@ export const UseCheckoutController = (planId: string) => {
     console.log("Validando cupom:", couponCode);
     const code = couponCode.trim();
     if (code.length <= 13) {
-      hookForm.setValue("totalValue", plan?.priceAnual ?? "0.00");
+      hookForm.setValue("totalValue", plan?.price.toString() ?? "0.00");
       setCouponValid(false);
       setValueCoupon(0);
       return;
@@ -299,19 +300,15 @@ export const UseCheckoutController = (planId: string) => {
       const data = await response.json();
 
       if (data.result === "Valid") {
-        toast.success("Cupom aplicado com sucesso!");
-        hookForm.setValue("totalValue", data.valueForDiscount);
+        hookForm.setValue("totalValue", data.valueForDiscount.toString());
         setValueCoupon(data.valueForDiscount);
         setCouponValid(true);
       } else {
-        toast.error("Cupom inválido ou expirado.");
-        hookForm.setValue("totalValue", plan?.priceAnual ?? "0.00");
         setValueCoupon(0);
         setCouponValid(false);
       }
     } catch (error) {
       console.error("Erro ao validar cupom:", error);
-      hookForm.setValue("totalValue", plan?.priceAnual ?? "0.00");
       setValueCoupon(0);
       setCouponValid(false);
       toast.error("Erro ao validar cupom. Tente novamente mais tarde.");

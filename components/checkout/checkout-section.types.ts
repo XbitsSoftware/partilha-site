@@ -61,7 +61,7 @@ export const formSchema = z
       .boolean()
       .refine((value) => value === true, "Aceite os termos de uso"),
     productsInfo: z.boolean().optional(),
-    totalValue: z.string().min(1, "Total obrigatório"),
+    totalValue: z.string().optional(),
   })
   .superRefine((data, ctx) => {
     // Campos obrigatórios para cartão

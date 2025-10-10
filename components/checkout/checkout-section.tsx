@@ -456,8 +456,8 @@ export default function CheckoutSection({ id }: { id: string }) {
                         control={hookForm.control}
                         errors={hookForm.formState.errors}
                         name="totalValue"
-                        id="totalValue"
                         disabled
+                        id="totalValue"
                       />
                     </div>
                   </div>
@@ -492,8 +492,8 @@ export default function CheckoutSection({ id }: { id: string }) {
                         control={hookForm.control}
                         errors={hookForm.formState.errors}
                         name="totalValue"
-                        id="totalValue"
                         disabled
+                        id="totalValue"
                       />
                     </div>
                   </div>
