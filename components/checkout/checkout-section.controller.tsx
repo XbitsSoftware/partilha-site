@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import Modal from "../modalDefault/modalDefault";
 
 export const UseCheckoutController = (planId: string) => {
   const [plan, setPlan] = useState<any | null>(null);
@@ -14,6 +15,7 @@ export const UseCheckoutController = (planId: string) => {
   const [paymentMethod, setPaymentMethod] = useState("CreditCard");
   const [couponValid, setCouponValid] = useState(false);
   const [valueCoupon, setValueCoupon] = useState(0);
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const [pixData, setPixData] = useState<null | {
     qrCode: string;
     expirationDate: string;
@@ -186,6 +188,7 @@ export const UseCheckoutController = (planId: string) => {
       }
       // Se o pagamento for com cartão de credito
       if (formData.charge.billingType === "CreditCard" && res.ok) {
+        setIsOpenModal(true);
         toast.success(
           <div>
             <strong className="block text-lg font-medium">Sucesso!</strong>
@@ -351,6 +354,8 @@ export const UseCheckoutController = (planId: string) => {
     paymentMethod,
     pixData,
     couponValid,
+    isOpenModal,
+    setIsOpenModal,
     handleSubmit,
     unmask,
     handleTradePlan,

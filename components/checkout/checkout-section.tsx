@@ -18,6 +18,8 @@ import { EMask } from "@/app/enum/enum";
 import { UseCheckoutController } from "./checkout-section.controller";
 import { Loading } from "../loading/loading";
 import { ModalPix } from "../modalPix/modalPix";
+import Modal from "../modalDefault/modalDefault";
+import { useRouter } from "next/navigation";
 
 export default function CheckoutSection({ id }: { id: string }) {
   const {
@@ -28,6 +30,8 @@ export default function CheckoutSection({ id }: { id: string }) {
     paymentMethod,
     pixData,
     couponValid,
+    isOpenModal,
+    setIsOpenModal,
     handleTradePlan,
     handleSubmit,
     setPaymentMethod,
@@ -46,9 +50,25 @@ export default function CheckoutSection({ id }: { id: string }) {
           qrCode={pixData.qrCode}
           expirationDate={pixData.expirationDate}
           copyPaste={pixData.copyPaste}
-          onClose={() => setPixData(null)}
+          onClose={() => {
+            setPixData(null);
+            window.location.href = "/";
+          }}
         />
       )}
+      {isOpenModal && (
+        <Modal
+          isOpen={isOpenModal}
+          description="Acompanhe em seu e-mail os próximos passos."
+          onClick={() => {
+            setIsOpenModal(false);
+            window.location.href = "/";
+          }}
+          title="Sucesso!"
+          btnDescription="Fechar"
+        />
+      )}
+
       <main className="max-w-[1800px] mx-auto py-12 px-4">
         {loading && <Loading />}
         <div className="flex flex-col md:flex-row gap-8">
