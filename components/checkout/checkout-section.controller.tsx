@@ -10,7 +10,7 @@ export const UseCheckoutController = (planId: string) => {
   const [plan, setPlan] = useState<any | null>(null);
   const [plans, setPlans] = useState<any[]>([]);
   const productId = "add7e59b-ab1c-4a6d-8811-d2188f232590";
-  const urlGatewayApi = "https://apihml.xgateway.com.br/api/";
+  const urlGatewayApi = "https://api.xgateway.com.br/api/";
   const [loading, setLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("CreditCard");
   const [couponValid, setCouponValid] = useState(false);
