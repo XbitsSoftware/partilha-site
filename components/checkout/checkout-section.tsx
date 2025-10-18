@@ -21,7 +21,13 @@ import { ModalPix } from "../modalPix/modalPix";
 import Modal from "../modalDefault/modalDefault";
 import { useRouter } from "next/navigation";
 
-export default function CheckoutSection({ id }: { id: string }) {
+export default function CheckoutSection({
+  id,
+  couponCode,
+}: {
+  id: string;
+  couponCode?: string;
+}) {
   const {
     hookForm,
     estados,
@@ -38,7 +44,7 @@ export default function CheckoutSection({ id }: { id: string }) {
     setPixData,
     handleSearchZipCode,
     handleCouponValidate,
-  } = UseCheckoutController(id);
+  } = UseCheckoutController(id, couponCode);
   const onSubmit = async (data: any) => {
     await handleSubmit(data);
   };

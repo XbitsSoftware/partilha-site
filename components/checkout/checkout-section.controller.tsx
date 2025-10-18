@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Modal from "../modalDefault/modalDefault";
 
-export const UseCheckoutController = (planId: string) => {
+export const UseCheckoutController = (planId: string, couponCode?: string) => {
   const [plan, setPlan] = useState<any | null>(null);
   const [plans, setPlans] = useState<any[]>([]);
   const productId = "add7e59b-ab1c-4a6d-8811-d2188f232590";
@@ -241,7 +241,6 @@ export const UseCheckoutController = (planId: string) => {
     }
 
     const value = String(plan?.price ?? "0");
-    console.log("value", value);
     const numericValue = Number(
       value.replace("R$", "").replace(/\./g, "").replace(",", ".")
     );
@@ -286,7 +285,6 @@ export const UseCheckoutController = (planId: string) => {
   };
 
   const handleCouponValidate = async (couponCode: string) => {
-    console.log("Validando cupom:", couponCode);
     const code = couponCode.trim();
     if (code.length <= 13) {
       hookForm.setValue("totalValue", plan?.price.toString() ?? "0.00");
@@ -317,21 +315,19 @@ export const UseCheckoutController = (planId: string) => {
       toast.error("Erro ao validar cupom. Tente novamente mais tarde.");
     }
   };
+  const hasCouponInUrl = async (code: string) => {
+    if (code && code.length > 0) {
+      hookForm.setValue("couponCode", code);
+      await handleCouponValidate(code);
+    } else {
+      hookForm.setValue("couponCode", "");
+    }
+  };
 
   useEffect(() => {
     setValueInTotalValue();
     handleCouponValidate(hookForm.getValues("couponCode") ?? "");
   }, [paymentMethod, plan, couponValid]);
-
-  useEffect(() => {
-    fetch("https://api.ipify.org?format=json")
-      .then((res) => res.json())
-      .then((data) => {
-        hookForm.setValue("payment.remoteIp", data.ip);
-        console.log("IP obtido:", data);
-      })
-      .catch((err) => console.error("Erro ao obter IP:", err));
-  }, []);
 
   useEffect(() => {
     if (planId && plans.length > 0) {
@@ -343,7 +339,17 @@ export const UseCheckoutController = (planId: string) => {
   }, [planId, plans]);
 
   useEffect(() => {
+    fetch("https://api.ipify.org?format=json")
+      .then((res) => res.json())
+      .then((data) => {
+        hookForm.setValue("payment.remoteIp", data.ip);
+      })
+      .catch((err) => console.error("Erro ao obter IP:", err));
+  }, []);
+
+  useEffect(() => {
     fetchPlans();
+    hasCouponInUrl(couponCode || "");
   }, []);
 
   return {

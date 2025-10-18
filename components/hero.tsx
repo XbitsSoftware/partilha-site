@@ -11,6 +11,22 @@ import Link from "next/link";
 
 const carouselSlides = [
   {
+    title: "Olá participante da Fenalaw 2025! Esta aproveitando o evento?",
+    description: (
+      <>
+        Que tal aproveitar também{" "}
+        <strong className="">condições exclusivas</strong> para transformar sua
+        rotina jurídica com o Partilha Online? Realize seu pré-cadastro e receba
+        um cupom com até 20% de desconto! Oferta válida até 31/10/2025.
+      </>
+    ),
+    buttonText: "Pré-Cadastro",
+    imageDesktop: banner07,
+    imageMobile: banner07Mobile,
+    objectPosition: "top",
+    link: "https://api.whatsapp.com/send/?phone=5541988705498&text=Ol%C3%A1.+Quero+aproveitar+os+descontos+da+Fenalaw.%0A%0A%2A%2ANome+completo%3A%2A%2A%0A%2A%2ATelefone%3A%2A%2A%0A%2A%2AE-mail%3A%2A%2A&type=phone_number&app_absent=0", // <- AQUI está o link personalizado
+  },
+  {
     title: (
       <>
         <span className="text-[#E6C288]">Seu assistente </span>
@@ -55,7 +71,7 @@ export default function Hero() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % carouselSlides.length);
-    }, 7000);
+    }, 12000);
     return () => clearInterval(timer);
   }, []);
 
@@ -93,7 +109,11 @@ export default function Hero() {
           <p className="text-[0.875rem] font-normal md:text-lg text-[#F7F7F7] mb-8 leading-relaxed">
             {currentContent.description}
           </p>
-          <Link href="/planos">
+          <Link
+            href={currentContent.link || "/planos"}
+            target={currentContent.link ? "_blank" : "_self"}
+            rel="noopener noreferrer"
+          >
             <Button
               size="lg"
               className="bg-[#840C0C] hover:bg-red-800 mb-12 text-white w-fit px-4 py-3 text-[0.875rem] font-medium rounded-md"

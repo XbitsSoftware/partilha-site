@@ -5,13 +5,19 @@ import ExtraBenefitsSection from "@/components/extra-benefits-section";
 import Footer from "@/components/footer";
 import BenefitsWarningSection from "@/components/warning-section-benefits";
 
-export default function PlanosPage() {
+export default function PlanosPage({
+  searchParams,
+}: {
+  searchParams: { couponCode?: string };
+}) {
+  const couponCode = searchParams.couponCode;
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
       <main>
         <PlanosHero />
-        <PricingSection />
+        <PricingSection couponCode={couponCode} />
         <ExtraBenefitsSection />
         <BenefitsWarningSection />
       </main>
