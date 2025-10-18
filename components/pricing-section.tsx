@@ -3,21 +3,22 @@ import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
-  Divider,
-  IconLogoPartilha,
   IconLogoPartilhaWithText,
   IconXWithCircle,
 } from "@/public/extensions/icons";
 import Link from "next/link";
 
-export default function PricingSection() {
+export default function PricingSection({
+  couponCode,
+}: {
+  couponCode?: string;
+}) {
   const [selectedPlanIndex, setSelectedPlanIndex] = useState<number>(1);
   const [loading, setLoading] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false); // controla modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const productId = "add7e59b-ab1c-4a6d-8811-d2188f232590";
   const urlGatewayApi = "https://api.xgateway.com.br/api/";
   const router = useRouter();
-
   const [plans, setPlans] = useState([
     {
       id: "",
@@ -55,8 +56,16 @@ export default function PricingSection() {
 
   const handleContratar = (index: number) => {
     const selectedPlan = plans[index];
-
-    router.push(`/checkout/${selectedPlan.id}`);
+    if (couponCode) {
+      router.push(
+        `/checkout/${selectedPlan.id}?couponCode=${encodeURIComponent(
+          couponCode
+        )}`
+      );
+      return;
+    } else {
+      router.push(`/checkout/${selectedPlan.id}`);
+    }
   };
   if (loading) {
     return (
