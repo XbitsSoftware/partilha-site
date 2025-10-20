@@ -67,6 +67,7 @@ export default function PricingSection({
       router.push(`/checkout/${selectedPlan.id}`);
     }
   };
+  
   if (loading) {
     return (
       <div className="flex items-center justify-center h-[50vh]">
@@ -74,6 +75,7 @@ export default function PricingSection({
       </div>
     );
   }
+  
   return (
     <section className="py-16 lg:py-14 bg-[#FFFFFF]">
       <div className="max-w-[1400px] h-full mx-auto px-4 sm:px-6 lg:px-8">
@@ -132,7 +134,7 @@ export default function PricingSection({
                     </li>
                   </ul>
                   <div className="flex justify-start">
-                    {/* <Button
+                    <Button
                       onClick={() => {
                         setSelectedPlanIndex(index);
                         handleContratar(index);
@@ -141,14 +143,14 @@ export default function PricingSection({
                       size="lg"
                     >
                       Contratar
-                    </Button> */}
-                    <Button
-                      onClick={() => setIsModalOpen(true)} // abre modal
+                    </Button>
+                    {/* <Button
+                      onClick={handleContratar} // abre modal
                       className="w-1/2 bg-[#840C0C] text-[1rem] hover:bg-red-800 text-white py-3 px-6 rounded-md font-medium transition-colors duration-200"
                       size="lg"
                     >
                       Contratar
-                    </Button>
+                    </Button> */}
                   </div>
                 </div>
               </div>
@@ -172,41 +174,6 @@ export default function PricingSection({
           </Link>
         </div>
       </div>
-
-      {/* Modal */}
-      {isModalOpen && (
-        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white mx-4 pb-8 pl-12 pr-4 content-normal rounded-lg shadow-lg w-fit max-w-[500px] h-fit text-center">
-            <span className="flex items-end justify-end mt-3 mb-4 ">
-              <IconXWithCircle
-                height="3rem"
-                width="3rem"
-                className="cursor-pointer"
-                onClick={() => setIsModalOpen(false)}
-              />
-            </span>
-            <span className="flex items-center justify-center mb-4 mr-6">
-              <IconLogoPartilhaWithText height="8rem" width="8rem" />
-            </span>
-            <div className="border-b border-gray-300 mb-4 mr-6"></div>
-            <h2 className="text-2xl text-[#983131] font-medium mb-4 mr-6">
-              Nossas vendas iniciam no dia 20 de outubro.
-            </h2>
-            <p className="text-gray-700 text-[1rem] mb-4 mr-6">
-              Entre em contato conosco e garanta descontos exclusivos de
-              pré-vendas.
-            </p>
-            <Link href="https://wa.me/554188705498" target="_blank">
-              <Button
-                onClick={() => setIsModalOpen(false)}
-                className="bg-[#840C0C] mt-6 hover:bg-red-800 mr-6 text-white"
-              >
-                Entrar em contato
-              </Button>
-            </Link>
-          </div>
-        </div>
-      )}
     </section>
   );
 }
