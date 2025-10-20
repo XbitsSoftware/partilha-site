@@ -7,6 +7,8 @@ import WomanOffice from "@/public/images/woman-office.png";
 import WomanOfficeMobile from "@/public/images/woman-office-mobile.jpg";
 import banner07 from "@/public/images/banner07.jpg";
 import banner07Mobile from "@/public/images/banner07Mobile.jpg";
+import bannerFenallaw25 from "@/public/bannerFenallaw25Desktop.jpg"
+import bannerFenallaw25Mobile from "@/public/bannerFenallaw25Mobile.jpg"
 import Link from "next/link";
 
 const carouselSlides = [
@@ -21,8 +23,8 @@ const carouselSlides = [
       </>
     ),
     buttonText: "Pré-Cadastro",
-    imageDesktop: banner07,
-    imageMobile: banner07Mobile,
+    imageDesktop: bannerFenallaw25,
+    imageMobile: bannerFenallaw25Mobile,
     objectPosition: "top",
     link: "https://api.whatsapp.com/send/?phone=5541988705498&text=Ol%C3%A1.+Quero+aproveitar+os+descontos+da+Fenalaw.%0A%0A%2A%2ANome+completo%3A%2A%2A%0A%2A%2ATelefone%3A%2A%2A%0A%2A%2AE-mail%3A%2A%2A&type=phone_number&app_absent=0", // <- AQUI está o link personalizado
   },
