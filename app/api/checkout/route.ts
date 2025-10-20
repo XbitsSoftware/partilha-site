@@ -23,12 +23,19 @@ export async function POST(req: Request) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
-
-    const text = await res.text();
+    const text = res.status === 200 ? await res.text() : null;
 
     try {
-      const json = JSON.parse(text);
-      return NextResponse.json(json, { status: res.status });
+      if (res.status === 200 && text) {
+        const json = JSON.parse(text);
+        return NextResponse.json(json, { status: res.status });
+      } else {
+        const json = JSON.parse("{}");
+        return new NextResponse(json, {
+          status: 204,
+          headers: { "Content-Type": "text/plain" },
+        });
+      }
     } catch {
       return new NextResponse(text, {
         status: res.status,

@@ -155,7 +155,7 @@ export default function Footer() {
               <span className="text-[#5E0909]">|</span>
               <span className="mx-2">Termos de uso</span>{" "}
               <span className="text-[#5E0909]">|</span>{" "}
-              <span className="mx-2">Política de privacidade</span>
+              <a className="mx-2" href="politica-de-privacidade">Política de privacidade</a>
             </p>
 
             <div className="flex gap-4">
