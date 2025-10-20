@@ -12,10 +12,12 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
   const productId = "add7e59b-ab1c-4a6d-8811-d2188f232590";
   const urlGatewayApi = "https://api.xgateway.com.br/api/";
   const [loading, setLoading] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState("CreditCard");
+  const [paymentMethod, setPaymentMethod] = useState("Pix");
   const [couponValid, setCouponValid] = useState(false);
   const [valueCoupon, setValueCoupon] = useState(0);
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenModalCreditNotPayment, setIsOpenModalCreditNotPayment] =
+    useState(false);
   const [pixData, setPixData] = useState<null | {
     qrCode: string;
     expirationDate: string;
@@ -113,8 +115,6 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
   };
   const handleSubmit = async (formData: any) => {
     hookForm.setValue("charge.billingType", paymentMethod);
-    const validation = await hookForm.trigger();
-    if (!validation) return;
     const payload = {
       planId: planId,
       couponCode: formData.couponCode,
@@ -166,16 +166,26 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
   };
 
   const buyPlan = async (formData: any) => {
-    setLoading(true);
+    if (paymentMethod === "CreditCard") {
+      setIsOpenModalCreditNotPayment(true);
+      return;
+    }
+    const validation = await hookForm.trigger();
+    if (!validation) return;
+
     try {
+      setLoading(true);
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-
-      const data = await res.json();
-
+      let data: any = null;
+      if (res.status === 200) {
+        data = await res.json();
+      } else if (res.status === 204) {
+        data = res;
+      }
       if (!res.ok) {
         const errorMessage = data?.[0]?.value || "Erro desconhecido";
         toast.error(
@@ -200,7 +210,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
         return;
       }
 
-      // Se o pagamento for com piix
+      // Se o pagamento for com pix
       if (formData.charge.billingType === "Pix" && data.encodedImage) {
         toast.success(
           <div>
@@ -215,6 +225,18 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
           expirationDate: data.expirationDate,
           copyPaste: data.payload,
         });
+      } else if (formData.charge.billingType === "Pix" && data.status === 204) {
+        toast.success(
+          <div>
+            <strong className="block text-lg font-medium">Sucesso!</strong>
+            <span className="text-sm font-normal">
+              Pagamento realizado com sucesso! Acompanhe em seu e-mail os
+              próximos passos.
+            </span>
+          </div>
+        );
+        setPixData(null);
+        setIsOpenModal(true);
       }
     } catch (err) {
       toast.error("Erro ao enviar pagamento");
@@ -368,6 +390,8 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
     setPaymentMethod,
     setPixData,
     handleSearchZipCode,
+    isOpenModalCreditNotPayment,
+    setIsOpenModalCreditNotPayment,
     handleCouponValidate,
   };
 };
