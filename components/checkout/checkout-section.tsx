@@ -43,8 +43,6 @@ export default function CheckoutSection({
     setPaymentMethod,
     setPixData,
     handleSearchZipCode,
-    isOpenModalCreditNotPayment,
-    setIsOpenModalCreditNotPayment,
     handleCouponValidate,
   } = UseCheckoutController(id, couponCode);
   const onSubmit = async (data: any) => {
@@ -73,17 +71,6 @@ export default function CheckoutSection({
             window.location.href = "/";
           }}
           title="Sucesso!"
-          btnDescription="Fechar"
-        />
-      )}
-      {isOpenModalCreditNotPayment && (
-        <Modal
-          isOpen={isOpenModalCreditNotPayment}
-          description="Ainda não é possível processar pagamentos com cartão de crédito no momento. Por favor, tente novamente mais tarde ou escolha outro método de pagamento."
-          onClick={() => {
-            setIsOpenModalCreditNotPayment(false);
-          }}
-          title="Atenção!"
           btnDescription="Fechar"
         />
       )}
@@ -356,7 +343,7 @@ export default function CheckoutSection({
                 </div>
               </div>
 
-              {/* {paymentMethod === "CreditCard" && (
+              {paymentMethod === "CreditCard" && (
                 <div className="space-y-4">
                   <div className="grid grid-cols-12 gap-4">
                     <div className="col-span-12 md:col-span-6">
@@ -501,16 +488,8 @@ export default function CheckoutSection({
                     </div>
                   </div>
                 </div>
-              )} */}
-
-              {paymentMethod === "CreditCard" && (
-                <div className="p-4 border border-yellow-500 mt-6 rounded-md bg-yellow-50">
-                  <p className="text-black font-normal">
-                    No momento, os pagamentos com cartão de crédito não estão
-                    disponíveis. Por favor, escolha outro método de pagamento.
-                  </p>
-                </div>
               )}
+
               {paymentMethod === "Pix" && (
                 <div>
                   <div className="grid grid-cols-12 gap-4">
