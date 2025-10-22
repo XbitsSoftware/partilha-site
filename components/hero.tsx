@@ -19,7 +19,7 @@ const carouselSlides = [
         Que tal aproveitar também{" "}
         <strong className="">condições exclusivas</strong> para transformar sua
         rotina jurídica com o Partilha Online? Realize seu pré-cadastro e receba
-        um cupom com até 20% de desconto! Oferta válida até 31/10/2025.
+        um cupom de 10% de desconto! Oferta válida até 31/10/2025.
       </>
     ),
     buttonText: "Pré-Cadastro",

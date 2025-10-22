@@ -153,7 +153,7 @@ export default function Footer() {
                 © X-Bits - Todos os direitos reservados
               </span>{" "}
               <span className="text-[#5E0909]">|</span>
-              <span className="mx-2">Termos de uso</span>{" "}
+              <a className="mx-2" href="politica-de-privacidade">Termos de uso</a>
               <span className="text-[#5E0909]">|</span>{" "}
               <a className="mx-2" href="politica-de-privacidade">Política de privacidade</a>
             </p>
