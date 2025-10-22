@@ -13,7 +13,7 @@ export default function PricingSection({
 }: {
   couponCode?: string;
 }) {
-  const [selectedPlanIndex, setSelectedPlanIndex] = useState<number>(1);
+  const [selectedPlanIndex, setSelectedPlanIndex] = useState<number>(0);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const productId = "add7e59b-ab1c-4a6d-8811-d2188f232590";
@@ -92,6 +92,12 @@ export default function PricingSection({
                     : "border border-gray-200"
                 }`}
               >
+                {/* Header especial para o primeiro plano */}
+                {index === 0 && (
+                  <div className="bg-[#840C0C] text-white text-center py-2 px-4 rounded-t-lg -mt-8 -mx-8 mb-6">
+                    <span className="font-semibold text-sm">Oferta exclusiva da Fenalaw!</span>
+                  </div>
+                )}
                 <div className="text-start">
                   <h3 className="text-2xl font-bold text-[#380505] mb-6">
                     {plan.name}

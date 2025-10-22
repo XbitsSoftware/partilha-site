@@ -5,7 +5,7 @@ import { Section } from "@/components/section";
 import Header from "@/components/header";
 
 export const metadata = generateSEO({
-  title: "Política de Privacidade - XBits",
+  title: "Política de Privacidade - Partilha Online",
   description:
     "Saiba como tratamos seus dados e garantimos sua privacidade conforme a LGPD.",
   keywords: [
@@ -19,12 +19,21 @@ export const metadata = generateSEO({
 });
 
 const menuPoliticadePrivacidade = [
-  { label: "GLOSSÁRIO", href: "glossario" },
-  { label: "O USO DOS DADOS", href: "uso-dados" },
-  { label: "A POLÍTICA DO USO DE COOKIES", href: "cookies" },
-  { label: "O USO DE TECNOLOGIAS SIMILARES", href: "tecnologias" },
-  { label: "DIREITOS DO TITULAR", href: "direitos" },
-  { label: "CONTATO", href: "contato" },
+  { label: "01. Introdução", href: "introducao" },
+  { label: "02. Controladora e Encarregada (DPO)", href: "controladora" },
+  { label: "03. Definições essenciais (LGPD, art. 5º)", href: "definicoes" },
+  { label: "04. Fontes e formas de coleta", href: "fontes" },
+  { label: "05. Categorias de dados pessoais tratados", href: "categorias" },
+  { label: "06. Finalidades e bases legais", href: "finalidades" },
+  { label: "07. Cookies e tecnologias similares", href: "cookies" },
+  { label: "08. Compartilhamento e operadores", href: "compartilhamento" },
+  { label: "09. Transferência internacional de dados", href: "transferencia" },
+  { label: "10. Segurança da informação", href: "seguranca" },
+  { label: "11. Retenção e eliminação", href: "retencao" },
+  { label: "12. Direitos do titular e canais", href: "direitos" },
+  { label: "13. Dados de crianças e adolescentes", href: "menores" },
+  { label: "14. Alterações desta Política", href: "alteracoes" },
+  { label: "15. Contato", href: "contato" },
 ];
 
 export default function PoliticaPrivacidadePage() {
@@ -52,484 +61,351 @@ export default function PoliticaPrivacidadePage() {
 
           {/* Conteúdo */}
           <article className="col-span-12 md:col-span-9 lg:col-span-10 text-[#6F6F6F] space-y-16">
-            <section id="glossario">
+            <section id="introducao">
               <p>
-                Conheça parte a parte a nossa PPPD. <br />
-                Atualizada em 01.º de Julho de 2025.
+                Conheça parte a parte a nossa PPPD <br />
+                Última atualização: 20 de outubro de 2025
               </p>
               <br />
               <br />
               <h2 className="text-2xl font-bold text-[#983131] mb-4">
-                GLOSSÁRIO
+                01. Introdução
               </h2>
               <p className="">
-                Este tópico destina-se a esclarecer termos utilizados nesta
-                PPPD. Acrescenta-se que procuramos ao máximo adotar os termos
-                previstos no art. 5.º da Lei de Geral de Proteção de Dados –
-                LGPD, Lei n.º 13.709 de 2018, conforme a redação dada pela Lei
-                13.853/2019.
+              Esta Política de Privacidade descreve, de forma clara e objetiva, como a Partilha Online Ltda. ("Partilha Online" ou "Controladora") coleta, utiliza, armazena, compartilha e protege dados pessoais no contexto do aplicativo Partilha Online e de seus sites e serviços correlatos, em conformidade com a Lei nº 13.709/2018 (LGPD), o Marco Civil da Internet (Lei nº 12.965/2014) e demais normas aplicáveis.               </p>
+              <br />
+              <p>Ao utilizar o aplicativo ou nossos serviços, você declara ciência desta Política. Quando necessário, solicitaremos consentimento específico, informado e destacado. </p>
+            </section>
+
+            <section id="controladora">
+              <h2 className="text-2xl font-bold text-[#983131] mb-4">
+                02. Controladora e Encarregada (DPO)
+              </h2>
+              <p className="mb-4">
+                <strong>Controladora:</strong> Partilha Online Ltda.<br />
+                <strong>CNPJ: </strong>61.429.341/0001-71<br />
+                <strong>Endereço: </strong> Rua Dr. Manoel Pedro, nº 365, Conj. 504 - Curitiba/PR, CEP 80.035-030
               </p>
-              <br />
-              <h3 className="text-[#983131] font-bold">
-                1.A. Pessoas envolvidas
-              </h3>
-              <br />
               <p>
-                I - titular: pessoa natural a quem se refere os dados pessoais
-                que são objeto de tratamento. Geralmente, o titular dos dados é
-                o Usuário de nossos produtos e serviços, devendo ser pessoa
-                maior de 18 anos, com plena capacidade para aceitar e consentir
-                os termos apresentados nesta PPPD. Caso não se encaixe neste
-                perfil, requer-se que pessoas autorizadas e/ou responsáveis pelo
-                Titular expressem o seu aceite e consentimento. <br />
-                <br />
-                II - controlador: a quem compete decidir questões referentes ao
-                tratamento de dados pessoais. Nossos produtos e serviços podem
-                ter como controlador: <br /> <br /> - Quando os dados são
-                solicitados por terceiros/clientes da X-Bits, a X-Bits atua
-                apenas como operadora, coletando diretamente ou indiretamente os
-                dados do titular/usuário. Neste caso, considera-se controlador
-                aquele com quem o titular/usuário celebrou o contrato
-                originalmente;
-                <br />
-                <br />- Quando os dados são solicitados diretamente pela X-Bits,
-                a X-Bits atua como controladora e, muitas vezes, a operadora dos
-                dados do titular/usuário. Os dados coletados e motivos de coleta
-                são descritos nos Termos de Uso de cada produto ou serviço da
-                X-Bits;
-                <br />
-                <br /> III - operador: quem realiza o tratamento de dados
-                pessoais em nome do controlador – geralmente a X-Bits. <br />{" "}
-                <br /> IV - agentes de tratamento: o controlador e o operador.
-                <br />
-                <br /> V – encarregado ou Data Protection Officer (DPO): pessoa
-                física ou jurídica, indicada pelo controlador e operador para
-                atuar como canal de comunicação entre os agentes de tratamento,
-                os titulares dos dados e a Autoridade Nacional de Proteção de
-                Dados (ANPD). No tocante aos produtos e serviços prestados
-                diretamente pela X-Bits, o encarregado será identificado no
-                último tópico desta PPPD.{" "}
-              </p>
-              <br />
-              <h3 className="text-[#983131] font-bold">1.B. Tipos de dados </h3>
-              <br />
-              <p>
-                I - dado pessoal: informação que permite a identificação do
-                titular dos dados, tais como nome, CPF, telefone, e-mail,
-                endereço, ...;  <br />
-                II - dado pessoal sensível: dado pessoal sobre origem racial ou
-                étnica, convicção religiosa, opinião política, filiação a
-                sindicato ou a organização de caráter religioso, filosófico ou
-                político, dado referente à saúde ou à vida sexual, dado genético
-                ou biométrico, vinculado ao titular;  <br />
-                III - dado anonimizado: dado relativo ao titular que não possa
-                ser identificado, considerando a utilização de meios técnicos
-                razoáveis e disponíveis na ocasião de seu tratamento.
-              </p>
-              <br />
-              <h3 className="text-[#983131] font-bold">1.C. Sobre os dados </h3>
-              <br />
-              <p>
-                I - banco de dados: conjunto estruturado de dados pessoais,
-                estabelecido em um ou em vários locais, em suporte eletrônico ou
-                físico;  <br />
-                II - tratamento: toda operação realizada com dados pessoais,
-                como as que se referem a coleta, produção, recepção,
-                classificação, utilização, acesso, reprodução, transmissão,
-                distribuição, processamento, arquivamento, armazenamento,
-                eliminação, avaliação ou controle da informação, modificação,
-                comunicação, transferência, difusão ou extração;  <br />
-                III - bloqueio: suspensão temporária de qualquer operação de
-                tratamento, mediante guarda do dado pessoal ou do banco de
-                dados;  <br />
-                IV - eliminação: exclusão de dado ou de conjunto de dados
-                armazenados em banco de dados, independentemente do procedimento
-                empregado;  <br />V - uso compartilhado de dados: comunicação,
-                difusão, transferência internacional, interconexão de dados
-                pessoais ou tratamento compartilhado de bancos de dados pessoais
-                por órgãos e entidades públicas no cumprimento de suas
-                competências legais, ou entre esses e entes privados,
-                reciprocamente, com autorização específica, para uma ou mais
-                modalidades de tratamento permitidas por esses entes públicos,
-                ou entre entes privados.
-              </p>
-              <br />
-              <h3 className="text-[#983131] font-bold">1.D. Fonte de dados</h3>
-              <br />
-              <p>
-                Os dados são inseridos em nossos sistemas:
-                <br /> <br />
-                - voluntariamente pelos Usuários; ou
-                <br />- são submetidos por nossos clientes e parceiros, do qual
-                esperamos o respeito à proteção de dados e à legislação vigente,
-                além da observação das nossas Políticas de Privacidade e
-                consentimento do Titular para o compartilhamento; ou
-                <br /> - podem ser obtidos de forma sistematizadas, tal como as
-                ações de Cookies.
-                <br />
-                <br />
-                De todo o modo, a coleta dos dados geralmente ocorre por meio
-                de:
-                <br /> <br />I - sites gerenciados ou operados pela X-Bits em
-                nossos próprios domínios;
-                <br />
-                II - páginas comerciais e/ou redes sociais que envolvam
-                terceiros, como o Facebook, Instagram, LinkedIn, ou anúncios de
-                um site alheio; <br /> III – softwares e aplicativos
-                desenvolvidos pela X-Bits; <br /> IV - dados disponibilizados
-                por terceiros, que consistem em dados repassados pelos Clientes
-                para a utilização de produtos e serviços da X-Bits; <br /> V -
-                e-mails, mensagens de texto e outras mensagens eletrônicas
-                promovidas para a interação e comunicação eletrônica;
-                <br />
-                VI - formulários de registro, impressos ou digitais e similares.
-              </p>
-              <br />
-              <br />
-              <h3 className="text-[#983131] font-bold">
-                1.E. Tipo de informações coletada
-              </h3>
-              <br />
-              <p>
-                Geralmente, nos dados coletados constam informações sobre:{" "}
-                <br />
-                <br />
-                I – dados específicos, como nome completo, CPF, data de
-                nascimento, endereço, e-mail, detalhes de redes sociais, número
-                de telefone, entre outros;
-                <br />
-                II - login, tais como nome de usuário, CPF, senha, pergunta e
-                resposta de segurança, são armazenados para que se possa acessar
-                mais rapidamente o sistema e dar continuidade as transações
-                efetuadas com maior simplicidade.
-                <br />
-                III – dados espontâneos geradas pelo próprio Titular, quando
-                cria e compartilha matéria de natureza própria, tais como fotos
-                e vídeos, que apresentam nossos produtos e serviços;
-                <br />
-                IV - localização demográfica, interesses e satisfação, para
-                análise de características comportamentais, reconhecimento do
-                público-alvo, relatos de experiência para melhoria e
-                aperfeiçoamento dos produtos e serviços prestados;
-                <br />V - dados técnicos do dispositivo utilizado para acessar
-                nossos produtos e serviços, como exemplo, o endereço IP
-                (Internet Protocol), o tipo de sistema operacional e o tipo e a
-                versão do navegador da web;
-                <br />
-                VI - dados tecnológicas coletadas automaticamente por meio de
-                interações com os sites, aplicativos e softwares, como Cookies,
-                web beacons e via rastreamento de terceiros;
-                <br />
-                VII - dados financeiros e de pagamento quando efetuado um
-                pedido, uma compra, entre outros. Cabe esclarecer que os dados
-                de cartão de débito ou crédito, bem como as formas de pagamento,
-                não ficam no banco de dados ou servidores da X-Bits, ou seja,
-                não são gravados. Nossos prestadores de serviço que processam
-                pagamentos lidam com as informações financeiras em conformidade
-                com as leis, normas e os padrões de segurança aplicáveis;
-                <br />
-                VIII – dados que aduzam dados sensíveis requisitadas diretamente
-                pela X-Bits vem sempre acompanhada da finalidade pretendida e
-                solicitado o prévio e expresso consentimento do Titular;
-                <br />
-                IX – dados vinculados a menores de idade requisitadas
-                diretamente pela X-Bits são coletadas apenas em situações de
-                necessidade e com o consentimento expresso de um responsável.
+                <strong>Encarregada pelo tratamento de dados (DPO):</strong> Barbara Duarte da Silva<br />
+                <strong>E-mail:</strong> contato@partilhaonline.com.br<br />
+                <strong>Telefone:</strong> +55 (41) 98870-5498
               </p>
             </section>
 
-            <section id="uso-dados">
+            <section id="definicoes">
               <h2 className="text-2xl font-bold text-[#983131] mb-4">
-                O USO DOS DADOS
+                03. Definições essenciais (LGPD, art. 5º)
               </h2>
-              <p className="">
-                Para a X-Bits, seus dados são preciosos e devem ser resguardados
-                e mantidos em sigilo o máximo possível. Nos reservamos o direito
-                de compilar estas contas em uma conta única, quando for o caso.
+              <ul className="list-disc pl-6 space-y-2">
+                <li><strong>Titular:</strong> pessoa natural a quem se referem os dados pessoais.</li>
+                <li><strong>Dado pessoal:</strong> informação relacionada a pessoa natural identificada ou identificável.</li>
+                <li><strong>Dado pessoal sensível:</strong> dado sobre origem racial ou étnica, convicção religiosa, opinião política, filiação a sindicato ou a organização de caráter religioso, filosófico ou político, dado referente à saúde ou à vida sexual, dado genético ou biométrico.</li>
+                <li><strong>Controladora / Operadora:</strong> quem decide sobre o tratamento / quem realiza o tratamento em nome da controladora.</li>
+                <li><strong>Agentes de tratamento:</strong> controladora e operadora.</li>
+                <li><strong>Anonimização:</strong> dado relativo ao titular que não possa ser identificado, considerando meios técnicos razoáveis e disponíveis.</li>
+                <li><strong>Banco de dados:</strong> conjunto estruturado de dados pessoais, em suporte eletrônico ou físico.</li>
+                <li><strong>Tratamento:</strong> toda operação realizada com dados pessoais.</li>
+              </ul>
+              <p className="mt-4">
+                <strong>Observação: </strong>Em determinadas soluções, a Partilha Online poderá atuar como operadora, quando tratar dados em nome de clientes (p. ex., escritórios que inserem dados de seus clientes/partes). Nesses casos, o controlador é o cliente contratante, e a Partilha Online seguirá as instruções documentadas do controlador.
               </p>
-              <br />
-              <h3 className="text-[#983131] font-bold">2.A. Prazo</h3>
-              <br />
-              <p>
-                A coleta e manutenção dos dados em nossos servidores não é
-                obrigatória, existindo e persistindo enquanto for necessário
-                viabilizar a relação comercial, cumprir obrigações contratuais e
-                legais, ou engajarmos a nossa marca. Logo, os Dados Pessoais
-                serão armazenados pelo tempo necessário para alcançar as
-                finalidades ou para cumprir com obrigações legais aplicáveis. 
-                Os Dados Pessoais serão ainda gerenciados e operados por nossos
-                colaboradores e por sistemas de armazenamento e segurança.  O
-                Titular pode solicitar a eliminação de seus Dados Pessoais em
-                nossa base a qualquer momento. 
-              </p>
-              <br />
-              <h3 className="text-[#983131] font-bold">
-                2.B. Armazenamento e compartilhamento interno{" "}
-              </h3>
-              <br />
-              <p>
-                Armazenamos seus Dados Pessoais adotando medidas e protocolos de
-                segurança razoáveis a fim de prevenir acesso não autorizado.  
-                Seus Dados Pessoais podem ser acessados por nossos colaboradores
-                ou agentes autorizados, quando necessário e mediante propósitos
-                específicos. <br />  Desta forma, NUNCA forneça seus dados por
-                telefone ou e-mail. Na dúvida, entre em contato conosco. 
-                Relembramos que a transmissão de informação pela internet não é
-                completamente segura, não sendo possível garantir a segurança
-                dos dados durante transmissão por nossos sites/aplicativos. 
-              </p>
-              <br />
-              <h3 className="text-[#983131] font-bold">
-                2.C. Motivos para o compartilhamento de seus dados com terceiros
-              </h3>
-              <br />
-              <p>
-                O compartilhamento com terceiros ocorrerá quando necessário:
-                <br />
-                I - cumprir os termos de qualquer acordo ou os termos do nosso
-                site. 
-                <br /> II - cumprir obrigações dispostas em lei, regulamentações
-                de órgãos governamentais, sentenças e acordos, e/ou a pedido de
-                autoridades fiscais, Poder Judiciário, ou qualquer outra
-                autoridade competente; 
-                <br /> III - proteger interesse legítimo ou direitos,
-                privacidade, segurança ou propriedade, sejam dos nossos ou do
-                próprio Titular; 
-                <br /> IV -  por motivos legais ou fusão/aquisição, ou por
-                motivo de falência, mediante a existência de novos sucessores
-                legais. 
-              </p>
-              <br />
-              <h3 className="text-[#983131] font-bold">
-                2.D. Terceiros com os quais compartilhamos seus dados
-              </h3>
-              <br />
-              <p>
-                Além das entidades governamentais, para mantermos a regular
-                prestação do seu serviço, a X-Bits compartilhará seus Dados
-                Pessoais com:
-                <br />
-                <br />I - prestadores de serviços: entidades externas
-                selecionadas e autorizadas pela X-Bits para acessar seus Dados
-                Pessoais em tarefas específicas, sendo obrigados por contrato e
-                por leis a manter a confidencialidade e sigilo. Cabe esclarecer
-                que uma vez que dispomos de prestadores de serviços
-                internacionais, seus Dados Pessoais são transferidos para outros
-                países para o alcance das finalidades dos nossos negócios.
-                Existindo divergência de leis e requisitos quanto à proteção de
-                dados daqueles aplicados pelo Brasil, há de se ponderar entrar
-                as legislações dos países relacionados; <br />
-                II - agências de análise de crédito e/ou cobrança de
-                dívidas: terceiros autorizados pela X-Bits ou por seus Clientes
-                a verificar a situação do seu crédito, sendo autorizados a
-                efetuar cobrança de valores vencidos. <br />
-                III - empresas terceiras com finalidades de marketing: a X-Bits
-                não licencia ou vende seus Dados Pessoais para terceiros,
-                solicitando sempre o seu consentimento para as ações e
-                explicitando as finalidades para as quais se destinam.
-              </p>
+            </section>
+
+            <section id="fontes">
+              <h2 className="text-2xl font-bold text-[#983131] mb-4">
+                04. Fontes e formas de coleta
+              </h2>
+              <p className="mb-4">Coletamos dados pessoais por meio de:</p>
+              <ul className="list-disc pl-6 space-y-2">
+                <li><strong>Identificação e contato:</strong> nome, CPF, RG, data de nascimento, endereço, e-mail, telefone.</li>
+                <li><strong>Credenciais:</strong> login, CPF/e-mail, senha (hash), autenticação via Google/Apple.</li>
+                <li><strong>Dados profissionais:</strong> nº OAB, nome da sociedade, especialidade.</li>
+                <li><strong>Financeiros:</strong> faturamento e pagamentos (cartão via ASAAS Pagamentos, não armazenado pela Partilha Online).</li>
+                <li><strong>Clientes/patrimoniais:</strong> bens, valores, quotas e informações para cálculos e simulações.</li>
+                <li><strong>Navegação e técnicos:</strong> IP, dispositivo, sistema operacional, cookies, logs e localização aproximada.</li>
+                <li><strong>Sensíveis:</strong> somente quando estritamente necessários e com base legal adequada.</li>
+                <li><strong>Menores:</strong> apenas quando indispensável à finalidade jurídica e com consentimento do responsável.</li>
+              </ul>
+            </section>
+
+            <section id="categorias">
+              <h2 className="text-2xl font-bold text-[#983131] mb-4">
+                05. Categorias de dados pessoais tratados
+              </h2>
+              <ul className="list-disc pl-6 space-y-2">
+                <li><strong>Identificação e contato:</strong> nome, CPF, RG, data de nascimento, endereço, e-mail, telefone.</li>
+                <li><strong>Credenciais:</strong> login, CPF/e-mail, senha (hash), autenticação via Google/Apple.</li>
+                <li><strong>Dados profissionais:</strong> nº OAB, nome da sociedade, especialidade.</li>
+                <li><strong>Financeiros:</strong> faturamento e pagamentos (cartão via ASAAS Pagamentos, não armazenado pela Partilha Online).</li>
+                <li><strong>Clientes/patrimoniais:</strong> bens, valores, quotas e informações para cálculos e simulações.</li>
+                <li><strong>Navegação e técnicos:</strong> IP, dispositivo, sistema operacional, cookies, logs e localização aproximada.</li>
+                <li><strong>Sensíveis:</strong> somente quando estritamente necessários e com base legal adequada.</li>
+                <li><strong>Menores:</strong> apenas quando indispensável à finalidade jurídica e com consentimento do responsável.</li>
+              </ul>
+            </section>
+
+            <section id="finalidades">
+              <h2 className="text-2xl font-bold text-[#983131] mb-4">
+                06. Finalidades e bases legais
+              </h2>
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse border border-gray-300">
+                  <thead>
+                    <tr className="bg-gray-100">
+                      <th className="border border-gray-300 p-3 text-left">Finalidade</th>
+                      <th className="border border-gray-300 p-3 text-left">Base Legal (LGPD, art. 7º)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="border border-gray-300 p-3">Operar o aplicativo e gerenciar contas</td>
+                      <td className="border border-gray-300 p-3">Execução de contrato (V)</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-gray-300 p-3">Cálculos e simulações de partilhas/inventários</td>
+                      <td className="border border-gray-300 p-3">Execução de contrato (V) / Legítimo interesse (IX)</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-gray-300 p-3">Processar pagamentos e emitir notas</td>
+                      <td className="border border-gray-300 p-3">Execução de contrato (V) / Obrigação legal (II) / Proteção ao crédito (X)</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-gray-300 p-3">Suporte e comunicações operacionais</td>
+                      <td className="border border-gray-300 p-3">Execução de contrato (V) / Legítimo interesse (IX)</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-gray-300 p-3">Segurança, prevenção a fraudes, desempenho</td>
+                      <td className="border border-gray-300 p-3">Legítimo interesse (IX) / Proteção ao crédito (X)</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-gray-300 p-3">Cumprimento de obrigações legais e regulatórias</td>
+                      <td className="border border-gray-300 p-3">Obrigação legal (II)</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-gray-300 p-3">Marketing consentido</td>
+                      <td className="border border-gray-300 p-3">Consentimento (I)</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </section>
 
             <section id="cookies">
               <h2 className="text-2xl font-bold text-[#983131] mb-4">
-                A POLÍTICA DO USO DE COOKIES{" "}
+                07. Cookies e tecnologias similares
               </h2>
-              <p className="">
-                Cookies são arquivos amplamente utilizados para fazer com que
-                sites funcionem de forma mais produtiva e eficiente, fornecendo
-                uma experiência personalizada de acesso. Os Cookies podem ser
-                classificados de acordo com as suas características:
+              <p className="mb-4">
+                Utilizamos cookies e tecnologias equivalentes para lembrar suas preferências, manter sessões, medir performance e melhorar a segurança.
               </p>
-              <br />
-              <h3 className="text-[#983131] font-bold">I - Durabilidade: </h3>
-              <br />
-              <p>
-                1. Cookies de sessão, apagados quando você fecha o navegador de
-                internet. Ele é armazenado na memória temporária do computador e
-                não é retido depois que o navegador é encerrado. Os cookies de
-                sessão não coletam informações do seu computador. Eles
-                normalmente armazenam informações na forma de uma identificação
-                que não coleta dados pessoais do usuário; 
-                <br />
-                2. Cookies persistentes, que permanecem no navegador até expirar
-                (cookies persistentes são definidos com datas de expiração) ou
-                até você excluir. 
+              <p className="mb-4 text-[#C17C7C]" ><strong>Categorias:</strong></p>
+              <ul className="list-disc pl-6 space-y-2 mb-4">
+                <li><strong>Essenciais:</strong> necessários ao funcionamento do serviço.</li>
+                <li><strong>Funcionais:</strong> personalizam a experiência.</li>
+                <li><strong>Analíticos:</strong> medem uso e desempenho.</li>
+                <li><strong>Marketing:</strong> dependem de consentimento expresso.</li>
+              </ul>
+              <p className="mb-4">
+                Você pode gerenciar cookies em seu navegador, mas a desativação pode limitar funcionalidades.
               </p>
-              <br />
-              <h3 className="text-[#983131] font-bold">II - Necessidade: </h3>
-              <br />
-              <p>
-                1. Cookies essenciais para a navegação e utilização dos recursos
-                do site, não sendo possível se opor a este tratamento ou
-                desabilitá-lo;  <br />
-                2. Cookies de preferências podem ser gerenciados e desabilitados
-                nas configurações do seu navegador. Entretanto, alguns Cookies
-                são necessários para a utilização dos nossos produtos e
-                serviços. Dentre os 
+              <p className="mb-4 text-[#C17C7C]"><strong>Anexo I - Tabela de Cookies e SDKs Utilizados</strong></p>
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse border border-gray-300 text-sm">
+                  <thead>
+                    <tr className="bg-gray-100">
+                      <th className="border border-gray-300 p-2 text-left">Nome</th>
+                      <th className="border border-gray-300 p-2 text-left">Finalidade</th>
+                      <th className="border border-gray-300 p-2 text-left">Tipo</th>
+                      <th className="border border-gray-300 p-2 text-left">Base Legal</th>
+                      <th className="border border-gray-300 p-2 text-left">Prazo de Retenção</th>
+                      <th className="border border-gray-300 p-2 text-left">Fornecedor</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="border border-gray-300 p-2">_ga (Google Analytics)</td>
+                      <td className="border border-gray-300 p-2">Coletar estatísticas de uso e navegação</td>
+                      <td className="border border-gray-300 p-2">Analítico</td>
+                      <td className="border border-gray-300 p-2">Legítimo interesse (art. 7º, IX)</td>
+                      <td className="border border-gray-300 p-2">Duração da conta + 6 meses</td>
+                      <td className="border border-gray-300 p-2">Google LLC</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-gray-300 p-2">_gid (Google Analytics)</td>
+                      <td className="border border-gray-300 p-2">Identificar sessões e usuários (anon.)</td>
+                      <td className="border border-gray-300 p-2">Analítico</td>
+                      <td className="border border-gray-300 p-2">Legítimo interesse</td>
+                      <td className="border border-gray-300 p-2">5 anos após transação</td>
+                      <td className="border border-gray-300 p-2">Google LLC</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-gray-300 p-2">Intercom</td>
+                      <td className="border border-gray-300 p-2">Gestão de sessão e suporte ao usuário</td>
+                      <td className="border border-gray-300 p-2">Funcional</td>
+                      <td className="border border-gray-300 p-2">Execução de contrato</td>
+                      <td className="border border-gray-300 p-2">2 anos</td>
+                      <td className="border border-gray-300 p-2">Intercom, Inc</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-gray-300 p-2">asaas_token</td>
+                      <td className="border border-gray-300 p-2">Processar pagamentos e autenticação segura</td>
+                      <td className="border border-gray-300 p-2">Essencial</td>
+                      <td className="border border-gray-300 p-2">Execução de contrato</td>
+                      <td className="border border-gray-300 p-2">Até revogação do consentimento</td>
+                      <td className="border border-gray-300 p-2">ASAAS Pagamentos</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-gray-300 p-2">app_session</td>
+                      <td className="border border-gray-300 p-2">Manter sessão autenticada do usuário</td>
+                      <td className="border border-gray-300 p-2">Essencial</td>
+                      <td className="border border-gray-300 p-2">Execução de contrato</td>
+                      <td className="border border-gray-300 p-2">Até revogação do consentimento</td>
+                      <td className="border border-gray-300 p-2">Partilha Online</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-gray-300 p-2">marketing_tag</td>
+                      <td className="border border-gray-300 p-2">Exibir campanhas de marketing mediante consentimento</td>
+                      <td className="border border-gray-300 p-2">Marketing</td>
+                      <td className="border border-gray-300 p-2">Consentimento</td>
+                      <td className="border border-gray-300 p-2">Até revogação</td>
+                      <td className="border border-gray-300 p-2">Meta Platforms / Google Ads</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section id="compartilhamento">
+              <h2 className="text-2xl font-bold text-[#983131] mb-4">
+                08. Compartilhamento e operadores
+              </h2>
+              <p className="mb-4">
+                Compartilhamos dados apenas quando necessário e em conformidade com a LGPD.
               </p>
-              <br />
-              <h3 className="text-[#983131] font-bold">III – Origem: </h3>
-              <br />
+              <ul className="list-disc pl-6 space-y-2 mb-4">
+                <li><strong>ASAAS Pagamentos:</strong> processamento de transações financeiras;</li>
+                <li><strong>Microsoft Azure (Brasil):</strong> hospedagem e armazenamento;</li>
+                <li><strong>Fornecedores de tecnologia e suporte:</strong> e-mail, monitoramento, analytics e atendimento;</li>
+                <li><strong>Autoridades públicas:</strong> mediante obrigação legal.</li>
+              </ul>
+              <p>Todos os operadores contratados seguem cláusulas de confidencialidade e segurança.</p>
+            </section>
+
+            <section id="transferencia">
+              <h2 className="text-2xl font-bold text-[#983131] mb-4">
+                09. Transferência internacional de dados
+              </h2>
               <p>
-                1. Cookies de primeira parte são colocados e utilizados apenas
-                pela X-Bits e que mandam informações sobre o usuário; 
-                <br />
-                2. Cookies de terceiros são aqueles colocados em sites de
-                terceiros, que extraem informações quando se interage com eles,
-                como exemplo, os cookies de anúncios. Neste sentido, a X-Bits
-                pode colocar estes Cookies em sites de terceiros, bem como
-                nossos sites podem utilizar Cookies de terceiros, enviando
-                informação para companhias parceiras – como as redes sociais. 
+              A infraestrutura principal está no Brasil (Azure – região Brasil). Pode haver tratamento fora do país por provedores de apoio, mediante garantias contratuais (arts. 33–36 da LGPD) que assegurem proteção equivalente.               </p>
+            </section>
+
+            <section id="seguranca">
+              <h2 className="text-2xl font-bold text-[#983131] mb-4">
+                10. Segurança da informação
+              </h2>
+              <p className="mb-4">
+                Adotamos medidas técnicas e administrativas de proteção, incluindo:
+              </p>
+              <ul className="list-disc pl-6 space-y-2 mb-4">
+                <li>Criptografia de dados sensíveis;</li>
+                <li>Gestão de acessos e autenticação;</li>
+                <li>Monitoramento e auditoria de sistemas;</li>
+                <li>Backups e controle de versões.</li>
+              </ul>
+              <p className="mb-4">
+                Em caso de incidente relevante, notificaremos a ANPD e os titulares afetados.
+              </p>
+              <p>
+                <strong>Atenção:</strong> a Partilha Online nunca solicita senha por telefone, e-mail ou mensagem instantânea.
               </p>
             </section>
 
-            <section id="tecnologias">
+            <section id="retencao">
               <h2 className="text-2xl font-bold text-[#983131] mb-4">
-                O USO DE TECNOLOGIAS SIMILARES{" "}
+                11. Retenção e eliminação
               </h2>
-              <p className="">
-                Nossos sites utilizam tecnologias para rastreamento, arquivos de
-                registro e sinalizadores da web, conforme as nossas e suas
-                necessidades pessoais. Dentre eles, podemos destacar:
-              </p>
-              <br />
-              <p>
-                I - endereço de IP, que consiste em um número que identifica seu
-                computador todas as vezes que você se conecta na internet. O
-                registro do seu IP é coletado:  <br />
-                1. (i) por problemas técnicos de troubleshoot;
-                <br />
-                2. (ii) para manutenção da proteção e segurança do site;
-                <br />
-                3. (iii) para estudos sobre o modo que nossos sites são
-                utilizados; <br />
-                4. (iv) para melhor adaptar o acesso ao site às suas
-                necessidades.  
-              </p>
-              <br />
-              <p>
-                II - arquivos de registro que armazenam as atividades do site
-                anonimamente e coletam: <br />
-                1. (i) o tipo de navegador e o sistema do usuário; <br />
-                2. (ii) informações sobre a sessão do usuário (URL de origem,
-                data, hora e páginas visitadas, tempo de permanência);
-                <br />
-                3. (iii) outros dados de navegação ou de contagem de cliques.  
-              </p>
+              <p className="mb-4">
+              Os dados são mantidos pelo tempo necessário às finalidades desta Política e obrigações legais. Após esse prazo, são eliminados ou anonimizados de forma segura.               </p>
+              <p className="mb-4 text-[#C17C7C]"><strong>Tabela de Retenção de Dados</strong></p>
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse border border-gray-300">
+                  <thead>
+                    <tr className="bg-gray-100">
+                      <th className="border border-gray-300 p-3 text-left">Categoria</th>
+                      <th className="border border-gray-300 p-3 text-left">Prazo de Retenção</th>
+                      <th className="border border-gray-300 p-3 text-left">Base Legal</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="border border-gray-300 p-3">Dados de identificação e login</td>
+                      <td className="border border-gray-300 p-3">Duração da conta + 6 meses</td>
+                      <td className="border border-gray-300 p-3">Marco Civil, art. 15</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-gray-300 p-3">Dados financeiros</td>
+                      <td className="border border-gray-300 p-3">5 anos após transação</td>
+                      <td className="border border-gray-300 p-3">Código Civil / Obrigações fiscais</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-gray-300 p-3">Dados de suporte e comunicações</td>
+                      <td className="border border-gray-300 p-3">2 anos</td>
+                      <td className="border border-gray-300 p-3">Legítimo interesse</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-gray-300 p-3">Dados de marketing</td>
+                      <td className="border border-gray-300 p-3">Até revogação do consentimento</td>
+                      <td className="border border-gray-300 p-3">Consentimento</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-gray-300 p-3">Logs de acesso</td>
+                      <td className="border border-gray-300 p-3">6 meses</td>
+                      <td className="border border-gray-300 p-3">Marco Civil, art. 15</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </section>
 
             <section id="direitos">
               <h2 className="text-2xl font-bold text-[#983131] mb-4">
-                DIREITOS DO TITULAR
+                12. Direitos do titular e canais
               </h2>
-              <p className="">
-                Amparado pelos arts. 18 da LGPD, a X-Bits assegura ao titular o
-                direito de obter do controlador a qualquer momento e mediante
-                requisição: 
-              </p>
-              <br />
+              <p className="mb-4">O titular pode requerer:</p>
+              <ol className="list-decimal pl-6 space-y-2">
+                <li>Confirmação da existência e acesso aos dados;</li>
+                <li>Correção de dados incorretos;</li>
+                <li>Anonimização, bloqueio ou eliminação de dados desnecessários;</li>
+                <li>Portabilidade;</li>
+                <li>Informação sobre compartilhamento;</li>
+                <li>Revogação do consentimento.</li>
+              </ol>
+            </section>
+
+            <section id="menores">
+              <h2 className="text-2xl font-bold text-[#983131] mb-4">
+                13. Dados de crianças e adolescentes
+              </h2>
               <p>
-                I –  confirmar a existência de tratamento; 
-                <br />
-                II –  acessar, revisar e solicitar a correção de dados
-                incompletos, inexatos ou desatualizados. Sempre confira a sua
-                identidade (login e senha) antes de acessar ou alterar sua
-                conta, para prevenir acesso não autorizado. 
-                <br />
-                III –  solicitar a anonimização, bloqueio ou eliminação de dados
-                desnecessários, excessivos ou tratados em desconformidade com o
-                disposto na LGPD; 
-                <br />
-                IV –  requerer a portabilidade dos dados a outro fornecedor de
-                serviço ou produto, mediante requisição expressa, de acordo com
-                a regulamentação da autoridade nacional, observados os segredos
-                comercial e industrial;
-                <br />
-                V –  solicitar a eliminação dos dados pessoais tratados com o
-                consentimento do titular, exceto nas hipóteses previstas no art.
-                16 da LGPD;
-                <br />
-                VI –  solicitar informação das entidades públicas e privadas com
-                as quais o controlador realizou uso compartilhado de dados;
-                <br />
-                VII –  obter informação sobre a possibilidade de não fornecer
-                consentimento e sobre as consequências da negativa;
-                <br />
-                VIII –  requerer a revogação do consentimento, nos termos do §
-                5º do art. 8º da LGPD. 
-              </p>
-              <br />
+              O aplicativo destina-se a maiores de 18 anos. Dados de menores serão tratados apenas quando necessários, com consentimento do responsável e observância do melhor interesse do menor.               </p>
+            </section>
+
+            <section id="alteracoes">
+              <h2 className="text-2xl font-bold text-[#983131] mb-4">
+                14. Alterações desta Política
+              </h2>
               <p>
-                O art. 9º ainda assegura ao titular o direito ao acesso
-                facilitado às informações sobre o tratamento de seus dados, de
-                forma clara, adequada e ostensiva no que diz respeito à:
-              </p>
-              <br />
-              <p>
-                I - finalidade específica, forma e duração do tratamento,
-                observados os segredos comercial e industrial; 
-                <br />
-                II - identificação, informações de contato do controlador; 
-                <br />
-                III -  informações acerca do uso compartilhado de dados pelo
-                controlador e a finalidade; 
-                <br /> IV - responsabilidades dos agentes que realizarão o
-                tratamento. 
-              </p>
-              <br />
-              <p>
-                As medidas de segurança adotadas pela X-Bits são continuamente
-                monitoradas e revisadas de acordo com os avanços tecnológicos e
-                recursos organizacionais mais atuais. Entretanto, as proteções
-                perdem eficácia e não se aplicam a informações compartilhadas
-                pelo próprio Titular, ou mediante descuido deste, em áreas
-                públicas, como redes sociais. Do mesmo modo, a criação de
-                usuário e senha confidencial deve ser exclusiva, evitando-se
-                repetições em outras contas. <br /> Atente-se também quanto ao
-                uso de computador compartilhado ou público no que se refere à
-                opção de lembrar o ID de login e senha. Por fim, sempre se
-                certifique que você saiu da sua conta (“log out”) ao finalizar o
-                uso dos nossos sites, sistemas e aplicativos. 
-              </p>
+              A Política poderá ser atualizada a qualquer momento. A versão vigente será disponibilizada no site e no aplicativo. Mudanças relevantes poderão ser comunicadas por meios razoáveis (aviso no app/e-mail).               </p>
             </section>
 
             <section id="contato">
               <h2 className="text-2xl font-bold text-[#983131] mb-4">
-                CONTATO
+                15. Contato
               </h2>
-              <p className="">
-                Para exercer os seus direitos ou realizar perguntas, sugestões
-                ou reclamações sobre as práticas de privacidade adotadas pela
-                X-Bits, por favor, entre em contato conosco pelo formulário ou
-                por:
-              </p>
-              <br />
               <p>
-                E-mail: contato@xbits.com.br  <br />
-                Telefone (WhatsApp): +55 41 9.9615-6707 
-                <br />
-                Endereço : R. Zeila Moura dos Santos, n.º101 – Sala 1014 Cristo
-                Rei – Curitiba/PR – CEP. 80.050-605
-              </p>
-              <br />
-              <p>
-                Para o exercício de direitos, anexe uma prova da sua identidade
-                (documento de reconhecimento nacional com foto), ou forneça
-                elementos que comprovem a legitimidade para pedidos realizados
-                em seu nome. Qualquer informação de identificação só será
-                processada de acordo com as leis aplicáveis. 
-              </p>
-              <br />
-              <p>
-                Nos reservamos o direito de fazer alterações às nossas práticas
-                e a esta Política a qualquer tempo. Por favor, acesse-a
-                frequentemente para verificar quaisquer atualizações ou
-                mudanças. 
-              </p>
-              <br />
-              <p>
-                É um prazer tê-lo operando nossos sistemas, sites e aplicativos.
-                Estaremos sempre à sua disposição para melhor atendê-lo.
+                <strong>Encarregada (DPO):</strong> Barbara Duarte da Silva<br />
+                <strong>E-mail:</strong> contato@partilhaonline.com.br<br />
+                <strong>Telefone:</strong> +55 (41) 98870-5498
               </p>
             </section>
           </article>
