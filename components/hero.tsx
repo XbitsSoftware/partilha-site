@@ -7,8 +7,8 @@ import WomanOffice from "@/public/images/woman-office.png";
 import WomanOfficeMobile from "@/public/images/woman-office-mobile.jpg";
 import banner07 from "@/public/images/banner07.jpg";
 import banner07Mobile from "@/public/images/banner07Mobile.jpg";
-import bannerFenallaw25 from "@/public/bannerFenallaw25Desktop.jpg"
-import bannerFenallaw25Mobile from "@/public/bannerFenallaw25Mobile.jpg"
+import bannerFenallaw25 from "@/public/bannerFenallaw25Desktop.jpg";
+import bannerFenallaw25Mobile from "@/public/bannerFenallaw25Mobile.jpg";
 import Link from "next/link";
 
 const carouselSlides = [
@@ -73,7 +73,7 @@ export default function Hero() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % carouselSlides.length);
-    }, 12000);
+    }, 16000);
     return () => clearInterval(timer);
   }, []);
 
