@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Modal from "../modalDefault/modalDefault";
+import { useCepSearch } from "@/hooks/useCepSearch";
 
 export const UseCheckoutController = (planId: string, couponCode?: string) => {
+   const { searchCep, error: cepError } = useCepSearch();
    const [plan, setPlan] = useState<any | null>(null);
    const [plans, setPlans] = useState<any[]>([]);
    const productId = "add7e59b-ab1c-4a6d-8811-d2188f232590";
@@ -16,6 +18,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
    const [couponValid, setCouponValid] = useState(false);
    const [valueCoupon, setValueCoupon] = useState(0);
    const [isOpenModal, setIsOpenModal] = useState(false);
+   const [isCepValid, setIsCepValid] = useState(false);
    const [pixData, setPixData] = useState<null | {
       qrCode: string;
       expirationDate: string;
@@ -111,6 +114,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
          console.error("Erro ao buscar planos:", error);
       }
    };
+
    const handleSubmit = async (formData: any) => {
       hookForm.setValue("charge.billingType", paymentMethod);
       const payload = {
@@ -163,9 +167,25 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
       buyPlan(payload);
    };
 
+   const handleValidationForm = async () => {
+      const validationForm = await hookForm.trigger();
+      if (!validationForm) return false;
+
+      if (!isCepValid) {
+         toast.error("Por favor, insira um CEP válido para continuar.");
+         hookForm.setError("customer.address.zipCode", {
+            type: "custom",
+            message: "CEP inválido",
+         });
+         return false;
+      }
+
+      return true;
+   };
+
    const buyPlan = async (formData: any) => {
-      const validation = await hookForm.trigger();
-      if (!validation) return;
+      const isValid = await handleValidationForm();
+      if (!isValid) return;
 
       try {
          setLoading(true);
@@ -257,6 +277,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
    ) => {
       router.push("/planos");
    };
+
    const unmask = (value: string | undefined | null) => {
       if (!value) return "";
       return value.replace(/\D/g, "");
@@ -295,20 +316,31 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
       event: React.ChangeEvent<HTMLInputElement>
    ) => {
       const zipCode = unmask(event.target.value).trim();
-      try {
-         if (zipCode.length == 8) {
-            const response = await fetch(`/api/cep?cep=${zipCode}`);
-            const data = await response.json();
-            if (!data || !data.street) {
-               return;
-            }
-            hookForm.setValue("customer.address.city", data.city);
-            hookForm.setValue("customer.address.state", data.state);
-            hookForm.setValue("customer.address.street", data.street);
-            hookForm.setValue("customer.address.district", data.district);
-         }
-      } catch (error) {
-         console.error("Erro ao buscar CEP:", error);
+      hookForm.clearErrors("customer.address.zipCode");
+
+      if (zipCode.length !== 8) {
+         hookForm.setValue("customer.address.city", "");
+         hookForm.setValue("customer.address.state", "");
+         hookForm.setValue("customer.address.street", "");
+         hookForm.setValue("customer.address.district", "");
+         setIsCepValid(false);
+         return;
+      }
+
+      const data = await searchCep(zipCode);
+
+      if (data) {
+         hookForm.setValue("customer.address.city", data.localidade);
+         hookForm.setValue("customer.address.state", data.uf);
+         hookForm.setValue("customer.address.street", data.logradouro);
+         hookForm.setValue("customer.address.district", data.bairro);
+         setIsCepValid(true);
+      } else {
+         hookForm.setError("customer.address.zipCode", {
+            type: "custom",
+            message: "CEP inválido",
+         });
+         setIsCepValid(false);
       }
    };
 
@@ -343,6 +375,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
          toast.error("Erro ao validar cupom. Tente novamente mais tarde.");
       }
    };
+
    const hasCouponInUrl = async (code: string) => {
       if (code && code.length > 0) {
          hookForm.setValue("couponCode", code);
