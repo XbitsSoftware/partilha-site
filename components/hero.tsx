@@ -9,17 +9,43 @@ import banner07 from "@/public/images/banner07.jpg";
 import banner07Mobile from "@/public/images/banner07Mobile.jpg";
 import bannerFenallaw25 from "@/public/bannerFenallaw25Desktop.jpg";
 import bannerFenallaw25Mobile from "@/public/bannerFenallaw25Mobile.jpg";
+import bannerIBDFAMobile from "@/public/bannerIBDFAM25Mobile.png";
+import bannerIBDFADesktop from "@/public/bannerIBDFAM25Desktop.png";
 import Link from "next/link";
 
 const carouselSlides = [
   {
-    title: "Olá participante da Fenalaw 2025! Esta aproveitando o evento?",
+    title: "Estamos no IBDFAM 2025!",
     description: (
       <>
-        Que tal aproveitar também{" "}
-        <strong className="">condições exclusivas</strong> para transformar sua
-        rotina jurídica com o Partilha Online? Realize seu pré-cadastro e receba
-        um cupom de 10% de desconto! Oferta válida até 31/10/2025.
+        <span>
+          Apresentando soluções que transformam a rotina jurídica com
+          tecnologia, agilidade e precisão. Realize seu pré-cadastro e receba um
+          cupom com até
+          <strong> 10% de desconto!</strong>
+        </span>
+        <br />
+        <strong>Oferta válida até 31/10/2025.</strong>
+      </>
+    ),
+    buttonText: "Pré-Cadastro",
+    imageDesktop: bannerIBDFADesktop,
+    imageMobile: bannerIBDFAMobile,
+    objectPosition: "center",
+    link: "https://api.whatsapp.com/send/?phone=5541988705498&text=Ol%C3%A1.+Quero+aproveitar+os+descontos+da+IBDFAM.%0A%0A%2A%2ANome+completo%3A%2A%2A%0A%2A%2ATelefone%3A%2A%2A%0A%2A%2AE-mail%3A%2A%2A&type=phone_number&app_absent=0", // <- AQUI está o link personalizado
+  },
+  {
+    title: "A Fenalaw 2025 foi incrível!",
+    description: (
+      <>
+        <span>
+          E as condições especiais do <strong>Partilha Online</strong> continuam
+          por tempo limitado. Realize seu pré-cadastro e receba um cupom com até
+          <br />
+          <strong> 10% de desconto!</strong>
+        </span>
+        <br />
+        <strong>Oferta válida até 31/10/2025.</strong>
       </>
     ),
     buttonText: "Pré-Cadastro",

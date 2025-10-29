@@ -67,7 +67,7 @@ export default function PricingSection({
       router.push(`/checkout/${selectedPlan.id}`);
     }
   };
-  
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-[50vh]">
@@ -75,7 +75,7 @@ export default function PricingSection({
       </div>
     );
   }
-  
+
   return (
     <section className="py-16 lg:py-14 bg-[#FFFFFF]">
       <div className="max-w-[1400px] h-full mx-auto px-4 sm:px-6 lg:px-8">
@@ -86,7 +86,7 @@ export default function PricingSection({
             return (
               <div
                 key={index}
-                className={` rounded-lg p-8 shadow-lg relative transition-transform duration-200 ${
+                className={`flex flex-col justify-between rounded-lg p-8 shadow-lg relative transition-transform duration-200 ${
                   isSelected
                     ? "border-2 border-[#840C0C] scale-105 bg-[#840c0c18]"
                     : "border border-gray-200"
@@ -95,15 +95,18 @@ export default function PricingSection({
                 {/* Header especial para o primeiro plano */}
                 {index === 0 && (
                   <div className="bg-[#840C0C] text-white text-center py-2 px-4 rounded-t-lg -mt-8 -mx-8 mb-6">
-                    <span className="font-semibold text-sm">Oferta exclusiva da Fenalaw!</span>
+                    <span className="font-semibold text-sm">
+                      Oferta exclusiva da Fenalaw e IBDFAM!
+                    </span>
                   </div>
                 )}
-                <div className="text-start">
+
+                <div className="text-start flex-1">
                   <h3 className="text-2xl font-bold text-[#380505] mb-6">
                     {plan.name}
                   </h3>
                   <span
-                    className={` justify-start font-medium ${
+                    className={`justify-start font-medium ${
                       isSelected ? "text-[#983131]" : "text-[#7A7A7A]"
                     }`}
                   >
@@ -115,49 +118,39 @@ export default function PricingSection({
                       R$ {(plan.price / 12).toFixed(2)}
                     </span>
                   </div>
+
                   <span
-                    className={` justify-start font-medium ${
+                    className={`justify-start font-medium ${
                       isSelected ? "text-[#AC5757]" : "text-[#7A7A7A]"
                     }`}
                   >
-                    R$ {plan.price} /ano*
+                    R$ {plan.price} / {plan.planDetail.premiumBalance}{" "}
+                    pareceres*
                   </span>
 
-                  <ul className="space-y-4 mb-8 mt-4 pt-3  border-t border-[#CCCCCC]  text-left">
+                  <ul className="space-y-4 mb-8 mt-4 pt-3 border-t border-[#CCCCCC] text-left">
                     <li className="flex items-center gap-3">
                       <div className="w-1 h-1 bg-black rounded-full flex-shrink-0" />
                       <span className="text-gray-700 text-[0.85rem]">
                         {plan.planDetail.user}
-                        {plan.planDetail.user > 1 ? " usuários" : " usuário"}
-                      </span>
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <div className="w-1 h-1 bg-black rounded-full flex-shrink-0" />
-
-                      <span className="text-gray-700 text-[0.85rem]">
-                        Até {plan.planDetail.premiumBalance} pareceres por ano
+                        {plan.planDetail.user > 1 ? " usuários" : " usuário"}
                       </span>
                     </li>
                   </ul>
-                  <div className="flex justify-start">
-                    <Button
-                      onClick={() => {
-                        setSelectedPlanIndex(index);
-                        handleContratar(index);
-                      }}
-                      className="w-1/2 bg-[#840C0C] hover:bg-red-800 text-white py-3 px-6 rounded-md font-medium transition-colors duration-200"
-                      size="lg"
-                    >
-                      Contratar
-                    </Button>
-                    {/* <Button
-                      onClick={handleContratar} // abre modal
-                      className="w-1/2 bg-[#840C0C] text-[1rem] hover:bg-red-800 text-white py-3 px-6 rounded-md font-medium transition-colors duration-200"
-                      size="lg"
-                    >
-                      Contratar
-                    </Button> */}
-                  </div>
+                </div>
+
+                {/* Botão sempre fixado no fundo */}
+                <div className="flex justify-start pb-2 mt-auto">
+                  <Button
+                    onClick={() => {
+                      setSelectedPlanIndex(index);
+                      handleContratar(index);
+                    }}
+                    className="w-1/2 bg-[#840C0C] hover:bg-red-800 text-white py-3 px-6 rounded-md font-medium transition-colors duration-200"
+                    size="lg"
+                  >
+                    Contratar
+                  </Button>
                 </div>
               </div>
             );
