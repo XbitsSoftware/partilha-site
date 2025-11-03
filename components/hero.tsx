@@ -15,46 +15,6 @@ import Link from "next/link";
 
 const carouselSlides = [
   {
-    title: "Estamos no IBDFAM 2025!",
-    description: (
-      <>
-        <span>
-          Apresentando soluções que transformam a rotina jurídica com
-          tecnologia, agilidade e precisão. Realize seu pré-cadastro e receba um
-          cupom com até
-          <strong> 10% de desconto!</strong>
-        </span>
-        <br />
-        <strong>Oferta válida até 31/10/2025.</strong>
-      </>
-    ),
-    buttonText: "Pré-Cadastro",
-    imageDesktop: bannerIBDFADesktop,
-    imageMobile: bannerIBDFAMobile,
-    objectPosition: "center",
-    link: "https://api.whatsapp.com/send/?phone=5541988705498&text=Ol%C3%A1.+Quero+aproveitar+os+descontos+da+IBDFAM.%0A%0A%2A%2ANome+completo%3A%2A%2A%0A%2A%2ATelefone%3A%2A%2A%0A%2A%2AE-mail%3A%2A%2A&type=phone_number&app_absent=0", // <- AQUI está o link personalizado
-  },
-  {
-    title: "A Fenalaw 2025 foi incrível!",
-    description: (
-      <>
-        <span>
-          E as condições especiais do <strong>Partilha Online</strong> continuam
-          por tempo limitado. Realize seu pré-cadastro e receba um cupom com até
-          <br />
-          <strong> 10% de desconto!</strong>
-        </span>
-        <br />
-        <strong>Oferta válida até 31/10/2025.</strong>
-      </>
-    ),
-    buttonText: "Pré-Cadastro",
-    imageDesktop: bannerFenallaw25,
-    imageMobile: bannerFenallaw25Mobile,
-    objectPosition: "top",
-    link: "https://api.whatsapp.com/send/?phone=5541988705498&text=Ol%C3%A1.+Quero+aproveitar+os+descontos+da+Fenalaw.%0A%0A%2A%2ANome+completo%3A%2A%2A%0A%2A%2ATelefone%3A%2A%2A%0A%2A%2AE-mail%3A%2A%2A&type=phone_number&app_absent=0", // <- AQUI está o link personalizado
-  },
-  {
     title: (
       <>
         <span className="text-[#E6C288]">Seu assistente </span>
@@ -137,11 +97,7 @@ export default function Hero() {
           <p className="text-[0.875rem] font-normal md:text-lg text-[#F7F7F7] mb-8 leading-relaxed">
             {currentContent.description}
           </p>
-          <Link
-            href={currentContent.link || "/planos"}
-            target={currentContent.link ? "_blank" : "_self"}
-            rel="noopener noreferrer"
-          >
+          <Link href={"/planos"} target={"_self"} rel="noopener noreferrer">
             <Button
               size="lg"
               className="bg-[#840C0C] hover:bg-red-800 mb-12 text-white w-fit px-4 py-3 text-[0.875rem] md:text-[1rem]  font-medium rounded-md"
