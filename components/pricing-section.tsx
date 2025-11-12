@@ -82,7 +82,6 @@ export default function PricingSection({
         <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 gap-8 mb-12">
           {plans.map((plan, index) => {
             const isSelected = selectedPlanIndex === index;
-
             return (
               <div
                 key={index}
