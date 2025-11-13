@@ -85,7 +85,11 @@ export default function Header() {
             <Link
               href="https://calendar.app.google/Zm6FifWArGsMX1468"
               target="_blank"
-              className="bg-transparent hover:bg-[#840C0C] hover:text-white hover:border-[#840C0C] border border-[#FDECEC] text-[#FDECEC] px-6 py-2 text-sm font-medium rounded-md transition-colors duration-200"
+              className={`bg-transparent hover:bg-[#840C0C] hover:text-white hover:border-[#840C0C] border border-[#FDECEC] text-[#FDECEC] px-6 py-2 text-sm font-medium rounded-md transition-colors duration-200 ${
+                isAtTop
+                  ? "text-white hover:text-amber-200 focus:ring-offset-[#380505]"
+                  : "text-red-800 border-red-800 hover:text-amber-200 "
+              }`}
             >
               Agende uma demonstração
             </Link>
