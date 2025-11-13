@@ -23,7 +23,7 @@ const carouselSlides = [
         />
       </>
     ),
-    buttonText: "Pré cadastro",
+    buttonText: "Pré-Cadastro",
     imageDesktop: bannerBlackFridayDesktop,
     imageMobile: bannerBlackFridayMobile,
     buttonHref:
