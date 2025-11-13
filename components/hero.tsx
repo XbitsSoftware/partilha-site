@@ -7,13 +7,29 @@ import WomanOffice from "@/public/images/woman-office.png";
 import WomanOfficeMobile from "@/public/images/woman-office-mobile.jpg";
 import banner07 from "@/public/images/banner07.jpg";
 import banner07Mobile from "@/public/images/banner07Mobile.jpg";
-import bannerFenallaw25 from "@/public/bannerFenallaw25Desktop.jpg";
-import bannerFenallaw25Mobile from "@/public/bannerFenallaw25Mobile.jpg";
-import bannerIBDFAMobile from "@/public/bannerIBDFAM25Mobile.png";
-import bannerIBDFADesktop from "@/public/bannerIBDFAM25Desktop.png";
+import bannerBlackFridayDesktop from "@/public/Black-Friday.jpg";
+import bannerBlackFridayMobile from "@/public/Black-Friday - Mobile.jpg";
+import bannerBlackFriday from "@/public/Black-Friday-Text.png";
 import Link from "next/link";
 
 const carouselSlides = [
+  {
+    title: (
+      <>
+        <img
+          src={bannerBlackFriday.src}
+          alt="Black Friday"
+          className="w-52 md:w-72 h-auto object-cover rounded-md"
+        />
+      </>
+    ),
+    buttonText: "Pré cadastro",
+    imageDesktop: bannerBlackFridayDesktop,
+    imageMobile: bannerBlackFridayMobile,
+    buttonHref:
+      "https://wa.me/5541988705498?text=Ol%C3%A1!%20Quero%20participar%20do%20desconto%20de%20Black%20Friday%20do%20Partilha%20Online!",
+    buttonTarget: "_blank",
+  },
   {
     title: (
       <>
@@ -30,6 +46,7 @@ const carouselSlides = [
     imageDesktop: WomanOffice,
     imageMobile: WomanOfficeMobile,
     objectPosition: "center",
+    buttonHref: "/planos",
   },
   {
     title: "O futuro da divisão patrimonial já está à sua disposição",
@@ -38,6 +55,7 @@ const carouselSlides = [
     imageDesktop: banner07,
     imageMobile: banner07Mobile,
     objectPosition: "top",
+    buttonHref: "/planos",
   },
 ];
 
@@ -97,7 +115,11 @@ export default function Hero() {
           <p className="text-[0.875rem] font-normal md:text-lg text-[#F7F7F7] mb-8 leading-relaxed">
             {currentContent.description}
           </p>
-          <Link href={"/planos"} target={"_self"} rel="noopener noreferrer">
+          <Link
+            href={currentContent.buttonHref}
+            target={currentContent.buttonTarget ?? "_self"}
+            rel="noopener noreferrer"
+          >
             <Button
               size="lg"
               className="bg-[#840C0C] hover:bg-red-800 mb-12 text-white w-fit px-4 py-3 text-[0.875rem] md:text-[1rem]  font-medium rounded-md"
