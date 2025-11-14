@@ -78,7 +78,7 @@ export default function PricingSection({
 
   return (
     <section className="py-16 lg:py-14 bg-[#FFFFFF]">
-      <div className="max-w-[1400px] h-full mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1600px] h-full mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-3 2xl:grid-cols-5 md:grid-cols-2 sm:grid-cols-2 gap-8 mb-12">
           {plans.map((plan, index) => {
             const isSelected = selectedPlanIndex === index;
@@ -91,6 +91,13 @@ export default function PricingSection({
                     : "border border-gray-200"
                 }`}
               >
+                {index === 1 && (
+                  <div className="bg-[#840C0C] text-white text-center py-2 px-4 rounded-t-lg -mt-8 -mx-8 mb-6">
+                    <span className="font-semibold text-sm">
+                      Promoção por tempo limitado**
+                    </span>
+                  </div>
+                )}
                 <div className="text-start flex-1">
                   <h3 className="text-2xl font-bold text-[#380505] mb-6">
                     {plan.name}
