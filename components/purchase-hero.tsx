@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 export default function PurchaseHero({ id: planId }: { id: string }) {
    const productId = "add7e59b-ab1c-4a6d-8811-d2188f232590";
-   const urlGatewayApi = "https://api.xgateway.com.br/api/";
+   const urlGatewayApi = "https://apihml.xgateway.com.br/api/";
    const [plans, setPlans] = useState([
       {
          id: "",
