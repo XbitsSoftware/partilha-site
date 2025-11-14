@@ -79,7 +79,7 @@ export default function PricingSection({
   return (
     <section className="py-16 lg:py-14 bg-[#FFFFFF]">
       <div className="max-w-[1400px] h-full mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 gap-8 mb-12">
+        <div className="grid lg:grid-cols-3 2xl:grid-cols-5 md:grid-cols-2 sm:grid-cols-2 gap-8 mb-12">
           {plans.map((plan, index) => {
             const isSelected = selectedPlanIndex === index;
             return (

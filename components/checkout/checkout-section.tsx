@@ -318,27 +318,30 @@ export default function CheckoutSection({
                     Modelo de pagamento <span className="text-red-500">*</span>
                   </h4>
                   <div className="flex items-center gap-6">
-                    <label className="flex items-center gap-2">
-                      <input
-                        type="radio"
-                        name="paymentMethod"
-                        value="credit"
-                        checked={paymentMethod === "CreditCard"}
-                        onChange={() => setPaymentMethod("CreditCard")}
-                      />
-                      <span className="text-gray-800">Cartão de Crédito</span>
-                    </label>
-
-                    <label className="flex items-center gap-2">
-                      <input
-                        type="radio"
-                        name="paymentMethod"
-                        value="pix"
-                        checked={paymentMethod === "Pix"}
-                        onChange={() => setPaymentMethod("Pix")}
-                      />{" "}
-                      <span className="text-gray-800">Pix</span>
-                    </label>
+                    {plan?.card === true && (
+                      <label className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          value="credit"
+                          checked={paymentMethod === "CreditCard"}
+                          onChange={() => setPaymentMethod("CreditCard")}
+                        />
+                        <span className="text-gray-800">Cartão de Crédito</span>
+                      </label>
+                    )}
+                    {plan?.pix === true && (
+                      <label className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          value="pix"
+                          checked={paymentMethod === "Pix"}
+                          onChange={() => setPaymentMethod("Pix")}
+                        />
+                        <span className="text-gray-800">Pix</span>
+                      </label>
+                    )}
                   </div>
                 </div>
               </div>
