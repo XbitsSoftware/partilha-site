@@ -17,7 +17,7 @@ export default function PricingSection({
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const productId = "add7e59b-ab1c-4a6d-8811-d2188f232590";
-  const urlGatewayApi = "https://api.xgateway.com.br/api/";
+  const urlGatewayApi = "https://apihml.xgateway.com.br/api/";
   const router = useRouter();
   const [plans, setPlans] = useState([
     {
