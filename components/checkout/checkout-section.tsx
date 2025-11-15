@@ -85,17 +85,37 @@ export default function CheckoutSection({
                   <h2 className="text-[1.5rem] sm:text-[1.5rem] md:text-[1.25rem] lg:text-2xl font-bold mb-6 text-[#380505]">
                     {plan.name}
                   </h2>
-                  <div className="text-[#7A7A7A] mb-2">12x de</div>
-                  <div className="mb-3 ">
-                    <span className="text-[1.5rem] sm:text-[1.5rem] md:text-[1.7em] lg:text-3xl  font-bold text-[#380505]">
-                      R$ {(plan.price / 12).toFixed(2)}
-                    </span>
-                    <span className="text-gray-600 ml-2">/ mês</span>
+                  <div>
+                    {plan.card && plan.pix && (
+                      <>
+                        <div className="text-[#7A7A7A] mb-2">12x de</div>
+                        <div className="mb-3 ">
+                          <span className="text-[1.5rem] sm:text-[1.5rem] md:text-[1.7em] lg:text-3xl  font-bold text-[#380505]">
+                            R$ {(plan.price / 12).toFixed(2)}
+                          </span>
+                          <span className="text-gray-600 ml-2">/ mês</span>
+                        </div>
+                        <div className="mb-5 text-[0.85rem] font-bold text-[#A3A3A3]">
+                          <span className="">R$ {plan.price}</span>
+                          <span className="ml-2">/ ano*</span>
+                        </div>
+                      </>
+                    )}
+                    {!plan.card && plan.pix && (
+                      <>
+                        <div className="mb-3 ">
+                          <span className="text-[1.5rem] sm:text-[1.5rem] md:text-[1.7em] lg:text-3xl  font-bold text-[#380505]">
+                            R$ {plan.price.toFixed(2)}
+                          </span>
+                        </div>
+                        <div className="mb-5 text-[0.85rem] font-bold text-[#A3A3A3]">
+                          <span className="">R$ {plan.price.toFixed(2)}</span>
+                          <span className="ml-2">/ ano*</span>
+                        </div>
+                      </>
+                    )}
                   </div>
-                  <div className="mb-5 text-[0.85rem] font-bold text-[#A3A3A3]">
-                    <span className="">R$ {plan.price}</span>
-                    <span className="ml-2">/ ano*</span>
-                  </div>
+
                   <Divide className="w-full h-px bg-gray-300 mb-8" />
                   <ul className="space-y-3 mb-12 text-left">
                     <li className="flex items-center gap-3">
@@ -108,7 +128,11 @@ export default function CheckoutSection({
                     <li className="flex items-center gap-3">
                       <div className="w-2 h-2 bg-gray-400 rounded-full flex-shrink-0"></div>
                       <span className="text-gray-700 text-[0.85rem] sm:text-[1rem] md:text-[0.75rem] lg:text-[1rem]">
-                        Até {plan.planDetail.premiumBalance} pareceres por ano
+                        Até {plan.planDetail.premiumBalance}{" "}
+                        {plan.planDetail.premiumBalance === 1
+                          ? "parecer"
+                          : "pareceres"}{" "}
+                        por ano
                       </span>
                     </li>
                   </ul>

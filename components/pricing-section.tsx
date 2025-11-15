@@ -27,6 +27,8 @@ export default function PricingSection({
       description: "",
       cycle: "",
       active: true,
+      card: false,
+      pix: false,
       productId: "",
       planDetail: {
         eLimitation: "",
@@ -99,30 +101,50 @@ export default function PricingSection({
                   </div>
                 )}
                 <div className="text-start flex-1">
-                  <h3 className="text-2xl font-bold text-[#380505] mb-6">
-                    {plan.name}
-                  </h3>
-                  <span
-                    className={`justify-start font-medium ${
-                      isSelected ? "text-[#983131]" : "text-[#7A7A7A]"
-                    }`}
-                  >
-                    12x de
-                  </span>
+                  {plan.card && plan.pix && (
+                    <div>
+                      <h3 className="text-2xl font-bold text-[#380505] mb-6">
+                        {plan.name}
+                      </h3>
+                      <span
+                        className={`justify-start font-medium ${
+                          isSelected ? "text-[#983131]" : "text-[#7A7A7A]"
+                        }`}
+                      >
+                        12x de
+                      </span>
 
-                  <div className="mb-2 mt-2">
-                    <span className="lg:text-4xl text-2xl md:text-3xl font-bold text-[#380505]">
-                      R$ {(plan.price / 12).toFixed(2)}
-                    </span>
-                  </div>
+                      <div className="mb-2 mt-2">
+                        <span className="lg:text-4xl text-2xl md:text-3xl font-bold text-[#380505]">
+                          R$ {(plan.price / 12).toFixed(2)}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                  {!plan.card && plan.pix && (
+                    <div>
+                      <h3 className="text-2xl font-bold text-[#380505] mb-6">
+                        {plan.name}
+                      </h3>
 
+                      <div className="mb-6 mt-10">
+                        <span className="lg:text-4xl text-2xl md:text-3xl font-bold text-[#380505]">
+                          R$ {plan.price.toFixed(2)}
+                        </span>
+                      </div>
+                    </div>
+                  )}
                   <span
                     className={`justify-start font-medium ${
                       isSelected ? "text-[#AC5757]" : "text-[#7A7A7A]"
                     }`}
                   >
-                    R$ {plan.price} / {plan.planDetail.premiumBalance}{" "}
-                    pareceres*
+                    R$ {plan.price.toFixed(2)} /{" "}
+                    {plan.planDetail.premiumBalance}{" "}
+                    {plan.planDetail.premiumBalance === 1
+                      ? "parecer"
+                      : "pareceres"}{" "}
+                    *
                   </span>
 
                   <ul className="space-y-4 mb-8 mt-4 pt-3 border-t border-[#CCCCCC] text-left">
