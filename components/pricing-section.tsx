@@ -17,7 +17,7 @@ export default function PricingSection({
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const productId = "add7e59b-ab1c-4a6d-8811-d2188f232590";
-  const urlGatewayApi = "https://api.xgateway.com.br/api/";
+  const urlGatewayApi = "https://apihml.xgateway.com.br/api/";
   const router = useRouter();
   const [plans, setPlans] = useState([
     {
@@ -27,6 +27,8 @@ export default function PricingSection({
       description: "",
       cycle: "",
       active: true,
+      card: false,
+      pix: false,
       productId: "",
       planDetail: {
         eLimitation: "",
@@ -78,8 +80,8 @@ export default function PricingSection({
 
   return (
     <section className="py-16 lg:py-14 bg-[#FFFFFF]">
-      <div className="max-w-[1400px] h-full mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 gap-8 mb-12">
+      <div className="max-w-[1600px] h-full mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-3 2xl:grid-cols-5 md:grid-cols-2 sm:grid-cols-2 gap-8 mb-12">
           {plans.map((plan, index) => {
             const isSelected = selectedPlanIndex === index;
             return (
@@ -91,31 +93,58 @@ export default function PricingSection({
                     : "border border-gray-200"
                 }`}
               >
-                <div className="text-start flex-1">
-                  <h3 className="text-2xl font-bold text-[#380505] mb-6">
-                    {plan.name}
-                  </h3>
-                  <span
-                    className={`justify-start font-medium ${
-                      isSelected ? "text-[#983131]" : "text-[#7A7A7A]"
-                    }`}
-                  >
-                    12x de
-                  </span>
-
-                  <div className="mb-2 mt-2">
-                    <span className="lg:text-4xl text-2xl md:text-3xl font-bold text-[#380505]">
-                      R$ {(plan.price / 12).toFixed(2)}
+                {index === 1 && (
+                  <div className="bg-[#840C0C] text-white text-center py-2 px-4 rounded-t-lg -mt-8 -mx-8 mb-6">
+                    <span className="font-semibold text-sm">
+                      Promoção por tempo limitado**
                     </span>
                   </div>
+                )}
+                <div className="text-start flex-1">
+                  {plan.card && plan.pix && (
+                    <div>
+                      <h3 className="text-2xl font-bold text-[#380505] mb-6">
+                        {plan.name}
+                      </h3>
+                      <span
+                        className={`justify-start font-medium ${
+                          isSelected ? "text-[#983131]" : "text-[#7A7A7A]"
+                        }`}
+                      >
+                        12x de
+                      </span>
 
+                      <div className="mb-2 mt-2">
+                        <span className="lg:text-4xl text-2xl md:text-3xl font-bold text-[#380505]">
+                          R$ {(plan.price / 12).toFixed(2)}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                  {!plan.card && plan.pix && (
+                    <div>
+                      <h3 className="text-2xl font-bold text-[#380505] mb-6">
+                        {plan.name}
+                      </h3>
+
+                      <div className="mb-6 mt-10">
+                        <span className="lg:text-4xl text-2xl md:text-3xl font-bold text-[#380505]">
+                          R$ {plan.price.toFixed(2)}
+                        </span>
+                      </div>
+                    </div>
+                  )}
                   <span
                     className={`justify-start font-medium ${
                       isSelected ? "text-[#AC5757]" : "text-[#7A7A7A]"
                     }`}
                   >
-                    R$ {plan.price} / {plan.planDetail.premiumBalance}{" "}
-                    pareceres*
+                    R$ {plan.price.toFixed(2)} /{" "}
+                    {plan.planDetail.premiumBalance}{" "}
+                    {plan.planDetail.premiumBalance === 1
+                      ? "parecer"
+                      : "pareceres"}{" "}
+                    *
                   </span>
 
                   <ul className="space-y-4 mb-8 mt-4 pt-3 border-t border-[#CCCCCC] text-left">
