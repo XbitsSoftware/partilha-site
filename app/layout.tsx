@@ -5,6 +5,7 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import { IconAtentionToast, IconSucessToast } from "@/public/extensions/icons";
 import { Analytics } from "@vercel/analytics/next";
+import Script from "next/script";
 
 const inter = Roboto({ subsets: ["latin"] });
 
@@ -86,10 +87,22 @@ export default function RootLayout({
       <head>
         <meta name="theme-color" content="#92400e" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {/* Google Ads Tag */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-17724676914"
+          strategy="afterInteractive"
+        />
+        <Script id="google-ads" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-17724676914');
+          `}
+        </Script>
       </head>
       <body className={inter.className}>
         {children}
-
         <Toaster
           position="top-right"
           toastOptions={{
