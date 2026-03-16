@@ -7,14 +7,14 @@ export async function POST(req: Request) {
       let apiUrl = "";
       if (body.charge.billingType === "CreditCard") {
          apiUrl =
-            "https://api.xgateway.com.br/api/Customer/signup_payment_with_card";
+            "https://apihml.xgateway.com.br/api/Customer/signup_payment_with_card";
       } else if (body.charge.billingType === "Pix") {
          apiUrl =
-            "https://api.xgateway.com.br/api/Customer/signup_payment_with_pix";
+            "https://apihml.xgateway.com.br/api/Customer/signup_payment_with_pix";
       } else {
          return NextResponse.json(
             { error: "Tipo de pagamento inválido" },
-            { status: 400 }
+            { status: 400 },
          );
       }
 
@@ -46,7 +46,7 @@ export async function POST(req: Request) {
       console.error("Erro geral:", error);
       return NextResponse.json(
          { error: "Erro ao processar requisição" },
-         { status: 500 }
+         { status: 500 },
       );
    }
 }
@@ -63,11 +63,11 @@ export async function GET(req: Request) {
       if (!code || !productId || !planId || !billingType) {
          return NextResponse.json(
             { error: "Parâmetros obrigatórios ausentes" },
-            { status: 400 }
+            { status: 400 },
          );
       }
 
-      const apiUrl = `https://api.xgateway.com.br/api/Coupon/validate_coupon?Code=${code}&ProductId=${productId}&PlanId=${planId}&BillingType=${billingType}`;
+      const apiUrl = `https://apihml.xgateway.com.br/api/Coupon/validate_coupon?Code=${code}&ProductId=${productId}&PlanId=${planId}&BillingType=${billingType}`;
 
       const res = await fetch(apiUrl, {
          method: "GET",
@@ -81,7 +81,7 @@ export async function GET(req: Request) {
       console.error("Erro geral:", error);
       return NextResponse.json(
          { error: "Erro ao processar validação do cupom" },
-         { status: 500 }
+         { status: 500 },
       );
    }
 }

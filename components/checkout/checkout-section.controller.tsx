@@ -12,7 +12,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
    const [plan, setPlan] = useState<any | null>(null);
    const [plans, setPlans] = useState<any[]>([]);
    const productId = "add7e59b-ab1c-4a6d-8811-d2188f232590";
-   const urlGatewayApi = "https://api.xgateway.com.br/api/";
+   const urlGatewayApi = "https://apihml.xgateway.com.br/api/";
    const [loading, setLoading] = useState(false);
    const [paymentMethod, setPaymentMethod] = useState("CreditCard");
    const [couponValid, setCouponValid] = useState(false);
@@ -106,7 +106,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
    const fetchPlans = async () => {
       try {
          const result = await fetch(
-            `${urlGatewayApi}Plan/find_plan_by_product_id?productId=${productId}`
+            `${urlGatewayApi}Plan/find_plan_by_product_id?productId=${productId}`,
          ).then((res) => res.json());
 
          setPlans(result);
@@ -208,7 +208,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
                      Atenção!
                   </strong>
                   <span className="text-sm font-normal">{errorMessage}</span>
-               </div>
+               </div>,
             );
             return;
          }
@@ -223,7 +223,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
                   <span className="text-sm font-normal">
                      Acompanhe em seu e-mail os próximos passos.
                   </span>
-               </div>
+               </div>,
             );
             return;
          }
@@ -239,7 +239,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
                      Após o pagamento, acompanhe em seu e-mail os próximos
                      passos.
                   </span>
-               </div>
+               </div>,
             );
             setPixData({
                qrCode: data.encodedImage,
@@ -259,7 +259,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
                      Pagamento realizado com sucesso! Acompanhe em seu e-mail os
                      próximos passos.
                   </span>
-               </div>
+               </div>,
             );
             setPixData(null);
             setIsOpenModal(true);
@@ -273,7 +273,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
    };
 
    const handleTradePlan: (e: React.FormEvent) => void = (
-      e: React.FormEvent
+      e: React.FormEvent,
    ) => {
       router.push("/planos");
    };
@@ -291,7 +291,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
 
       const value = String(plan?.price ?? "0");
       const numericValue = Number(
-         value.replace("R$", "").replace(/\./g, "").replace(",", ".")
+         value.replace("R$", "").replace(/\./g, "").replace(",", "."),
       );
 
       if (isNaN(numericValue)) {
@@ -313,7 +313,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
    };
 
    const handleSearchZipCode = async (
-      event: React.ChangeEvent<HTMLInputElement>
+      event: React.ChangeEvent<HTMLInputElement>,
    ) => {
       const zipCode = unmask(event.target.value).trim();
       hookForm.clearErrors("customer.address.zipCode");
@@ -355,7 +355,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
 
       try {
          const response = await fetch(
-            `/api/checkout?Code=${code}&ProductId=add7e59b-ab1c-4a6d-8811-d2188f232590&PlanId=${plan?.id}&BillingType=${paymentMethod}`
+            `/api/checkout?Code=${code}&ProductId=add7e59b-ab1c-4a6d-8811-d2188f232590&PlanId=${plan?.id}&BillingType=${paymentMethod}`,
          );
 
          const data = await response.json();
