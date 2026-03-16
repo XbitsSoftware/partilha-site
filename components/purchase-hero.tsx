@@ -1,44 +1,36 @@
 import Image from "next/image";
 import womanOffice from "@/public/images/woman-office.png";
 import womanOfficeMobile from "@/public/images/woman-office-mobile.jpg";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { use } from "react";
+
+type PlanDetail = {
+   eLimitation: string;
+   premiumBalance: number;
+   user: number;
+};
+
+type PlanDto = {
+   id: string;
+   name: string;
+   price: number;
+   description: string;
+   cycle: string;
+   active: boolean;
+   productId: string;
+   planDetail: PlanDetail;
+};
+
+const productId = "add7e59b-ab1c-4a6d-8811-d2188f232590";
+const urlGatewayApi = "https://apihml.xgateway.com.br/api/";
+
+async function fetchPlans(): Promise<PlanDto[]> {
+   return await fetch(
+      `${urlGatewayApi}Plan/find_plan_by_product_id?productId=${productId}`,
+   ).then((res) => res.json());
+}
 
 export default function PurchaseHero({ id: planId }: { id: string }) {
-   const productId = "add7e59b-ab1c-4a6d-8811-d2188f232590";
-   const urlGatewayApi = "https://apihml.xgateway.com.br/api/";
-   const [plans, setPlans] = useState([
-      {
-         id: "",
-         name: "",
-         price: 0,
-         description: "",
-         cycle: "",
-         active: true,
-         productId: "",
-         planDetail: {
-            eLimitation: "",
-            premiumBalance: 0,
-            user: 0,
-         },
-      },
-   ]);
-
-   const fetchPlans = async () => {
-      try {
-         const result = await fetch(
-            `${urlGatewayApi}Plan/find_plan_by_product_id?productId=${productId}`,
-         ).then((res) => res.json());
-
-         setPlans(result);
-      } catch (error) {
-         console.error("Erro ao buscar planos:", error);
-      }
-   };
-
-   useEffect(() => {
-      fetchPlans();
-   }, [productId]);
+   const plans = use<PlanDto[]>(fetchPlans());
 
    return (
       <section className="relative h-80 2xl:h-[400px] flex items-center justify-start overflow-hidden">

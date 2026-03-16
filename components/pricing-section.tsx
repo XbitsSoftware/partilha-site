@@ -13,7 +13,7 @@ export default function PricingSection({
 }: {
    couponCode?: string;
 }) {
-   const [selectedPlanIndex, setSelectedPlanIndex] = useState<number>(1);
+   const [selectedPlanIndex, setSelectedPlanIndex] = useState<number>(0);
    const [loading, setLoading] = useState(true);
    const [isModalOpen, setIsModalOpen] = useState(false);
    const productId = "add7e59b-ab1c-4a6d-8811-d2188f232590";
@@ -52,10 +52,6 @@ export default function PricingSection({
       }
    };
 
-   useEffect(() => {
-      fetchPlans();
-   }, []);
-
    const handleContratar = (index: number) => {
       const selectedPlan = plans[index];
       if (couponCode) {
@@ -69,6 +65,10 @@ export default function PricingSection({
          router.push(`/checkout/${selectedPlan.id}`);
       }
    };
+
+   useEffect(() => {
+      fetchPlans();
+   }, []);
 
    if (loading) {
       return (
@@ -93,10 +93,10 @@ export default function PricingSection({
                               : "border border-gray-200"
                         }`}
                      >
-                        {index === 1 && (
+                        {index === 0 && (
                            <div className="bg-[#840C0C] text-white text-center py-2 px-4 rounded-t-lg -mt-8 -mx-8 mb-6">
                               <span className="font-semibold text-sm">
-                                 Promoção por tempo limitado**
+                                 Plano Especial para a Semana do Consumidor
                               </span>
                            </div>
                         )}
