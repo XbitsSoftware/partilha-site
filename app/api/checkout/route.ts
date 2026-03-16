@@ -7,10 +7,10 @@ export async function POST(req: Request) {
       let apiUrl = "";
       if (body.charge.billingType === "CreditCard") {
          apiUrl =
-            "https://apihml.xgateway.com.br/api/Customer/signup_payment_with_card";
+            "https://api.xgateway.com.br/api/Customer/signup_payment_with_card";
       } else if (body.charge.billingType === "Pix") {
          apiUrl =
-            "https://apihml.xgateway.com.br/api/Customer/signup_payment_with_pix";
+            "https://api.xgateway.com.br/api/Customer/signup_payment_with_pix";
       } else {
          return NextResponse.json(
             { error: "Tipo de pagamento inválido" },
@@ -67,7 +67,7 @@ export async function GET(req: Request) {
          );
       }
 
-      const apiUrl = `https://apihml.xgateway.com.br/api/Coupon/validate_coupon?Code=${code}&ProductId=${productId}&PlanId=${planId}&BillingType=${billingType}`;
+      const apiUrl = `https://api.xgateway.com.br/api/Coupon/validate_coupon?Code=${code}&ProductId=${productId}&PlanId=${planId}&BillingType=${billingType}`;
 
       const res = await fetch(apiUrl, {
          method: "GET",

@@ -46,10 +46,13 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div
-            className="flex-shrink-0 flex items-center gap-3"
+            className="flex-shrink-0 flex items-center gap-3 cursor-pointer"
             onClick={() => (window.location.href = "/")}
           >
-            <div className="w-10 h-8 relative">
+            <div
+              className="w-10 h-8 relative cursor-pointer"
+              onClick={() => (window.location.href = "/")}
+            >
               {/* Geometric triangle logo */}
               <IconLogoPartilha width="45" height="35" />
             </div>

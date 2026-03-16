@@ -7,29 +7,9 @@ import WomanOffice from "@/public/images/woman-office.png";
 import WomanOfficeMobile from "@/public/images/woman-office-mobile.jpg";
 import banner07 from "@/public/images/banner07.jpg";
 import banner07Mobile from "@/public/images/banner07Mobile.jpg";
-import bannerBlackFridayDesktop from "@/public/Black-Friday.jpg";
-import bannerBlackFridayMobile from "@/public/Black-Friday - Mobile.jpg";
-import bannerBlackFriday from "@/public/Black-Friday-Text.png";
 import Link from "next/link";
 
 const carouselSlides = [
-  {
-    title: (
-      <>
-        <img
-          src={bannerBlackFriday.src}
-          alt="Black Friday"
-          className="w-52 md:w-72 h-auto object-cover rounded-md"
-        />
-      </>
-    ),
-    buttonText: "Pré-Cadastro",
-    imageDesktop: bannerBlackFridayDesktop,
-    imageMobile: bannerBlackFridayMobile,
-    buttonHref:
-      "https://wa.me/5541988705498?text=Ol%C3%A1!%20Quero%20participar%20do%20desconto%20de%20Black%20Friday%20do%20Partilha%20Online!",
-    buttonTarget: "_blank",
-  },
   {
     title: (
       <>
@@ -117,7 +97,7 @@ export default function Hero() {
           </p>
           <Link
             href={currentContent.buttonHref}
-            target={currentContent.buttonTarget ?? "_self"}
+            target="_self"
             rel="noopener noreferrer"
           >
             <Button
