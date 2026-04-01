@@ -44,6 +44,7 @@ export default function CheckoutSection({
     setPixData,
     handleSearchZipCode,
     handleCouponValidate,
+    returnDivisorForPriceLayout,
   } = UseCheckoutController(id, couponCode);
   const onSubmit = async (data: any) => {
     await handleSubmit(data);
@@ -88,10 +89,16 @@ export default function CheckoutSection({
                   <div>
                     {plan.card && plan.pix && (
                       <>
-                        <div className="text-[#7A7A7A] mb-2">12x de</div>
+                        <div className="text-[#7A7A7A] mb-2">
+                          {returnDivisorForPriceLayout(plan)}x de
+                        </div>
                         <div className="mb-3 ">
                           <span className="text-[1.5rem] sm:text-[1.5rem] md:text-[1.7em] lg:text-3xl  font-bold text-[#380505]">
-                            R$ {(plan.price / 12).toFixed(2)}
+                            R${" "}
+                            {(
+                              plan.price /
+                              (returnDivisorForPriceLayout(plan) ?? 6)
+                            ).toFixed(2)}
                           </span>
                           <span className="text-gray-600 ml-2">/ mês</span>
                         </div>
