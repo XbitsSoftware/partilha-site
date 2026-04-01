@@ -160,6 +160,7 @@ export default function PricingSection({
                       : "pareceres"}{" "}
                     *
                   </span>
+                  <br />
                   <div
                     className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold mb-2 mt-4 ${
                       isSelected

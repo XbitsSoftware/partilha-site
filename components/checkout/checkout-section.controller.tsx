@@ -388,6 +388,23 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
     }
   };
 
+  const quantityInstallments = (plan: any) => {
+    if (plan?.name === "Plano Start") {
+      return 1;
+    } else if (
+      plan?.name === "Plano Básico" ||
+      plan?.name === "Plano Essencial"
+    ) {
+      return 6;
+    } else if (plan?.name === "Plano Profissional") {
+      return 8;
+    } else if (plan?.name === "Plano Corporativo") {
+      return 10;
+    } else {
+      return 12;
+    }
+  };
+
   useEffect(() => {
     setValueInTotalValue();
     handleCouponValidate(hookForm.getValues("couponCode") ?? "");
@@ -442,5 +459,6 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
     handleSearchZipCode,
     handleCouponValidate,
     returnDivisorForPriceLayout,
+    quantityInstallments,
   };
 };

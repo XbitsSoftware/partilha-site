@@ -45,6 +45,7 @@ export default function CheckoutSection({
     handleSearchZipCode,
     handleCouponValidate,
     returnDivisorForPriceLayout,
+    quantityInstallments,
   } = UseCheckoutController(id, couponCode);
   const onSubmit = async (data: any) => {
     await handleSubmit(data);
@@ -482,10 +483,13 @@ export default function CheckoutSection({
                         label="Quantidade de parcelas"
                         control={hookForm.control}
                         errors={hookForm.formState.errors}
-                        items={Array.from({ length: 12 }, (_, index) => ({
-                          value: Number(index + 1),
-                          label: String(index + 1),
-                        }))}
+                        items={Array.from(
+                          { length: quantityInstallments(plan) },
+                          (_, index) => ({
+                            value: Number(index + 1),
+                            label: String(index + 1),
+                          }),
+                        )}
                         name="charge.installmentCount"
                         id="installmentCount"
                         mandatory
