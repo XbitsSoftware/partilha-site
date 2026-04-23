@@ -1,23 +1,23 @@
-"use client";
-
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import PurchaseHero from "@/components/purchase-hero";
 import CheckoutSection from "@/components/checkout/checkout-section";
 
-export default function PurchasePage({
+export default async function PurchasePage({
   params,
   searchParams,
 }: {
-  params: { id: string };
-  searchParams: { couponCode?: string };
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ couponCode?: string }>;
 }) {
+  const { id } = await params;
+  const { couponCode } = await searchParams;
   return (
     <div className="min-h-screen bg-white">
       <Header />
       <main>
-        <PurchaseHero id={params.id} />
-        <CheckoutSection id={params.id} couponCode={searchParams.couponCode} />
+        <PurchaseHero id={id} />
+        <CheckoutSection id={id} couponCode={couponCode} />
       </main>
       <Footer />
     </div>
