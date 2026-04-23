@@ -36,7 +36,7 @@ export default function ComplexCasesSection() {
 
               <p>
                 Comece sua primeira simulação e veja como a tecnologia pode
-                transformar seu dia a dia jurídico.
+                transformar seu dia a dia jurídico..
               </p>
             </div>
             <Link
