@@ -105,7 +105,7 @@ export default function PricingSection({
                 {index === 0 && (
                   <div className="bg-[#840C0C] text-white text-center py-2 px-4 rounded-t-lg -mt-8 -mx-8 mb-6">
                     <span className="font-semibold text-sm">
-                      Plano Especial para a Semana do Consumidor
+                      Conheça seu novo assistente jurídico
                     </span>
                   </div>
                 )}
