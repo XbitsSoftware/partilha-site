@@ -10,7 +10,7 @@ export default function PricingSection({
 }: {
   couponCode?: string;
 }) {
-  const [selectedPlanIndex, setSelectedPlanIndex] = useState<number>(2);
+  const [selectedPlanIndex, setSelectedPlanIndex] = useState<number>(0);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const productId = "add7e59b-ab1c-4a6d-8811-d2188f232590";
@@ -102,9 +102,11 @@ export default function PricingSection({
                     : "border border-gray-200"
                 }`}
               >
-                {index === 2 && (
+                {index === 0 && (
                   <div className="bg-[#840C0C] text-white text-center py-2 px-4 rounded-t-lg -mt-8 -mx-8 mb-6">
-                    <span className="font-semibold text-sm"></span>
+                    <span className="font-semibold text-sm">
+                      Conheça seu novo assistente jurídico
+                    </span>
                   </div>
                 )}
                 <div className="text-start flex-1">
