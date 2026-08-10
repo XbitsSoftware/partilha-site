@@ -505,6 +505,7 @@ export default function CheckoutSection({
                         onChange={(e) => handleCouponValidate(e.target.value)}
                         name="couponCode"
                         id="couponCode"
+                        disabled
                       />
                       {couponValid == true && (
                         <span className="text-green-500 text-sm">
@@ -541,6 +542,7 @@ export default function CheckoutSection({
                         onChange={(e) => handleCouponValidate(e.target.value)}
                         name="couponCode"
                         id="couponCode"
+                        disabled
                       />
                       {couponValid == true && (
                         <span className="text-green-500 text-sm">
