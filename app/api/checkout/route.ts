@@ -1,42 +1,38 @@
 import { NextResponse } from "next/server";
 
+const GATEWAY_API_BASE_URL = "https://api.xgateway.com.br/api";
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();
 
     let apiUrl = "";
     if (body.charge.billingType === "CreditCard") {
-      apiUrl =
-        "https://api.xgateway.com.br/api/Customer/signup_payment_with_card";
+      apiUrl = `${GATEWAY_API_BASE_URL}/Customer/signup_payment_with_card`;
     } else if (body.charge.billingType === "Pix") {
-      apiUrl =
-        "https://api.xgateway.com.br/api/Customer/signup_payment_with_pix";
+      apiUrl = `${GATEWAY_API_BASE_URL}/Customer/signup_payment_with_pix`;
     } else {
       return NextResponse.json(
         { error: "Tipo de pagamento inválido" },
         { status: 400 },
       );
     }
-      const res = await fetch(apiUrl, {
-         method: "POST",
-         headers: { "Content-Type": "application/json" },
-         body: JSON.stringify(body),
-      });
-      const text = await res.text();
 
-      if (!text) {
-         return new NextResponse(null, { status: res.status });
-      }
+    const res = await fetch(apiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
 
-      try {
-         const json = JSON.parse(text);
-         return NextResponse.json(json, { status: res.status });
-      } catch {
-         return new NextResponse(text, {
-            status: res.status,
-            headers: { "Content-Type": "text/plain" },
-         });
-      }
+    const text = await res.text();
+
+    if (!text) {
+      return new NextResponse(null, { status: res.status });
+    }
+
+    try {
+      const json = JSON.parse(text);
+      return NextResponse.json(json, { status: res.status });
     } catch {
       return new NextResponse(text, {
         status: res.status,
@@ -68,7 +64,7 @@ export async function GET(req: Request) {
       );
     }
 
-    const apiUrl = `https://api.xgateway.com.br/api/Coupon/validate_coupon?Code=${code}&ProductId=${productId}&PlanId=${planId}&BillingType=${billingType}`;
+    const apiUrl = `${GATEWAY_API_BASE_URL}/Coupon/validate_coupon?Code=${code}&ProductId=${productId}&PlanId=${planId}&BillingType=${billingType}`;
 
     const res = await fetch(apiUrl, {
       method: "GET",
