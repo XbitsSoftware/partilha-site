@@ -197,13 +197,18 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
         body: JSON.stringify(formData),
       });
       let data: any = null;
-      if (res.status === 200) {
-        data = await res.json();
+      if (res.status === 200 || res.status >= 400) {
+        try {
+          data = await res.json();
+        } catch {
+          data = null;
+        }
       } else if (res.status === 204) {
         data = res;
       }
       if (!res.ok) {
-        const errorMessage = data?.[0]?.value || "Erro desconhecido";
+        const errorMessage =
+          data?.[0]?.value || data?.value || data?.error || "Erro desconhecido";
         toast.error(
           <div>
             <strong className="block text-lg font-medium">Atenção!</strong>
