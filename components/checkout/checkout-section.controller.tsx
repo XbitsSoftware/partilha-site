@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import Modal from "../modalDefault/modalDefault";
 import { useCepSearch } from "@/hooks/useCepSearch";
 
-const DEFAULT_DISCOUNT_COUPON_CODE = "8E1AE-10082026";
+const DEFAULT_DISCOUNT_COUPON_CODE = "0C358-10082026";
 
 export const UseCheckoutController = (planId: string, couponCode?: string) => {
   const { searchCep, error: cepError } = useCepSearch();
