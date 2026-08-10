@@ -7,6 +7,8 @@ import toast from "react-hot-toast";
 import Modal from "../modalDefault/modalDefault";
 import { useCepSearch } from "@/hooks/useCepSearch";
 
+const DEFAULT_DISCOUNT_COUPON_CODE = "0C358-10082026";
+
 export const UseCheckoutController = (planId: string, couponCode?: string) => {
   const { searchCep, error: cepError } = useCepSearch();
   const [plan, setPlan] = useState<any | null>(null);
@@ -28,7 +30,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
   const hookForm = useForm<TFormState>({
     defaultValues: {
       planId: "",
-      couponCode: "" as string | null,
+      couponCode: DEFAULT_DISCOUNT_COUPON_CODE,
       typePayment: "Charge",
       customer: {
         fullName: "",
@@ -195,13 +197,18 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
         body: JSON.stringify(formData),
       });
       let data: any = null;
-      if (res.status === 200) {
-        data = await res.json();
+      if (res.status === 200 || res.status >= 400) {
+        try {
+          data = await res.json();
+        } catch {
+          data = null;
+        }
       } else if (res.status === 204) {
         data = res;
       }
       if (!res.ok) {
-        const errorMessage = data?.[0]?.value || "Erro desconhecido";
+        const errorMessage =
+          data?.[0]?.value || data?.value || data?.error || "Erro desconhecido";
         toast.error(
           <div>
             <strong className="block text-lg font-medium">Atenção!</strong>
@@ -271,9 +278,14 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
     return value.replace(/\D/g, "");
   };
 
+  const formatTotalValueDisplay = (value: string | number) => {
+    const numericDisplay = String(value).replace(/^R\$\s*/, "");
+    return `R$ ${numericDisplay}`;
+  };
+
   const setValueInTotalValue = () => {
     if (!plan) {
-      hookForm.setValue("totalValue", "0.00");
+      hookForm.setValue("totalValue", formatTotalValueDisplay("0.00"));
       return;
     }
 
@@ -283,7 +295,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
     );
 
     if (isNaN(numericValue)) {
-      hookForm.setValue("totalValue", "0.00");
+      hookForm.setValue("totalValue", formatTotalValueDisplay("0.00"));
       return;
     }
 
@@ -297,7 +309,10 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
       finalValue = valueCoupon;
     }
 
-    hookForm.setValue("totalValue", finalValue.toString().replace(".", ","));
+    hookForm.setValue(
+      "totalValue",
+      formatTotalValueDisplay(finalValue.toString().replace(".", ",")),
+    );
   };
 
   const handleSearchZipCode = async (
@@ -335,7 +350,10 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
   const handleCouponValidate = async (couponCode: string) => {
     const code = couponCode.trim();
     if (code.length <= 13) {
-      hookForm.setValue("totalValue", plan?.price.toString() ?? "0.00");
+      hookForm.setValue(
+        "totalValue",
+        formatTotalValueDisplay(plan?.price.toString() ?? "0.00"),
+      );
       setCouponValid(false);
       setValueCoupon(0);
       return;
@@ -349,7 +367,10 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
       const data = await response.json();
 
       if (data.result === "Valid") {
-        hookForm.setValue("totalValue", data.valueForDiscount.toString());
+        hookForm.setValue(
+          "totalValue",
+          formatTotalValueDisplay(data.valueForDiscount.toString()),
+        );
         setValueCoupon(data.valueForDiscount);
         setCouponValid(true);
       } else {
@@ -438,7 +459,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
 
   useEffect(() => {
     fetchPlans();
-    hasCouponInUrl(couponCode || "");
+    hasCouponInUrl(DEFAULT_DISCOUNT_COUPON_CODE);
   }, []);
 
   return {
