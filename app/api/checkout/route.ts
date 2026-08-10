@@ -17,25 +17,24 @@ export async function POST(req: Request) {
         { status: 400 },
       );
     }
-      const res = await fetch(apiUrl, {
-         method: "POST",
-         headers: { "Content-Type": "application/json" },
-         body: JSON.stringify(body),
-      });
-      const text = await res.text();
 
-      if (!text) {
-         return new NextResponse(null, { status: res.status });
-      }
+    const res = await fetch(apiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    const text = res.status === 200 ? await res.text() : null;
 
-      try {
-         const json = JSON.parse(text);
-         return NextResponse.json(json, { status: res.status });
-      } catch {
-         return new NextResponse(text, {
-            status: res.status,
-            headers: { "Content-Type": "text/plain" },
-         });
+    try {
+      if (res.status === 200 && text) {
+        const json = JSON.parse(text);
+        return NextResponse.json(json, { status: res.status });
+      } else {
+        const json = JSON.parse("{}");
+        return new NextResponse(json, {
+          status: 204,
+          headers: { "Content-Type": "text/plain" },
+        });
       }
     } catch {
       return new NextResponse(text, {
