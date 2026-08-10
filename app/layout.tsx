@@ -1,6 +1,6 @@
 import type React from "react";
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
+import { Roboto, Montserrat } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import { IconAtentionToast, IconSucessToast } from "@/public/extensions/icons";
@@ -8,6 +8,12 @@ import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
 
 const inter = Roboto({ subsets: ["latin"] });
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Partilha Online - Seu assistente jurídico na divisão patrimonial",
@@ -83,7 +89,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" className={montserrat.variable}>
       <head>
         <meta name="theme-color" content="#92400e" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
