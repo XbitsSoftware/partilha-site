@@ -18,8 +18,16 @@ import { EMask } from "@/app/enum/enum";
 import { UseCheckoutController } from "./checkout-section.controller";
 import { Loading } from "../loading/loading";
 import { ModalPix } from "../modalPix/modalPix";
+import Modal from "../modalDefault/modalDefault";
+import { useRouter } from "next/navigation";
 
-export default function CheckoutSection({ id }: { id: string }) {
+export default function CheckoutSection({
+  id,
+  couponCode,
+}: {
+  id: string;
+  couponCode?: string;
+}) {
   const {
     hookForm,
     estados,
@@ -28,15 +36,18 @@ export default function CheckoutSection({ id }: { id: string }) {
     paymentMethod,
     pixData,
     couponValid,
+    isOpenModal,
+    setIsOpenModal,
     handleTradePlan,
     handleSubmit,
     setPaymentMethod,
     setPixData,
     handleSearchZipCode,
     handleCouponValidate,
-  } = UseCheckoutController(id);
+    returnDivisorForPriceLayout,
+    quantityInstallments,
+  } = UseCheckoutController(id, couponCode);
   const onSubmit = async (data: any) => {
-    // Aqui você chama a função de compra
     await handleSubmit(data);
   };
 
@@ -47,9 +58,25 @@ export default function CheckoutSection({ id }: { id: string }) {
           qrCode={pixData.qrCode}
           expirationDate={pixData.expirationDate}
           copyPaste={pixData.copyPaste}
-          onClose={() => setPixData(null)}
+          onClose={() => {
+            setPixData(null);
+            window.location.href = "/";
+          }}
         />
       )}
+      {isOpenModal && (
+        <Modal
+          isOpen={isOpenModal}
+          description="Acompanhe em seu e-mail os próximos passos."
+          onClick={() => {
+            setIsOpenModal(false);
+            window.location.href = "/";
+          }}
+          title="Sucesso!"
+          btnDescription="Fechar"
+        />
+      )}
+
       <main className="max-w-[1800px] mx-auto py-12 px-4">
         {loading && <Loading />}
         <div className="flex flex-col md:flex-row gap-8">
@@ -57,30 +84,65 @@ export default function CheckoutSection({ id }: { id: string }) {
             {plan && (
               <div className="bg-white rounded-lg p-8 h-fit shadow-lg relative border border-red-500">
                 <div className="text-start">
-                  <h2 className="text-[1.5rem] sm:text-[1.5rem] md:text-[1.25rem] lg:text-2xl font-bold mb-6 text-gray-900">
+                  <h2 className="text-[1.5rem] sm:text-[1.5rem] md:text-[1.25rem] lg:text-2xl font-bold mb-6 text-[#380505]">
                     {plan.name}
                   </h2>
-                  <div className="text-[#7A7A7A] mb-2">12x de</div>
-                  <div className="mb-3 ">
-                    <span className="text-[1.5rem] sm:text-[1.5rem] md:text-[1.7em] lg:text-3xl  font-bold text-gray-900">
-                      R$ {plan.price}
-                    </span>
-                    <span className="text-gray-600 ml-2">/ mês</span>
+                  <div>
+                    {plan.card && plan.pix && (
+                      <>
+                        <div className="text-[#7A7A7A] mb-2">
+                          {returnDivisorForPriceLayout(plan)}x de
+                        </div>
+                        <div className="mb-3 ">
+                          <span className="text-[1.5rem] sm:text-[1.5rem] md:text-[1.7em] lg:text-3xl  font-bold text-[#380505]">
+                            R${" "}
+                            {(
+                              plan.price /
+                              (returnDivisorForPriceLayout(plan) ?? 6)
+                            ).toFixed(2)}
+                          </span>
+                          <span className="text-gray-600 ml-2">/ mês</span>
+                        </div>
+                        <div className="mb-5 text-[0.85rem] font-bold text-[#A3A3A3]">
+                          <span className="">R$ {plan.price}</span>
+                          <span className="ml-2">/ ano*</span>
+                        </div>
+                      </>
+                    )}
+                    {!plan.card && plan.pix && (
+                      <>
+                        <div className="mb-3 ">
+                          <span className="text-[1.5rem] sm:text-[1.5rem] md:text-[1.7em] lg:text-3xl  font-bold text-[#380505]">
+                            R$ {plan.price.toFixed(2)}
+                          </span>
+                        </div>
+                        <div className="mb-5 text-[0.85rem] font-bold text-[#A3A3A3]">
+                          <span className="">R$ {plan.price.toFixed(2)}</span>
+                          <span className="ml-2">/ ano*</span>
+                        </div>
+                      </>
+                    )}
                   </div>
-                  <div className="mb-5 text-[0.85rem] font-bold text-[#A3A3A3]">
-                    <span className="">R$ {plan.priceAnual}</span>
-                    <span className="ml-2">/ ano*</span>
-                  </div>
+
                   <Divide className="w-full h-px bg-gray-300 mb-8" />
                   <ul className="space-y-3 mb-12 text-left">
-                    {plan.features.map((feature, index) => (
-                      <li key={index} className="flex items-center gap-3">
-                        <div className="w-2 h-2 bg-gray-400 rounded-full flex-shrink-0"></div>
-                        <span className="text-gray-700 text-[0.85rem] sm:text-[1rem] md:text-[0.75rem] lg:text-[1rem]">
-                          {feature}
-                        </span>
-                      </li>
-                    ))}
+                    <li className="flex items-center gap-3">
+                      <div className="w-2 h-2 bg-gray-400 rounded-full flex-shrink-0"></div>
+                      <span className="text-gray-700 text-[0.85rem] sm:text-[1rem] md:text-[0.75rem] lg:text-[1rem]">
+                        {plan.planDetail.user}{" "}
+                        {plan.planDetail.user === 1 ? "usuário" : "usuários"}
+                      </span>
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <div className="w-2 h-2 bg-gray-400 rounded-full flex-shrink-0"></div>
+                      <span className="text-gray-700 text-[0.85rem] sm:text-[1rem] md:text-[0.75rem] lg:text-[1rem]">
+                        Até {plan.planDetail.premiumBalance}{" "}
+                        {plan.planDetail.premiumBalance === 1
+                          ? "parecer"
+                          : "pareceres"}{" "}
+                        por ano
+                      </span>
+                    </li>
                   </ul>
                   <div className="flex justify-start">
                     <button
@@ -288,27 +350,30 @@ export default function CheckoutSection({ id }: { id: string }) {
                     Modelo de pagamento <span className="text-red-500">*</span>
                   </h4>
                   <div className="flex items-center gap-6">
-                    <label className="flex items-center gap-2">
-                      <input
-                        type="radio"
-                        name="paymentMethod"
-                        value="credit"
-                        checked={paymentMethod === "CreditCard"}
-                        onChange={() => setPaymentMethod("CreditCard")}
-                      />
-                      <span className="text-gray-800">Cartão de Crédito</span>
-                    </label>
-
-                    <label className="flex items-center gap-2">
-                      <input
-                        type="radio"
-                        name="paymentMethod"
-                        value="pix"
-                        checked={paymentMethod === "Pix"}
-                        onChange={() => setPaymentMethod("Pix")}
-                      />{" "}
-                      <span className="text-gray-800">Pix</span>
-                    </label>
+                    {plan?.card === true && (
+                      <label className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          value="credit"
+                          checked={paymentMethod === "CreditCard"}
+                          onChange={() => setPaymentMethod("CreditCard")}
+                        />
+                        <span className="text-gray-800">Cartão de Crédito</span>
+                      </label>
+                    )}
+                    {plan?.pix === true && (
+                      <label className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          value="pix"
+                          checked={paymentMethod === "Pix"}
+                          onChange={() => setPaymentMethod("Pix")}
+                        />
+                        <span className="text-gray-800">Pix</span>
+                      </label>
+                    )}
                   </div>
                 </div>
               </div>
@@ -418,10 +483,13 @@ export default function CheckoutSection({ id }: { id: string }) {
                         label="Quantidade de parcelas"
                         control={hookForm.control}
                         errors={hookForm.formState.errors}
-                        items={Array.from({ length: 12 }, (_, index) => ({
-                          value: Number(index + 1),
-                          label: String(index + 1),
-                        }))}
+                        items={Array.from(
+                          { length: quantityInstallments(plan) },
+                          (_, index) => ({
+                            value: Number(index + 1),
+                            label: String(index + 1),
+                          }),
+                        )}
                         name="charge.installmentCount"
                         id="installmentCount"
                         mandatory
@@ -437,6 +505,7 @@ export default function CheckoutSection({ id }: { id: string }) {
                         onChange={(e) => handleCouponValidate(e.target.value)}
                         name="couponCode"
                         id="couponCode"
+                        disabled
                       />
                       {couponValid == true && (
                         <span className="text-green-500 text-sm">
@@ -452,8 +521,8 @@ export default function CheckoutSection({ id }: { id: string }) {
                         control={hookForm.control}
                         errors={hookForm.formState.errors}
                         name="totalValue"
-                        id="totalValue"
                         disabled
+                        id="totalValue"
                       />
                     </div>
                   </div>
@@ -473,6 +542,7 @@ export default function CheckoutSection({ id }: { id: string }) {
                         onChange={(e) => handleCouponValidate(e.target.value)}
                         name="couponCode"
                         id="couponCode"
+                        disabled
                       />
                       {couponValid == true && (
                         <span className="text-green-500 text-sm">
@@ -488,8 +558,8 @@ export default function CheckoutSection({ id }: { id: string }) {
                         control={hookForm.control}
                         errors={hookForm.formState.errors}
                         name="totalValue"
-                        id="totalValue"
                         disabled
+                        id="totalValue"
                       />
                     </div>
                   </div>

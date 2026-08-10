@@ -4,19 +4,23 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import Modal from "../modalDefault/modalDefault";
+import { useCepSearch } from "@/hooks/useCepSearch";
 
-export const UseCheckoutController = (planId: string) => {
-  const [plan, setPlan] = useState<null | {
-    id: string;
-    name: string;
-    price: string;
-    features: string[];
-    priceAnual: string;
-  }>(null);
+const DEFAULT_DISCOUNT_COUPON_CODE = "8E1AE-10082026";
+
+export const UseCheckoutController = (planId: string, couponCode?: string) => {
+  const { searchCep, error: cepError } = useCepSearch();
+  const [plan, setPlan] = useState<any | null>(null);
+  const [plans, setPlans] = useState<any[]>([]);
+  const productId = "add7e59b-ab1c-4a6d-8811-d2188f232590";
+  const urlGatewayApi = "https://apihml.xgateway.com.br/api/";
   const [loading, setLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("CreditCard");
   const [couponValid, setCouponValid] = useState(false);
   const [valueCoupon, setValueCoupon] = useState(0);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isCepValid, setIsCepValid] = useState(false);
   const [pixData, setPixData] = useState<null | {
     qrCode: string;
     expirationDate: string;
@@ -26,7 +30,7 @@ export const UseCheckoutController = (planId: string) => {
   const hookForm = useForm<TFormState>({
     defaultValues: {
       planId: "",
-      couponCode: "" as string | null,
+      couponCode: DEFAULT_DISCOUNT_COUPON_CODE,
       typePayment: "Charge",
       customer: {
         fullName: "",
@@ -66,41 +70,10 @@ export const UseCheckoutController = (planId: string) => {
       },
       termsOfUse: false,
       productsInfo: false,
-      totalValue: plan?.price,
+      totalValue: plan?.price ?? "0.00",
     },
     resolver: zodResolver(formSchema),
   });
-
-  const plans = [
-    {
-      id: "2551e22f-32f7-444b-14fc-08ddeaf66fc6",
-      name: "Plano Básico",
-      price: "39,90",
-      features: ["1 usuário", "Até 10 pareceres por ano"],
-      priceAnual: "478,80",
-    },
-    {
-      id: "cf7803c3-6f35-465d-14fd-08ddeaf66fc6",
-      name: "Plano Essencial",
-      price: "69,90",
-      features: ["2 usuários", "Até 20 pareceres por ano"],
-      priceAnual: "838,80",
-    },
-    {
-      id: "ec547cbd-adcf-4009-14fe-08ddeaf66fc6",
-      name: "Plano Profissional",
-      price: "99,90",
-      features: ["5 usuários", "Até 30 pareceres por ano"],
-      priceAnual: "1198,80",
-    },
-    {
-      id: "58e67ec5-9370-4fa8-14ff-08ddeaf66fc6",
-      name: "Plano Corporativo",
-      price: "149,90",
-      features: ["7 usuários", "Até 50 pareceres por ano"],
-      priceAnual: "1798,80",
-    },
-  ];
 
   const estados = [
     { sigla: "AC", nome: "Acre" },
@@ -132,10 +105,20 @@ export const UseCheckoutController = (planId: string) => {
     { sigla: "TO", nome: "Tocantins" },
   ];
 
+  const fetchPlans = async () => {
+    try {
+      const result = await fetch(
+        `${urlGatewayApi}Plan/find_plan_by_product_id?productId=${productId}`,
+      ).then((res) => res.json());
+
+      setPlans(result);
+    } catch (error) {
+      console.error("Erro ao buscar planos:", error);
+    }
+  };
+
   const handleSubmit = async (formData: any) => {
     hookForm.setValue("charge.billingType", paymentMethod);
-    const validation = await hookForm.trigger();
-    if (!validation) return;
     const payload = {
       planId: planId,
       couponCode: formData.couponCode,
@@ -186,41 +169,64 @@ export const UseCheckoutController = (planId: string) => {
     buyPlan(payload);
   };
 
+  const handleValidationForm = async () => {
+    const validationForm = await hookForm.trigger();
+    if (!validationForm) return false;
+
+    if (!isCepValid) {
+      toast.error("Por favor, insira um CEP válido para continuar.");
+      hookForm.setError("customer.address.zipCode", {
+        type: "custom",
+        message: "CEP inválido",
+      });
+      return false;
+    }
+
+    return true;
+  };
+
   const buyPlan = async (formData: any) => {
-    setLoading(true);
+    const isValid = await handleValidationForm();
+    if (!isValid) return;
+
     try {
+      setLoading(true);
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-
-      const data = await res.json();
-
+      let data: any = null;
+      if (res.status === 200) {
+        data = await res.json();
+      } else if (res.status === 204) {
+        data = res;
+      }
       if (!res.ok) {
         const errorMessage = data?.[0]?.value || "Erro desconhecido";
         toast.error(
           <div>
             <strong className="block text-lg font-medium">Atenção!</strong>
             <span className="text-sm font-normal">{errorMessage}</span>
-          </div>
+          </div>,
         );
         return;
       }
       // Se o pagamento for com cartão de credito
       if (formData.charge.billingType === "CreditCard" && res.ok) {
+        setIsOpenModal(true);
         toast.success(
           <div>
             <strong className="block text-lg font-medium">Sucesso!</strong>
             <span className="text-sm font-normal">
               Acompanhe em seu e-mail os próximos passos.
             </span>
-          </div>
+          </div>,
         );
         return;
       }
 
-      // Se o pagamento for com piix
+      // Se o pagamento for com pix
       if (formData.charge.billingType === "Pix" && data.encodedImage) {
         toast.success(
           <div>
@@ -228,13 +234,25 @@ export const UseCheckoutController = (planId: string) => {
             <span className="text-sm font-normal">
               Após o pagamento, acompanhe em seu e-mail os próximos passos.
             </span>
-          </div>
+          </div>,
         );
         setPixData({
           qrCode: data.encodedImage,
           expirationDate: data.expirationDate,
           copyPaste: data.payload,
         });
+      } else if (formData.charge.billingType === "Pix" && data.status === 204) {
+        toast.success(
+          <div>
+            <strong className="block text-lg font-medium">Sucesso!</strong>
+            <span className="text-sm font-normal">
+              Pagamento realizado com sucesso! Acompanhe em seu e-mail os
+              próximos passos.
+            </span>
+          </div>,
+        );
+        setPixData(null);
+        setIsOpenModal(true);
       }
     } catch (err) {
       toast.error("Erro ao enviar pagamento");
@@ -245,24 +263,34 @@ export const UseCheckoutController = (planId: string) => {
   };
 
   const handleTradePlan: (e: React.FormEvent) => void = (
-    e: React.FormEvent
+    e: React.FormEvent,
   ) => {
     router.push("/planos");
   };
+
   const unmask = (value: string | undefined | null) => {
     if (!value) return "";
     return value.replace(/\D/g, "");
   };
 
-  const setValueInTotalValue = () => {
-    let value = plan?.priceAnual ?? "0";
+  const formatTotalValueDisplay = (value: string | number) => {
+    const numericDisplay = String(value).replace(/^R\$\s*/, "");
+    return `R$ ${numericDisplay}`;
+  };
 
+  const setValueInTotalValue = () => {
+    if (!plan) {
+      hookForm.setValue("totalValue", formatTotalValueDisplay("0.00"));
+      return;
+    }
+
+    const value = String(plan?.price ?? "0");
     const numericValue = Number(
-      value.replace("R$", "").replace(/\./g, "").replace(",", ".")
+      value.replace("R$", "").replace(/\./g, "").replace(",", "."),
     );
 
     if (isNaN(numericValue)) {
-      hookForm.setValue("totalValue", "0.00");
+      hookForm.setValue("totalValue", formatTotalValueDisplay("0.00"));
       return;
     }
 
@@ -276,35 +304,51 @@ export const UseCheckoutController = (planId: string) => {
       finalValue = valueCoupon;
     }
 
-    hookForm.setValue("totalValue", finalValue.toString().replace(".", ","));
+    hookForm.setValue(
+      "totalValue",
+      formatTotalValueDisplay(finalValue.toString().replace(".", ",")),
+    );
   };
 
   const handleSearchZipCode = async (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const zipCode = unmask(event.target.value).trim();
-    try {
-      if (zipCode.length == 8) {
-        const response = await fetch(`/api/cep?cep=${zipCode}`);
-        const data = await response.json();
-        if (!data || !data.street) {
-          return;
-        }
-        hookForm.setValue("customer.address.city", data.city);
-        hookForm.setValue("customer.address.state", data.state);
-        hookForm.setValue("customer.address.street", data.street);
-        hookForm.setValue("customer.address.district", data.district);
-      }
-    } catch (error) {
-      console.error("Erro ao buscar CEP:", error);
+    hookForm.clearErrors("customer.address.zipCode");
+
+    if (zipCode.length !== 8) {
+      hookForm.setValue("customer.address.city", "");
+      hookForm.setValue("customer.address.state", "");
+      hookForm.setValue("customer.address.street", "");
+      hookForm.setValue("customer.address.district", "");
+      setIsCepValid(false);
+      return;
+    }
+
+    const data = await searchCep(zipCode);
+
+    if (data) {
+      hookForm.setValue("customer.address.city", data.localidade);
+      hookForm.setValue("customer.address.state", data.uf);
+      hookForm.setValue("customer.address.street", data.logradouro);
+      hookForm.setValue("customer.address.district", data.bairro);
+      setIsCepValid(true);
+    } else {
+      hookForm.setError("customer.address.zipCode", {
+        type: "custom",
+        message: "CEP inválido",
+      });
+      setIsCepValid(false);
     }
   };
 
   const handleCouponValidate = async (couponCode: string) => {
-    console.log("Validando cupom:", couponCode);
     const code = couponCode.trim();
     if (code.length <= 13) {
-      hookForm.setValue("totalValue", plan?.priceAnual ?? "0.00");
+      hookForm.setValue(
+        "totalValue",
+        formatTotalValueDisplay(plan?.price.toString() ?? "0.00"),
+      );
       setCouponValid(false);
       setValueCoupon(0);
       return;
@@ -312,28 +356,68 @@ export const UseCheckoutController = (planId: string) => {
 
     try {
       const response = await fetch(
-        `/api/checkout?Code=${code}&ProductId=add7e59b-ab1c-4a6d-8811-d2188f232590&PlanId=${plan?.id}&BillingType=${paymentMethod}`
+        `/api/checkout?Code=${code}&ProductId=add7e59b-ab1c-4a6d-8811-d2188f232590&PlanId=${plan?.id}&BillingType=${paymentMethod}`,
       );
 
       const data = await response.json();
 
       if (data.result === "Valid") {
-        toast.success("Cupom aplicado com sucesso!");
-        hookForm.setValue("totalValue", data.valueForDiscount);
+        hookForm.setValue(
+          "totalValue",
+          formatTotalValueDisplay(data.valueForDiscount.toString()),
+        );
         setValueCoupon(data.valueForDiscount);
         setCouponValid(true);
       } else {
-        toast.error("Cupom inválido ou expirado.");
-        hookForm.setValue("totalValue", plan?.priceAnual ?? "0.00");
         setValueCoupon(0);
         setCouponValid(false);
       }
     } catch (error) {
       console.error("Erro ao validar cupom:", error);
-      hookForm.setValue("totalValue", plan?.priceAnual ?? "0.00");
       setValueCoupon(0);
       setCouponValid(false);
       toast.error("Erro ao validar cupom. Tente novamente mais tarde.");
+    }
+  };
+
+  const hasCouponInUrl = async (code: string) => {
+    if (code && code.length > 0) {
+      hookForm.setValue("couponCode", code);
+      await handleCouponValidate(code);
+    } else {
+      hookForm.setValue("couponCode", "");
+    }
+  };
+
+  const returnDivisorForPriceLayout = (plan: any) => {
+    if (plan?.name === "Plano Start") {
+      return null;
+    } else if (
+      plan?.name === "Plano Básico" ||
+      plan?.name === "Plano Essencial"
+    ) {
+      return 6;
+    } else if (plan?.name === "Plano Profissional") {
+      return 8;
+    } else {
+      return 10;
+    }
+  };
+
+  const quantityInstallments = (plan: any) => {
+    if (plan?.name === "Plano Start") {
+      return 1;
+    } else if (
+      plan?.name === "Plano Básico" ||
+      plan?.name === "Plano Essencial"
+    ) {
+      return 6;
+    } else if (plan?.name === "Plano Profissional") {
+      return 8;
+    } else if (plan?.name === "Plano Corporativo") {
+      return 10;
+    } else {
+      return 12;
     }
   };
 
@@ -343,24 +427,34 @@ export const UseCheckoutController = (planId: string) => {
   }, [paymentMethod, plan, couponValid]);
 
   useEffect(() => {
+    if (planId && plans.length > 0) {
+      const selectedPlan = plans.find((p) => p.id === planId);
+      if (selectedPlan) {
+        setPlan(selectedPlan);
+      }
+    }
+  }, [planId, plans]);
+
+  useEffect(() => {
     fetch("https://api.ipify.org?format=json")
       .then((res) => res.json())
       .then((data) => {
         hookForm.setValue("payment.remoteIp", data.ip);
-        console.log("IP obtido:", data);
       })
       .catch((err) => console.error("Erro ao obter IP:", err));
   }, []);
 
   useEffect(() => {
-    if (planId) {
-      const selectedPlan = plans.find((plan) => plan.id.toString() === planId);
-      if (selectedPlan) {
-        setPlan(selectedPlan);
-      } else {
-        router.push("/planos");
-      }
-    }
+    if (!plan) return;
+
+    if (plan.card && !plan.pix) setPaymentMethod("CreditCard");
+    else if (!plan.card && plan.pix) setPaymentMethod("Pix");
+    else setPaymentMethod("CreditCard");
+  }, [plan]);
+
+  useEffect(() => {
+    fetchPlans();
+    hasCouponInUrl(DEFAULT_DISCOUNT_COUPON_CODE);
   }, []);
 
   return {
@@ -371,6 +465,8 @@ export const UseCheckoutController = (planId: string) => {
     paymentMethod,
     pixData,
     couponValid,
+    isOpenModal,
+    setIsOpenModal,
     handleSubmit,
     unmask,
     handleTradePlan,
@@ -378,5 +474,7 @@ export const UseCheckoutController = (planId: string) => {
     setPixData,
     handleSearchZipCode,
     handleCouponValidate,
+    returnDivisorForPriceLayout,
+    quantityInstallments,
   };
 };

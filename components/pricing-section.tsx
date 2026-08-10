@@ -1,129 +1,202 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import {
-  Divider,
-  IconLogoPartilha,
-  IconLogoPartilhaWithText,
-  IconXWithCircle,
-} from "@/public/extensions/icons";
+
 import Link from "next/link";
 
-export default function PricingSection() {
-  const [selectedPlanIndex, setSelectedPlanIndex] = useState<number>(1);
-  const [isModalOpen, setIsModalOpen] = useState(false); // controla modal
-
+export default function PricingSection({
+  couponCode,
+}: {
+  couponCode?: string;
+}) {
+  const [selectedPlanIndex, setSelectedPlanIndex] = useState<number>(0);
+  const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const productId = "add7e59b-ab1c-4a6d-8811-d2188f232590";
+  const urlGatewayApi = "https://apihml.xgateway.com.br/api/";
   const router = useRouter();
+  const [plans, setPlans] = useState([
+    {
+      id: "",
+      name: "",
+      price: 0,
+      description: "",
+      cycle: "",
+      active: true,
+      card: false,
+      pix: false,
+      productId: "",
+      planDetail: {
+        eLimitation: "",
+        premiumBalance: 0,
+        user: 0,
+      },
+    },
+  ]);
 
-  const plans = [
-    {
-      id: "2551e22f-32f7-444b-14fc-08ddeaf66fc6",
-      name: "Plano Básico",
-      price: "39,90",
-      features: ["1 usuário", "Até 10 pareceres por ano"],
-      priceAnual: "478,80",
-    },
-    {
-      id: "cf7803c3-6f35-465d-14fd-08ddeaf66fc6",
-      name: "Plano Essencial",
-      price: "69,90",
-      features: ["2 usuários", "Até 20 pareceres por ano"],
-      priceAnual: "838,80",
-    },
-    {
-      id: "ec547cbd-adcf-4009-14fe-08ddeaf66fc6",
-      name: "Plano Profissional",
-      price: "99,90",
-      features: ["5 usuários", "Até 30 pareceres por ano"],
-      priceAnual: "1198,80",
-    },
-    {
-      id: "58e67ec5-9370-4fa8-14ff-08ddeaf66fc6",
-      name: "Plano Corporativo",
-      price: "149,90",
-      features: ["7 usuários", "Até 50 pareceres por ano"],
-      priceAnual: "1798,80",
-    },
-  ];
+  const fetchPlans = async () => {
+    try {
+      const result = await fetch(
+        `${urlGatewayApi}Plan/find_plan_by_product_id?productId=${productId}`,
+      ).then((res) => res.json());
+
+      setPlans(result);
+    } catch (error) {
+      console.error("Erro ao buscar planos:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleContratar = (index: number) => {
     const selectedPlan = plans[index];
-
-    router.push(`/checkout/${selectedPlan.id}`);
+    if (couponCode) {
+      router.push(
+        `/checkout/${selectedPlan.id}?couponCode=${encodeURIComponent(
+          couponCode,
+        )}`,
+      );
+      return;
+    } else {
+      router.push(`/checkout/${selectedPlan.id}`);
+    }
   };
+
+  const returnDivisorForPriceLayout = (index: number) => {
+    if (index === 0) {
+      return null;
+    } else if (index === 1 || index === 2) {
+      return 6;
+    } else if (index === 3) {
+      return 8;
+    } else {
+      return 10;
+    }
+  };
+
+  useEffect(() => {
+    fetchPlans();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-[50vh]">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    );
+  }
 
   return (
     <section className="py-16 lg:py-14 bg-[#FFFFFF]">
-      <div className="max-w-[1400px] h-full mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 gap-8 mb-12">
+      <div className="max-w-[1600px] h-full mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-3 2xl:grid-cols-5 md:grid-cols-2 sm:grid-cols-2 gap-8 mb-12">
           {plans.map((plan, index) => {
             const isSelected = selectedPlanIndex === index;
-
             return (
               <div
                 key={index}
-                className={` rounded-lg p-8 shadow-lg relative transition-transform duration-200 ${
+                className={`flex flex-col justify-between rounded-lg p-8 shadow-lg relative transition-transform duration-200 ${
                   isSelected
                     ? "border-2 border-[#840C0C] scale-105 bg-[#840c0c18]"
                     : "border border-gray-200"
                 }`}
               >
-                <div className="text-start">
-                  <h3 className="text-2xl font-bold text-[#380505] mb-6">
-                    {plan.name}
-                  </h3>
-                  <span
-                    className={` justify-start font-medium ${
-                      isSelected ? "text-[#983131]" : "text-[#7A7A7A]"
-                    }`}
-                  >
-                    12x de
-                  </span>
-
-                  <div className="mb-2 mt-2">
-                    <span className="lg:text-4xl text-2xl md:text-3xl font-bold text-[#380505]">
-                      R$ {plan.price}
+                {index === 0 && (
+                  <div className="bg-[#840C0C] text-white text-center py-2 px-4 rounded-t-lg -mt-8 -mx-8 mb-6">
+                    <span className="font-semibold text-sm">
+                      Conheça seu novo assistente jurídico
                     </span>
                   </div>
+                )}
+                <div className="text-start flex-1">
+                  {plan.card && plan.pix && (
+                    <div>
+                      <h3 className="text-2xl font-bold text-[#380505] mb-6">
+                        {plan.name}
+                      </h3>
+                      <span
+                        className={`justify-start font-medium ${
+                          isSelected ? "text-[#983131]" : "text-[#7A7A7A]"
+                        }`}
+                      >
+                        {returnDivisorForPriceLayout(index)}x de
+                      </span>
+
+                      <div className="mb-2 mt-2">
+                        <span className="lg:text-4xl text-2xl md:text-3xl font-bold text-[#380505]">
+                          R${" "}
+                          {(
+                            plan.price /
+                            (returnDivisorForPriceLayout(index) ?? 6)
+                          ).toFixed(2)}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                  {!plan.card && plan.pix && (
+                    <div>
+                      <h3 className="text-2xl font-bold text-[#380505] mb-6">
+                        {plan.name}
+                      </h3>
+
+                      <div className="mb-6 mt-10">
+                        <span className="lg:text-4xl text-2xl md:text-3xl font-bold text-[#380505]">
+                          R$ {plan.price.toFixed(2)}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+
                   <span
-                    className={` justify-start font-medium ${
+                    className={`justify-start font-medium ${
                       isSelected ? "text-[#AC5757]" : "text-[#7A7A7A]"
                     }`}
                   >
-                    R$ {plan.priceAnual} /ano*
+                    R$ {plan.price.toFixed(2)} /{" "}
+                    {plan.planDetail.premiumBalance}{" "}
+                    {plan.planDetail.premiumBalance === 1
+                      ? "parecer"
+                      : "pareceres"}{" "}
+                    *
                   </span>
-
-                  <ul className="space-y-4 mb-8 mt-4 pt-3  border-t border-[#CCCCCC]  text-left">
-                    {plan.features.map((feature, featureIndex) => (
-                      <li
-                        key={featureIndex}
-                        className="flex items-center gap-3"
-                      >
-                        <div className="w-1 h-1 bg-black rounded-full flex-shrink-0" />
-                        <span className="text-gray-700">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="flex justify-start">
-                    <Button
-                      onClick={() => {
-                        setSelectedPlanIndex(index);
-                        handleContratar(index);
-                      }}
-                      className="w-1/2 bg-[#840C0C] hover:bg-red-800 text-white py-3 px-6 rounded-md font-medium transition-colors duration-200"
-                      size="lg"
-                    >
-                      Contratar
-                    </Button>
-                    {/* <Button
-                      onClick={() => setIsModalOpen(true)} // abre modal
-                      className="w-1/2 bg-[#840C0C] text-[1rem] hover:bg-red-800 text-white py-3 px-6 rounded-md font-medium transition-colors duration-200"
-                      size="lg"
-                    >
-                      Contratar
-                    </Button> */}
+                  <br />
+                  <div
+                    className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold mb-2 mt-4 ${
+                      isSelected
+                        ? "bg-[#840C0C] text-white border-[#840C0C]"
+                        : "bg-[#FAE4E4] text-[#840C0C] border-[#E7B8B8]"
+                    }`}
+                  >
+                    <span className="w-2 h-2 rounded-full bg-current" />
+                    {index === 0
+                      ? "Exclusivo para pix"
+                      : "10% de desconto no pix"}
                   </div>
+
+                  <ul className="space-y-4 mb-8 mt-4 pt-3 border-t border-[#CCCCCC] text-left">
+                    <li className="flex items-center gap-3">
+                      <div className="w-1 h-1 bg-black rounded-full flex-shrink-0" />
+                      <span className="text-gray-700 text-[0.85rem]">
+                        {plan.planDetail.user}
+                        {plan.planDetail.user > 1 ? " usuários" : " usuário"}
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Botão sempre fixado no fundo */}
+                <div className="flex justify-start pb-2 mt-auto">
+                  <Button
+                    onClick={() => {
+                      setSelectedPlanIndex(index);
+                      handleContratar(index);
+                    }}
+                    className="w-1/2 cursor-pointer bg-[#840C0C] hover:bg-red-800 text-white py-3 px-6 rounded-md font-medium transition-colors duration-200"
+                    size="lg"
+                  >
+                    Contratar
+                  </Button>
                 </div>
               </div>
             );
@@ -146,41 +219,6 @@ export default function PricingSection() {
           </Link>
         </div>
       </div>
-
-      {/* Modal */}
-      {isModalOpen && (
-        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white mx-4 pb-8 pl-12 pr-4 content-normal rounded-lg shadow-lg w-fit max-w-[500px] h-fit text-center">
-            <span className="flex items-end justify-end mt-3 mb-4 ">
-              <IconXWithCircle
-                height="3rem"
-                width="3rem"
-                className="cursor-pointer"
-                onClick={() => setIsModalOpen(false)}
-              />
-            </span>
-            <span className="flex items-center justify-center mb-4 mr-6">
-              <IconLogoPartilhaWithText height="8rem" width="8rem" />
-            </span>
-            <div className="border-b border-gray-300 mb-4 mr-6"></div>
-            <h2 className="text-2xl text-[#983131] font-medium mb-4 mr-6">
-              Nossas vendas iniciam no dia 01 de outubro.
-            </h2>
-            <p className="text-gray-700 text-[1rem] mb-4 mr-6">
-              Entre em contato conosco e garanta descontos exclusivos de
-              pré-vendas.
-            </p>
-            <Link href="https://wa.me/554188705498" target="_blank">
-              <Button
-                onClick={() => setIsModalOpen(false)}
-                className="bg-[#840C0C] mt-6 hover:bg-red-800 mr-6 text-white"
-              >
-                Entrar em contato
-              </Button>
-            </Link>
-          </div>
-        </div>
-      )}
     </section>
   );
 }

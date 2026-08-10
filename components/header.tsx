@@ -46,10 +46,13 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div
-            className="flex-shrink-0 flex items-center gap-3"
+            className="flex-shrink-0 flex items-center gap-3 cursor-pointer"
             onClick={() => (window.location.href = "/")}
           >
-            <div className="w-10 h-8 relative">
+            <div
+              className="w-10 h-8 relative cursor-pointer"
+              onClick={() => (window.location.href = "/")}
+            >
               {/* Geometric triangle logo */}
               <IconLogoPartilha width="45" height="35" />
             </div>
@@ -82,6 +85,17 @@ export default function Header() {
             >
               Fale com a gente
             </Link>
+            <Link
+              href="https://calendar.app.google/Zm6FifWArGsMX1468"
+              target="_blank"
+              className={`bg-transparent hover:bg-[#840C0C] hover:text-white hover:border-[#840C0C] border border-[#FDECEC] text-[#FDECEC] px-6 py-2 text-sm font-medium rounded-md transition-colors duration-200 ${
+                isAtTop
+                  ? "text-white hover:text-amber-200 focus:ring-offset-[#380505]"
+                  : "text-red-800 border-red-800 hover:text-amber-200 "
+              }`}
+            >
+              Agende uma demonstração
+            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -105,7 +119,7 @@ export default function Header() {
 
         {/* Mobile Navigation */}
         <div
-          className={`fixed top-0 left-0 h-full w-1/2 max-w-xs bg-[#380505] z-50 shadow-lg transform transition-transform duration-300 ease-in-out ${
+          className={`fixed top-0 left-0 h-full w-full max-w-[300px] bg-[#380505] z-50 shadow-lg transform transition-transform duration-300 ease-in-out ${
             isMenuOpen ? "translate-x-0" : "-translate-x-full"
           } lg:hidden`}
           id="mobile-menu"
@@ -133,6 +147,14 @@ export default function Header() {
             <Link href={"https://wa.me/554188705498"} target="_blank">
               <Button className="bg-red-700 hover:bg-red-800 text-white w-full px-3 py-2 text-base font-medium rounded-md">
                 Fale com a gente
+              </Button>
+            </Link>
+            <Link
+              href={"https://calendar.app.google/Zm6FifWArGsMX1468"}
+              target="_blank"
+            >
+              <Button className="bg-transparent fit-content w-full hover:bg-[#840C0C] hover:text-white hover:border-[#840C0C] border border-[#FDECEC] text-[#FDECEC] px-6 py-2 text-sm font-medium rounded-md transition-colors duration-200">
+                Agende uma demonstração
               </Button>
             </Link>
           </div>
