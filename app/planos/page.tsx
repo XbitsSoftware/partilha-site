@@ -5,12 +5,12 @@ import ExtraBenefitsSection from "@/components/extra-benefits-section";
 import Footer from "@/components/footer";
 import BenefitsWarningSection from "@/components/warning-section-benefits";
 
-export default function PlanosPage({
+export default async function PlanosPage({
   searchParams,
 }: {
-  searchParams: { couponCode?: string };
+  searchParams: Promise<{ couponCode?: string }>;
 }) {
-  const couponCode = searchParams.couponCode;
+  const { couponCode } = await searchParams;
 
   return (
     <div className="min-h-screen bg-white">
