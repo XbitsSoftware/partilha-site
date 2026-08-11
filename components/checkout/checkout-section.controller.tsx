@@ -8,6 +8,18 @@ import Modal from "../modalDefault/modalDefault";
 import { useCepSearch } from "@/hooks/useCepSearch";
 
 const DEFAULT_DISCOUNT_COUPON_CODE = "8E1AE-10082026";
+const DEFAULT_DISCOUNT_COUPON_DISPLAY = "ADV2026";
+
+
+const getRealCouponCode = (value: string) =>
+  value === DEFAULT_DISCOUNT_COUPON_DISPLAY
+    ? DEFAULT_DISCOUNT_COUPON_CODE
+    : value;
+
+const getDisplayCouponCode = (value: string) =>
+  value === DEFAULT_DISCOUNT_COUPON_CODE
+    ? DEFAULT_DISCOUNT_COUPON_DISPLAY
+    : value;
 
 export const UseCheckoutController = (planId: string, couponCode?: string) => {
   const { searchCep, error: cepError } = useCepSearch();
@@ -30,7 +42,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
   const hookForm = useForm<TFormState>({
     defaultValues: {
       planId: "",
-      couponCode: DEFAULT_DISCOUNT_COUPON_CODE,
+      couponCode: DEFAULT_DISCOUNT_COUPON_DISPLAY,
       typePayment: "Charge",
       customer: {
         fullName: "",
@@ -121,7 +133,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
     hookForm.setValue("charge.billingType", paymentMethod);
     const payload = {
       planId: planId,
-      couponCode: formData.couponCode,
+      couponCode: getRealCouponCode(formData.couponCode?.trim() ?? ""),
       typePayment: formData.typePayment,
       customer: {
         fullName: formData.customer.fullName,
@@ -348,7 +360,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
   };
 
   const handleCouponValidate = async (couponCode: string) => {
-    const code = couponCode.trim();
+    const code = getRealCouponCode(couponCode.trim());
     if (code.length <= 13) {
       hookForm.setValue(
         "totalValue",
@@ -387,7 +399,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
 
   const hasCouponInUrl = async (code: string) => {
     if (code && code.length > 0) {
-      hookForm.setValue("couponCode", code);
+      hookForm.setValue("couponCode", getDisplayCouponCode(code));
       await handleCouponValidate(code);
     } else {
       hookForm.setValue("couponCode", "");
