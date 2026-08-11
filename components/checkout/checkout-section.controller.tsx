@@ -290,24 +290,31 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
     return value.replace(/\D/g, "");
   };
 
-  const formatTotalValueDisplay = (value: string | number) => {
-    const numericDisplay = String(value).replace(/^R\$\s*/, "");
-    return `R$ ${numericDisplay}`;
+  const parsePrice = (value: string | number) => {
+    const cleaned = String(value).replace(/^R\$\s*/, "").trim();
+    if (cleaned.includes(",")) {
+      return Number(cleaned.replace(/\./g, "").replace(",", "."));
+    }
+
+    return Number(cleaned);
+  };
+
+  const formatPriceDisplay = (value: string | number) => {
+    const numeric = parsePrice(value);
+    if (isNaN(numeric)) return "R$ 0,00";
+    return `R$ ${numeric.toFixed(2).replace(".", ",")}`;
   };
 
   const setValueInTotalValue = () => {
     if (!plan) {
-      hookForm.setValue("totalValue", formatTotalValueDisplay("0.00"));
+      hookForm.setValue("totalValue", formatPriceDisplay("0"));
       return;
     }
 
-    const value = String(plan?.price ?? "0");
-    const numericValue = Number(
-      value.replace("R$", "").replace(/\./g, "").replace(",", "."),
-    );
+    const numericValue = parsePrice(plan?.price ?? "0");
 
     if (isNaN(numericValue)) {
-      hookForm.setValue("totalValue", formatTotalValueDisplay("0.00"));
+      hookForm.setValue("totalValue", formatPriceDisplay("0"));
       return;
     }
 
@@ -321,10 +328,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
       finalValue = valueCoupon;
     }
 
-    hookForm.setValue(
-      "totalValue",
-      formatTotalValueDisplay(finalValue.toString().replace(".", ",")),
-    );
+    hookForm.setValue("totalValue", formatPriceDisplay(finalValue));
   };
 
   const handleSearchZipCode = async (
@@ -362,10 +366,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
   const handleCouponValidate = async (couponCode: string) => {
     const code = getRealCouponCode(couponCode.trim());
     if (code.length <= 13) {
-      hookForm.setValue(
-        "totalValue",
-        formatTotalValueDisplay(plan?.price.toString() ?? "0.00"),
-      );
+      hookForm.setValue("totalValue", formatPriceDisplay(plan?.price ?? "0"));
       setCouponValid(false);
       setValueCoupon(0);
       return;
@@ -381,7 +382,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
       if (data.result === "Valid") {
         hookForm.setValue(
           "totalValue",
-          formatTotalValueDisplay(data.valueForDiscount.toString()),
+          formatPriceDisplay(data.valueForDiscount),
         );
         setValueCoupon(data.valueForDiscount);
         setCouponValid(true);
