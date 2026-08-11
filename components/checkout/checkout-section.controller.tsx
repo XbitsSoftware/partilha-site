@@ -7,9 +7,8 @@ import toast from "react-hot-toast";
 import Modal from "../modalDefault/modalDefault";
 import { useCepSearch } from "@/hooks/useCepSearch";
 
-const DEFAULT_DISCOUNT_COUPON_CODE = "8E1AE-10082026";
+const DEFAULT_DISCOUNT_COUPON_CODE = "0C358-10082026";
 const DEFAULT_DISCOUNT_COUPON_DISPLAY = "ADV2026";
-
 
 const getRealCouponCode = (value: string) =>
   value === DEFAULT_DISCOUNT_COUPON_DISPLAY
@@ -363,9 +362,9 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
     }
   };
 
-  const handleCouponValidate = async (couponCode: string) => {
-    const code = getRealCouponCode(couponCode.trim());
-    if (code.length <= 13) {
+  const handleCouponValidate = async (couponCodeToValidate: string) => {
+    const code = getRealCouponCode(couponCodeToValidate.trim());
+    if (!plan?.id || code.length <= 13) {
       hookForm.setValue("totalValue", formatPriceDisplay(plan?.price ?? "0"));
       setCouponValid(false);
       setValueCoupon(0);
@@ -374,7 +373,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
 
     try {
       const response = await fetch(
-        `/api/checkout?Code=${code}&ProductId=add7e59b-ab1c-4a6d-8811-d2188f232590&PlanId=${plan?.id}&BillingType=${paymentMethod}`,
+        `/api/checkout?Code=${code}&ProductId=add7e59b-ab1c-4a6d-8811-d2188f232590&PlanId=${plan.id}&BillingType=${paymentMethod}`,
       );
 
       const data = await response.json();
@@ -398,7 +397,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
     }
   };
 
-  const hasCouponInUrl = async (code: string) => {
+  const applyDefaultOrUrlCoupon = async (code: string) => {
     if (code && code.length > 0) {
       hookForm.setValue("couponCode", getDisplayCouponCode(code));
       await handleCouponValidate(code);
@@ -472,8 +471,14 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
 
   useEffect(() => {
     fetchPlans();
-    hasCouponInUrl(DEFAULT_DISCOUNT_COUPON_CODE);
   }, []);
+
+  useEffect(() => {
+    if (!plan) return;
+    const resolvedCouponCode =
+      couponCode?.trim() || DEFAULT_DISCOUNT_COUPON_CODE;
+    applyDefaultOrUrlCoupon(resolvedCouponCode);
+  }, [plan]);
 
   return {
     hookForm,
