@@ -8,6 +8,17 @@ import Modal from "../modalDefault/modalDefault";
 import { useCepSearch } from "@/hooks/useCepSearch";
 
 const DEFAULT_DISCOUNT_COUPON_CODE = "0C358-10082026";
+const DEFAULT_DISCOUNT_COUPON_DISPLAY = "ADV2026";
+
+const getRealCouponCode = (value: string) =>
+  value === DEFAULT_DISCOUNT_COUPON_DISPLAY
+    ? DEFAULT_DISCOUNT_COUPON_CODE
+    : value;
+
+const getDisplayCouponCode = (value: string) =>
+  value === DEFAULT_DISCOUNT_COUPON_CODE
+    ? DEFAULT_DISCOUNT_COUPON_DISPLAY
+    : value;
 
 export const UseCheckoutController = (planId: string, couponCode?: string) => {
   const { searchCep, error: cepError } = useCepSearch();
@@ -30,7 +41,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
   const hookForm = useForm<TFormState>({
     defaultValues: {
       planId: "",
-      couponCode: DEFAULT_DISCOUNT_COUPON_CODE,
+      couponCode: DEFAULT_DISCOUNT_COUPON_DISPLAY,
       typePayment: "Charge",
       customer: {
         fullName: "",
@@ -121,7 +132,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
     hookForm.setValue("charge.billingType", paymentMethod);
     const payload = {
       planId: planId,
-      couponCode: formData.couponCode,
+      couponCode: getRealCouponCode(formData.couponCode?.trim() ?? ""),
       typePayment: formData.typePayment,
       customer: {
         fullName: formData.customer.fullName,
@@ -278,24 +289,31 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
     return value.replace(/\D/g, "");
   };
 
-  const formatTotalValueDisplay = (value: string | number) => {
-    const numericDisplay = String(value).replace(/^R\$\s*/, "");
-    return `R$ ${numericDisplay}`;
+  const parsePrice = (value: string | number) => {
+    const cleaned = String(value).replace(/^R\$\s*/, "").trim();
+    if (cleaned.includes(",")) {
+      return Number(cleaned.replace(/\./g, "").replace(",", "."));
+    }
+
+    return Number(cleaned);
+  };
+
+  const formatPriceDisplay = (value: string | number) => {
+    const numeric = parsePrice(value);
+    if (isNaN(numeric)) return "R$ 0,00";
+    return `R$ ${numeric.toFixed(2).replace(".", ",")}`;
   };
 
   const setValueInTotalValue = () => {
     if (!plan) {
-      hookForm.setValue("totalValue", formatTotalValueDisplay("0.00"));
+      hookForm.setValue("totalValue", formatPriceDisplay("0"));
       return;
     }
 
-    const value = String(plan?.price ?? "0");
-    const numericValue = Number(
-      value.replace("R$", "").replace(/\./g, "").replace(",", "."),
-    );
+    const numericValue = parsePrice(plan?.price ?? "0");
 
     if (isNaN(numericValue)) {
-      hookForm.setValue("totalValue", formatTotalValueDisplay("0.00"));
+      hookForm.setValue("totalValue", formatPriceDisplay("0"));
       return;
     }
 
@@ -309,10 +327,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
       finalValue = valueCoupon;
     }
 
-    hookForm.setValue(
-      "totalValue",
-      formatTotalValueDisplay(finalValue.toString().replace(".", ",")),
-    );
+    hookForm.setValue("totalValue", formatPriceDisplay(finalValue));
   };
 
   const handleSearchZipCode = async (
@@ -347,13 +362,10 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
     }
   };
 
-  const handleCouponValidate = async (couponCode: string) => {
-    const code = couponCode.trim();
-    if (code.length <= 13) {
-      hookForm.setValue(
-        "totalValue",
-        formatTotalValueDisplay(plan?.price.toString() ?? "0.00"),
-      );
+  const handleCouponValidate = async (couponCodeToValidate: string) => {
+    const code = getRealCouponCode(couponCodeToValidate.trim());
+    if (!plan?.id || code.length <= 13) {
+      hookForm.setValue("totalValue", formatPriceDisplay(plan?.price ?? "0"));
       setCouponValid(false);
       setValueCoupon(0);
       return;
@@ -361,7 +373,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
 
     try {
       const response = await fetch(
-        `/api/checkout?Code=${code}&ProductId=add7e59b-ab1c-4a6d-8811-d2188f232590&PlanId=${plan?.id}&BillingType=${paymentMethod}`,
+        `/api/checkout?Code=${code}&ProductId=add7e59b-ab1c-4a6d-8811-d2188f232590&PlanId=${plan.id}&BillingType=${paymentMethod}`,
       );
 
       const data = await response.json();
@@ -369,7 +381,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
       if (data.result === "Valid") {
         hookForm.setValue(
           "totalValue",
-          formatTotalValueDisplay(data.valueForDiscount.toString()),
+          formatPriceDisplay(data.valueForDiscount),
         );
         setValueCoupon(data.valueForDiscount);
         setCouponValid(true);
@@ -385,9 +397,9 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
     }
   };
 
-  const hasCouponInUrl = async (code: string) => {
+  const applyDefaultOrUrlCoupon = async (code: string) => {
     if (code && code.length > 0) {
-      hookForm.setValue("couponCode", code);
+      hookForm.setValue("couponCode", getDisplayCouponCode(code));
       await handleCouponValidate(code);
     } else {
       hookForm.setValue("couponCode", "");
@@ -459,8 +471,14 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
 
   useEffect(() => {
     fetchPlans();
-    hasCouponInUrl(DEFAULT_DISCOUNT_COUPON_CODE);
   }, []);
+
+  useEffect(() => {
+    if (!plan) return;
+    const resolvedCouponCode =
+      couponCode?.trim() || DEFAULT_DISCOUNT_COUPON_CODE;
+    applyDefaultOrUrlCoupon(resolvedCouponCode);
+  }, [plan]);
 
   return {
     hookForm,
