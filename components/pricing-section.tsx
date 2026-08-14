@@ -93,11 +93,12 @@ export default function PricingSection({
     <section className="pt-4 pb-16 lg:pt-6 lg:pb-14 bg-[#FFFFFF]">
       <div className="max-w-[1600px] h-full mx-auto px-4 sm:px-6 lg:px-8">
         <div
-          className="w-full bg-white rounded-lg px-6 py-2 sm:px-10 sm:py-3 text-center mb-4"
+          className="w-full bg-[#840C0C] rounded-full px-6 py-3 sm:px-10 sm:py-4 text-center mb-8"
           style={{ fontFamily: MONTSERRAT }}
         >
-          <p className="font-bold uppercase text-[#111111] tracking-wide text-sm sm:text-base md:text-lg">
-            CUPOM ADV2026 15% OFF PARA TODOS OS PLANOS ATÉ 31/08
+          <p className="font-bold uppercase text-[#E6C288] tracking-wide text-sm sm:text-base md:text-lg">
+            + 15% OFF PARA TODOS OS PLANOS ATÉ 31/08{" "}
+            <span className="normal-case">(cupom gerado automaticamente)</span>
           </p>
         </div>
         <div className="grid lg:grid-cols-3 2xl:grid-cols-5 md:grid-cols-2 sm:grid-cols-2 gap-8 mb-12">
