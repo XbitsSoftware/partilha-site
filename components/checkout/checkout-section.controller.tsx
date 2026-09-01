@@ -7,18 +7,9 @@ import toast from "react-hot-toast";
 import Modal from "../modalDefault/modalDefault";
 import { useCepSearch } from "@/hooks/useCepSearch";
 
-const DEFAULT_DISCOUNT_COUPON_CODE = "0C358-10082026";
-const DEFAULT_DISCOUNT_COUPON_DISPLAY = "ADV2026";
+const getRealCouponCode = (value: string) => value;
 
-const getRealCouponCode = (value: string) =>
-  value === DEFAULT_DISCOUNT_COUPON_DISPLAY
-    ? DEFAULT_DISCOUNT_COUPON_CODE
-    : value;
-
-const getDisplayCouponCode = (value: string) =>
-  value === DEFAULT_DISCOUNT_COUPON_CODE
-    ? DEFAULT_DISCOUNT_COUPON_DISPLAY
-    : value;
+const getDisplayCouponCode = (value: string) => value;
 
 export const UseCheckoutController = (planId: string, couponCode?: string) => {
   const { searchCep, error: cepError } = useCepSearch();
@@ -41,7 +32,7 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
   const hookForm = useForm<TFormState>({
     defaultValues: {
       planId: "",
-      couponCode: DEFAULT_DISCOUNT_COUPON_DISPLAY,
+      couponCode: "",
       typePayment: "Charge",
       customer: {
         fullName: "",
@@ -475,9 +466,12 @@ export const UseCheckoutController = (planId: string, couponCode?: string) => {
 
   useEffect(() => {
     if (!plan) return;
-    const resolvedCouponCode =
-      couponCode?.trim() || DEFAULT_DISCOUNT_COUPON_CODE;
-    applyDefaultOrUrlCoupon(resolvedCouponCode);
+    const resolvedCouponCode = couponCode?.trim();
+    if (resolvedCouponCode) {
+      applyDefaultOrUrlCoupon(resolvedCouponCode);
+    } else {
+      hookForm.setValue("couponCode", "");
+    }
   }, [plan]);
 
   return {
