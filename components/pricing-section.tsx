@@ -1,17 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
 import Link from "next/link";
 
-const MONTSERRAT = "var(--font-montserrat)";
-
-export default function PricingSection({
-  couponCode,
-}: {
-  couponCode?: string;
-}) {
+export default function PricingSection() {
   const [selectedPlanIndex, setSelectedPlanIndex] = useState<number>(0);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -53,16 +47,7 @@ export default function PricingSection({
 
   const handleContratar = (index: number) => {
     const selectedPlan = plans[index];
-    if (couponCode) {
-      router.push(
-        `/checkout/${selectedPlan.id}?couponCode=${encodeURIComponent(
-          couponCode,
-        )}`,
-      );
-      return;
-    } else {
-      router.push(`/checkout/${selectedPlan.id}`);
-    }
+    router.push(`/checkout/${selectedPlan.id}`);
   };
 
   const returnDivisorForPriceLayout = (index: number) => {
@@ -92,15 +77,7 @@ export default function PricingSection({
   return (
     <section className="pt-4 pb-16 lg:pt-6 lg:pb-14 bg-[#FFFFFF]">
       <div className="max-w-[1600px] h-full mx-auto px-4 sm:px-6 lg:px-8">
-        <div
-          className="w-full bg-[#840C0C] rounded-full px-6 py-3 sm:px-10 sm:py-4 text-center mb-8"
-          style={{ fontFamily: MONTSERRAT }}
-        >
-          <p className="font-bold uppercase text-[#E6C288] tracking-wide text-sm sm:text-base md:text-lg">
-            + 15% OFF PARA TODOS OS PLANOS ATÉ 31/08{" "}
-            <span className="normal-case">(cupom gerado automaticamente)</span>
-          </p>
-        </div>
+
         <div className="grid lg:grid-cols-3 2xl:grid-cols-5 md:grid-cols-2 sm:grid-cols-2 gap-8 mb-12">
           {plans.map((plan, index) => {
             const isSelected = selectedPlanIndex === index;
